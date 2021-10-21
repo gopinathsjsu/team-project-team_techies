@@ -11,5 +11,5 @@ Sameer Joshi - 015219308
 Technology Requirements:
 Python
 Flask
-MySQL → MongoDB
+MongoDB
 React
