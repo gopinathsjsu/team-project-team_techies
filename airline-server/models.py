@@ -1,3 +1,4 @@
+from flask_jwt_extended import get_jwt_identity
 from mongoengine import *
 import datetime
 
@@ -7,12 +8,13 @@ class BaseDocument(Document):
         'abstract': True
     }
     modified_at = DateTimeField()
-    created_at = DateTimeField()
+    modified_by = StringField()
 
     def save(self, *args, **kwargs):
-        if not self.created_at:
-            self.created_at = datetime.datetime.now()
         self.modified_at = datetime.datetime.now()
+        current_user = get_jwt_identity()
+        if current_user:
+            self.modified_by = current_user["user"]
         return super(BaseDocument, self).save(*args, **kwargs)
 
 
@@ -24,7 +26,7 @@ class User(BaseDocument):
     last_name = StringField(required=True)
     email = StringField(required=True)
     password = StringField(required=True)
-    is_admin = BooleanField(required=True, default=False)
+    user_type = StringField(required=True, default='customer')
 
 
 class Flight(BaseDocument):

@@ -1,5 +1,7 @@
 from flask import request, jsonify, Blueprint
+from flask_jwt_extended import jwt_required
 
+from auth_util import admin_only
 from models import Flight
 from util.error_codes import ErrorCodes
 
@@ -8,6 +10,8 @@ flight_bp = Blueprint('flight_bp', __name__)
 
 
 @flight_bp.route('/flight', methods=['POST', 'GET'])
+@admin_only
+@jwt_required()
 def flight():
     if request.method == 'POST':
         data = request.get_json()
@@ -33,6 +37,7 @@ def flight():
                 code = ErrorCodes.SUCCESS
 
         except Exception as error:
+            print(error)
             message = "Something went wrong"
             code = ErrorCodes.INTERNAL_SERVER_ERROR
 
@@ -75,6 +80,7 @@ def flight():
 
 
 def get_flight_by_flight_id(flightID):
+    print(flightID)
     try:
         return Flight.objects.get(flight_id=flightID)
     except:

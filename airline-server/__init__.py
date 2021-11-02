@@ -1,14 +1,14 @@
 import os
 from flask import Flask
-from flask_restful import Api
 from flask_mongoengine import MongoEngine
-from flask_jwt_extended import JWTManager
+from flask_jwt_extended import JWTManager, get_jwt_identity
 
 from api.flight import flight_bp
 from user import user_bp
 
 app = Flask(__name__)
-api = Api(app)
+
+app.config['SECRET_KEY'] = "airline_dev"
 
 app.config['MONGODB_SETTINGS'] = {
     'db': 'airline_db',
