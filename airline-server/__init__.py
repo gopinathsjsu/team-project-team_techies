@@ -2,8 +2,10 @@ import os
 from flask import Flask
 from flask_restful import Api
 from flask_mongoengine import MongoEngine
+from flask_jwt_extended import JWTManager
 
-from user_resource import UserRegistration, UserLogin
+from api.flight import flight_bp
+from user import user_bp
 
 app = Flask(__name__)
 api = Api(app)
@@ -15,16 +17,20 @@ app.config['MONGODB_SETTINGS'] = {
 }
 
 db = MongoEngine()
+jwt = JWTManager()
+
 db.init_app(app)
+jwt.init_app(app)
 
-#MongoEngine(app)
+blueprints = (user_bp, flight_bp)
 
-api.add_resource(UserRegistration, "/auth/registration")
-api.add_resource(UserLogin, "/auth/login")
+for blueprint in blueprints:
+    app.register_blueprint(blueprint)
+
 
 @app.route('/')
 def hello():
-    return 'Hello, World!'
+    return 'Airline App!'
 
 
 
