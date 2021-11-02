@@ -12,9 +12,6 @@ class BaseDocument(Document):
 
     def save(self, *args, **kwargs):
         self.modified_at = datetime.datetime.now()
-        current_user = get_jwt_identity()
-        if current_user:
-            self.modified_by = current_user["user"]
         return super(BaseDocument, self).save(*args, **kwargs)
 
 
