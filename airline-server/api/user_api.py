@@ -1,10 +1,11 @@
 from datetime import timedelta
 
 from flask import request, jsonify, Blueprint, make_response
+from mongoengine import NotUniqueError
 from passlib.hash import pbkdf2_sha256 as sha256
 from flask_jwt_extended import create_access_token
 
-from models import User
+from user import User
 from util.error_codes import ErrorCodes
 
 user_bp = Blueprint('user_bp', __name__)
@@ -15,18 +16,18 @@ def create_user():
     if request.method == 'POST':
         data = request.get_json()
         try:
-            user_in_repo = get_user_by_email(data['email'])
-            if user_in_repo:
-                message = "EmailID already registered"
-                code = ErrorCodes.CONFLICT
-            else:
-                user = User(first_name=data['first_name'],
-                            last_name=data['last_name'],
-                            email=data['email'],
-                            password=sha256.hash(data['password']))
-                user.save()
-                message = "User - {} registered successfully".format(data["email"])
-                code = ErrorCodes.SUCCESS
+            user = User(first_name=data['first_name'],
+                        last_name=data['last_name'],
+                        email=data['email'],
+                        password=sha256.hash(data['password']))
+            user.save()
+            message = "User - {} registered successfully".format(data["email"])
+            code = ErrorCodes.SUCCESS
+
+        except NotUniqueError:
+            message = "EmailID already registered"
+            code = ErrorCodes.CONFLICT
+
         except Exception as error:
             print(error)
             message = "Something went wrong"

@@ -3,8 +3,10 @@ from flask import Flask
 from flask_mongoengine import MongoEngine
 from flask_jwt_extended import JWTManager, get_jwt_identity
 
-from api.flight import flight_bp
-from user import user_bp
+from aircraft_api import aircraft_bp
+from airport_api import airport_bp
+from flight_api import flight_bp
+from user_api import user_bp
 
 app = Flask(__name__)
 
@@ -12,7 +14,7 @@ app.config['SECRET_KEY'] = "airline_dev"
 
 app.config['MONGODB_SETTINGS'] = {
     'db': 'airline_db',
-    'host': 'localhost',
+    'host': 'localhost', #$(DB_HOST)
     'port': 27017
 }
 
@@ -22,7 +24,7 @@ jwt = JWTManager()
 db.init_app(app)
 jwt.init_app(app)
 
-blueprints = (user_bp, flight_bp)
+blueprints = (user_bp, flight_bp, airport_bp, aircraft_bp)
 
 for blueprint in blueprints:
     app.register_blueprint(blueprint)
