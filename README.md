@@ -14,4 +14,3 @@ Flask
 MongoDB
 React
 
-#testing git commit
