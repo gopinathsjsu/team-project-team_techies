@@ -1,0 +1,123 @@
+User:
+{
+    "_id" : ObjectId("618176b53dc26f93f1129a9d"),
+    "modified_at" : ISODate("2021-11-02T10:34:45.037Z"),
+    "first_name" : "nidhi",
+    "last_name" : "tholar",
+    "email" : "nidhi@gmail.com",
+    "password" : "$pbkdf2-sha256$29000$I4QwZixlrFXKube2trYWwg$8Gal2fxoRXZxWysuJYkqhCG2KC7Hj9F95GywQ7PZOAI",
+    "user_type" : "admin"
+}
+
+{
+    "_id" : ObjectId("618190269934168b6712c56e"),
+    "modified_at" : ISODate("2021-11-02T12:23:18.585Z"),
+    "first_name" : "john",
+    "last_name" : "doe",
+    "email" : "john@gmail.com",
+    "password" : "$pbkdf2-sha256$29000$qxWi9B6jVIrROmfMWUtp7Q$mvfNEhBcH/f.R5e8GbLxAEXWOjS7h2PLRfc./LjND5Y",
+    "user_type" : "customer"
+}
+
+Aircraft:
+
+{
+    "_id" : ObjectId("6184a9d1c2bf805a6ec5164a"),
+    "name" : "Boeing 737",
+    "seats" : {
+        "first_class" : 20,
+        "economy" : 30,
+        "business_class" : 10
+    }
+}
+
+{
+    "_id" : ObjectId("6184aa07c2bf805a6ec51679"),
+    "name" : "Airbus A320",
+    "seats" : {
+        "first_class" : 20,
+        "economy" : 30,
+        "business_class" : 10
+    }
+}
+
+Flight:
+{
+    "_id" : ObjectId("6184c5f1e0027a37b70b4843"),
+    "modified_at" : ISODate("2021-11-04T22:49:37.110Z"),
+    "flight_id" : "3",
+    "aircraft" : ObjectId("6184aa07c2bf805a6ec51679"),
+    "departure_airport" : ObjectId("61849d5f4367d925b16ff24c"),
+    "arrival_airport" : ObjectId("61849d3f4367d925b16ff24b"),
+    "departure_date" : ISODate("2022-01-06T00:00:00.000Z"),
+    "arrival_date" : ISODate("2022-01-06T00:00:00.000Z"),
+    "departure_time" : "10:00",
+    "arrival_time" : "11:00",
+    "price" : 40.0,
+    "mileage_points" : 4
+}
+
+Airport:
+
+/* 1 */
+{
+    "_id" : ObjectId("61849d3f4367d925b16ff24b"),
+    "modified_at" : ISODate("2021-11-04T19:55:59.037Z"),
+    "code" : "SJC",
+    "name" : "San Jose International Airport",
+    "city" : "San Jose"
+}
+
+/* 2 */
+{
+    "_id" : ObjectId("61849d5f4367d925b16ff24c"),
+    "modified_at" : ISODate("2021-11-04T19:56:31.184Z"),
+    "code" : "SFO",
+    "name" : "San Francisco International Airport",
+    "city" : "San Francisco"
+}
+
+/* 3 */
+{
+    "_id" : ObjectId("61849d7d4367d925b16ff24d"),
+    "modified_at" : ISODate("2021-11-04T19:57:01.199Z"),
+    "code" : "LAX",
+    "name" : "Los Angeles International Airport",
+    "city" : "Los Angeles"
+}
+
+/* 4 */
+{
+    "_id" : ObjectId("61849e4fb39b33a887ff9fdc"),
+    "modified_at" : ISODate("2021-11-04T20:00:31.426Z"),
+    "code" : "JFK",
+    "name" : "John F. Kennedy International Airport",
+    "city" : "New York"
+}
+
+/* 5 */
+{
+    "_id" : ObjectId("61849ea4b39b33a887ff9fdd"),
+    "modified_at" : ISODate("2021-11-04T20:01:56.625Z"),
+    "code" : "SEA",
+    "name" : "Seattle-Tacoma International Airport",
+    "city" : "Seattle"
+}
+
+/* 6 */
+{
+    "_id" : ObjectId("61849ef0b39b33a887ff9fde"),
+    "modified_at" : ISODate("2021-11-04T20:03:12.194Z"),
+    "code" : "DFW",
+    "name" : "Dallas/Fort Worth International Airport",
+    "city" : "Dallas"
+}
+
+/* 7 */
+{
+    "_id" : ObjectId("618575181971168a04d0d034"),
+    "modified_at" : ISODate("2021-11-05T11:16:56.465Z"),
+    "code" : "b",
+    "name" : "r67rjh",
+    "city" : "Dallas"
+}
