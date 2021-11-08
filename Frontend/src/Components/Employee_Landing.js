@@ -1,0 +1,27 @@
+import React from 'react'
+
+import {Link} from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.css'
+import '../App.css'
+
+import { Navbar,Nav,NavItem,Form,FormControl,Button,Modal} from 'react-bootstrap';
+import {useState } from "react";
+const Employee_Landing = () => {
+
+
+    return (
+        <div>
+            <Navbar bg="dark" variant="dark" sticky="top">
+                <Navbar.Brand>Techies Airline</Navbar.Brand>
+                <Nav>
+                    <Nav.Link href="/"> Home </Nav.Link>
+                    <Nav.Link href="/addflight"> Add Flights  </Nav.Link>
+                    <Nav.Link href="/viewflights"> View Flights </Nav.Link>
+                </Nav>
+                </Navbar>
+            
+        </div>
+    )
+}
+
+export default Employee_Landing
