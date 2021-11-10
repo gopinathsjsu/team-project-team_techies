@@ -2,6 +2,8 @@ from flask import request, jsonify, Blueprint
 from flask_jwt_extended import jwt_required
 from mongoengine import NotUniqueError
 
+from aircraft import Aircraft
+from aircraft_api import get_aircraft_details
 from airport_api import get_airport_by_id
 from auth_util import admin_only
 from flight import Flight
@@ -18,8 +20,8 @@ def flight():
     if request.method == 'POST':
         data = request.get_json()
         try:
-
-            flight = Flight(flight_id=data['flight_id'],
+            aircraft = get_aircraft_details(data['aircraft'])
+            flight = Flight(flight_id="AA" + data['flight_id'],
                             aircraft=data['aircraft'],
                             departure_airport=data['departure_airport'],
                             arrival_airport=data['arrival_airport'],
@@ -28,7 +30,10 @@ def flight():
                             departure_time=data['departure_time'],
                             arrival_time=data['arrival_time'],
                             price=data['price'],
-                            mileage_points=data['mileage_points'])
+                            mileage_points=data['mileage_points'],
+                            remaining_seats=aircraft.total_seats,
+                            seats=aircraft.seats
+                            )
             flight.save()
 
             message = "Flight - {} added successfully".format(data["flight_id"])

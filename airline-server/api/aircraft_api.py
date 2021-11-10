@@ -17,6 +17,14 @@ aircraft_bp = Blueprint('aircraft_bp', __name__)
 # @jwt_required()
 def aircraft(id):
     try:
-        return jsonify(Aircraft.objects(id=id)), ErrorCodes.SUCCESS
+        return jsonify(get_aircraft_details(id)), ErrorCodes.SUCCESS
     except Exception as error:
         return jsonify({'message': "Something went wrong"}), ErrorCodes.INTERNAL_SERVER_ERROR
+
+
+def get_aircraft_details(id):
+    try:
+        return Aircraft.objects.get(id=id)
+
+    except:
+        return None

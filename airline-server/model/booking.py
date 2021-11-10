@@ -10,5 +10,5 @@ class Booking(BaseDocument):
     }
     flight_id = ReferenceField(Flight, required=True)
     customer_id = ReferenceField(User, required=True)
-    seat_num = StringField(required=True)
+    seat_num = StringField()
     mileage_points_earned = IntField(required=True)

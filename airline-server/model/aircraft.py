@@ -7,7 +7,8 @@ class Aircraft(BaseDocument):
         "collection": "aircraft"
     }
     name = StringField(required=True)
-    seats = DictField(required=True, fields=['first_class', 'economy', 'business_class'])
+    total_seats = IntField(required=True)
+    seats = DictField(required=True, fields=['window', 'aisle', 'middle'])
 
 
 
