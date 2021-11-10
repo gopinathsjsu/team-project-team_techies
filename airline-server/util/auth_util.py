@@ -7,14 +7,14 @@ from error_codes import ErrorCodes
 
 def admin_only(fn):
     @wraps(fn)
-    def wrapper(*args):
+    def wrapper(*args, **kwargs):
         verify_jwt_in_request()
         user = get_jwt_identity()
         print(user)
         if user['user_type'] != 'admin':
             return jsonify({'message': 'Admins only!'}), ErrorCodes.FORBIDDEN
         else:
-            return fn(*args)
+            return fn(*args, **kwargs)
 
     return wrapper
 

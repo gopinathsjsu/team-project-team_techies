@@ -8,6 +8,7 @@ class Booking(BaseDocument):
     meta = {
         "collection": "booking"
     }
+    booking_id = StringField(required=True, unique=True)
     flight_id = ReferenceField(Flight, required=True)
     customer_id = ReferenceField(User, required=True)
     seat_num = StringField()
