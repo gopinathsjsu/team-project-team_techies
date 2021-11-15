@@ -1,7 +1,7 @@
 import os
 from flask import Flask
 from flask_mongoengine import MongoEngine
-from flask_jwt_extended import JWTManager, get_jwt_identity
+from flask_jwt_extended import JWTManager
 
 from aircraft_api import aircraft_bp
 from airport_api import airport_bp
@@ -34,6 +34,8 @@ for blueprint in blueprints:
 @app.route('/')
 def hello():
     return 'Airline App!'
+
+
 
 
 

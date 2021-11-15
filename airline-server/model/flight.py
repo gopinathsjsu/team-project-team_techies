@@ -9,7 +9,7 @@ class Flight(BaseDocument):
     meta = {
         "collection": "flight"
     }
-    flight_id = StringField(required=True, unique=True)
+    flight_num = StringField(required=True, unique=True)
     aircraft = ReferenceField(Aircraft, required=True)
     departure_airport = ReferenceField(Airport, required=True)
     arrival_airport = ReferenceField(Airport, required=True)
@@ -21,3 +21,4 @@ class Flight(BaseDocument):
     mileage_points = IntField(required=True)
     remaining_seats = IntField(required=True)
     seats = DictField(required=True, fields=['window', 'aisle', 'middle'])
+    flight_status = StringField(required=True, default='scheduled', choices=['scheduled', 'canceled'])

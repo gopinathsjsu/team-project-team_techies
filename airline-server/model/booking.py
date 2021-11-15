@@ -8,8 +8,9 @@ class Booking(BaseDocument):
     meta = {
         "collection": "booking"
     }
-    booking_id = StringField(required=True, unique=True)
-    flight_id = ReferenceField(Flight, required=True)
-    customer_id = ReferenceField(User, required=True)
-    seat_num = StringField()
+    booking_num = StringField(required=True, unique=True)
+    flight_oid = ReferenceField(Flight, required=True)
+    customer_oid = ReferenceField(User, required=True)
+    seat = StringField(default='None', required=True)
     mileage_points_earned = IntField(required=True)
+    booking_history = StringField(required=True, default='booked', choices=['booked', 'changed', 'canceled'])

@@ -1,3 +1,5 @@
+
+
 class ErrorCodes:
     SUCCESS = 200
     INTERNAL_SERVER_ERROR = 500
@@ -6,3 +8,6 @@ class ErrorCodes:
     NOT_FOUND = 404
     CONFLICT = 409
     FORBIDDEN = 403
+
+
+
