@@ -14,11 +14,11 @@ function App() {
         <Route exact path="/" component={Landing}></Route>
         
         <Route path="/signup" component={Signup}></Route>
-        <Route path="/employeeLogin" component={Employee_Landing}></Route>
-        <Route path="/addflight" component={AddFlight}></Route>
-        <Route path="/customerlanding" component={CustomerLanding}></Route>
-        <Route path="/flightsearch" component={FlightSearch}></Route>
-        <Route path="/viewflights" component={EmployeeViewFlights}></Route>
+        <Route path="/employee" component={Employee_Landing} exact></Route>
+        <Route path="/employee/addflight" component={AddFlight} exact></Route>
+        <Route path="/customer" component={CustomerLanding} exact></Route>
+        <Route path="/customer/flightsearch" component={FlightSearch} exact></Route>
+        <Route path="/employee/viewflights" component={EmployeeViewFlights} exact></Route>
         </Switch>
      
     </div>
