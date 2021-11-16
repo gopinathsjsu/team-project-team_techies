@@ -1,5 +1,5 @@
 import React from 'react'
-
+import 'bootstrap/dist/css/bootstrap.css'
 import {useState } from "react";
 import '../App.css'
 import Employee_Landing from './Employee_Landing';
@@ -74,13 +74,13 @@ const AddFlight = () => {
                         
                             <div className="form-group">
                                 <input onChange = {(e)=>setDepTime(e.target.value)} type="text" className="form-control"
-                                       name="dep time" value ={depTime} placeholder=" Departure Time" required={true}
+                                       name="dep time" value ={depTime} placeholder="Departure Time" required={true}
                                       />
                             </div>
 
                             <div className="form-group">
                                 <input onChange = {(e)=>setArrTime(e.target.value)} type="text" className="form-control"
-                                       name="arr time" value ={arrTime} placeholder=" Arrival Time" required={true}
+                                       name="arr time" value ={arrTime} placeholder="Arrival Time" required={true}
                                       />
                             </div>
 
