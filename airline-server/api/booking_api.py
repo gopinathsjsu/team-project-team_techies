@@ -60,13 +60,13 @@ def booking(b_id):
                 bookings = Booking.objects(customer_oid=user.id)
                 for booking in bookings:
                     booking_res = jsonify(booking).json
-                    booking_res['flight_oid'] = f"/flight/{booking.flight_oid.id}"
+                    booking_res['flight_details'] = f"/flight/{booking.flight_oid.id}"
                     res.append(booking_res)
                 return jsonify(res), ErrorCodes.SUCCESS
             else:
                 booking = get_booking_by_id(b_id)
                 booking_res = jsonify(booking).json
-                booking_res['flight_oid'] = f"/flight/{booking.flight_oid.id}"
+                booking_res['flight_details'] = f"/flight/{booking.flight_oid.id}"
                 return jsonify(booking_res), ErrorCodes.SUCCESS
 
         except Exception as error:

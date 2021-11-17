@@ -11,7 +11,7 @@ from util.error_codes import ErrorCodes
 flight_bp = Blueprint('flight_bp', __name__)
 
 
-@flight_bp.route('/flight', defaults={'id': None}, methods=['POST', 'GET'])
+@flight_bp.route('/flight', defaults={'id': None}, methods=['POST', 'GET', 'PUT'])
 @flight_bp.route('/flight/<id>', methods=['GET'])
 
 
@@ -19,11 +19,13 @@ def flight(id):
     if request.method == 'POST':
         app.logger.info(f"Add flight API called")
         return add_flight()
-    else:
+    elif request.method == 'GET':
         return get_all_flights(id)
+    else:
+        return modify_flight()
 
-# @admin_only
-# @jwt_required()
+@admin_only
+@jwt_required()
 def add_flight():
     data = request.get_json()
     try:
@@ -64,7 +66,7 @@ def add_flight():
 
     return jsonify(message), code
 
-
+@jwt_required()
 def get_all_flights(id):
     if not id:
         app.logger.info(f"Get flights API called")
@@ -85,9 +87,9 @@ def get_all_flights(id):
 
             for flight in flights:
                 flight_res = jsonify(flight).json
-                flight_res['aircraft'] = f"/aircraft/{flight.aircraft.id}"
-                flight_res['departure_airport'] = f"/airport/{flight.departure_airport.id}"
-                flight_res['arrival_airport'] = f"/airport/{flight.arrival_airport.id}"
+                flight_res['aircraft_details'] = f"/aircraft/{flight.aircraft.id}"
+                flight_res['departure_airport_details'] = f"/airport/{flight.departure_airport.id}"
+                flight_res['arrival_airport_details'] = f"/airport/{flight.arrival_airport.id}"
                 res.append(flight_res)
 
             code = ErrorCodes.SUCCESS
@@ -100,12 +102,39 @@ def get_all_flights(id):
 
     else:
         app.logger.info("Get flight_by_ID API called")
-        flight = get_flight_by_flight_id(id)
-        flight_res = jsonify(flight).json
-        flight_res['aircraft'] = f"/aircraft/{flight.aircraft.id}"
-        flight_res['departure_airport'] = f"/airport/{flight.departure_airport.id}"
-        flight_res['arrival_airport'] = f"/airport/{flight.arrival_airport.id}"
-        return jsonify(flight_res), ErrorCodes.SUCCESS
+        try:
+            flight = get_flight_by_flight_id(id)
+            if flight is None:
+                message = "No such flight exists"
+                app.logger.error(f"Error message is: {message}")
+                return jsonify({'message': message}), ErrorCodes.INTERNAL_SERVER_ERROR
+            flight_res = jsonify(flight).json
+            flight_res['aircraft_details'] = f"/aircraft/{flight.aircraft.id}"
+            flight_res['departure_airport_details'] = f"/airport/{flight.departure_airport.id}"
+            flight_res['arrival_airport_details'] = f"/airport/{flight.arrival_airport.id}"
+            return jsonify(flight_res), ErrorCodes.SUCCESS
+        except Exception as error:
+            app.logger.error(f"Error message is: {error}")
+            return jsonify({'message': "Something went wrong"}), ErrorCodes.INTERNAL_SERVER_ERROR
+
+@admin_only
+@jwt_required()
+def modify_flight():
+    app.logger.info("Modify flight API called")
+    data = request.get_json()
+    try:
+        flight = get_flight_by_flight_id(data['flight_id'])
+        if flight is None:
+            message = "No such flight exists"
+            app.logger.error(f"Error message is: {message}")
+            return jsonify({'message': message}), ErrorCodes.INTERNAL_SERVER_ERROR
+        
+        flight.price = data['price']
+        flight.save()
+        return jsonify({'message': "Flight update successful"}), ErrorCodes.SUCCESS
+    except Exception as error:
+        app.logger.error(f"Error message is: {error}")
+        return jsonify({'message': "Something went wrong"}), ErrorCodes.INTERNAL_SERVER_ERROR
 
 
 def get_flight_by_flight_id(id):
