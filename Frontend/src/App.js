@@ -1,10 +1,12 @@
-
 import './App.css';
 import { Route,Switch } from 'react-router-dom';
 import Landing from './Components/Landing';
 import Signup from './Components/Signup';
 import Employee_Landing from './Components/Employee_Landing';
 import AddFlight from './Components/AddFlight';
+import CustomerLanding from './Components/CustomerLanding';
+import FlightSearch from './Components/FlightSearch';
+import EmployeeViewFlights from './Components/EmployeeViewFlights';
 function App() {
   return (
     <div className="App">
@@ -12,8 +14,11 @@ function App() {
         <Route exact path="/" component={Landing}></Route>
         
         <Route path="/signup" component={Signup}></Route>
-        <Route path="/employeeLogin" component={Employee_Landing}></Route>
-        <Route path="/addflight" component={AddFlight}></Route>
+        <Route path="/employee" component={Employee_Landing} exact></Route>
+        <Route path="/employee/addflight" component={AddFlight} exact></Route>
+        <Route path="/customer" component={CustomerLanding} exact></Route>
+        <Route path="/customer/flightsearch" component={FlightSearch} exact></Route>
+        <Route path="/employee/viewflights" component={EmployeeViewFlights} exact></Route>
         </Switch>
      
     </div>

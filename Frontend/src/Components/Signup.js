@@ -2,7 +2,7 @@ import React from 'react'
 import {useState } from "react";
 import '../App.css'
 import Landing from './Landing';
-
+import 'bootstrap/dist/css/bootstrap.css'
 const Signup = () => {
 
     const[email,setEmail] = useState("");

@@ -14,9 +14,9 @@ const Employee_Landing = () => {
             <Navbar bg="dark" variant="dark" sticky="top">
                 <Navbar.Brand>Techies Airline</Navbar.Brand>
                 <Nav>
-                    <Nav.Link href="/"> Home </Nav.Link>
-                    <Nav.Link href="/addflight"> Add Flights  </Nav.Link>
-                    <Nav.Link href="/viewflights"> View Flights </Nav.Link>
+                    <Nav.Link href="/employee"> Home </Nav.Link>
+                    <Nav.Link href="/employee/addflight"> Add Flights  </Nav.Link>
+                    <Nav.Link href="/employee/viewflights"> View Flights </Nav.Link>
                 </Nav>
                 </Navbar>
             
