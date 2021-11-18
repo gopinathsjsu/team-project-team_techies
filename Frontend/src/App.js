@@ -7,6 +7,7 @@ import AddFlight from './Components/AddFlight';
 import CustomerLanding from './Components/CustomerLanding';
 import FlightSearch from './Components/FlightSearch';
 import EmployeeViewFlights from './Components/EmployeeViewFlights';
+import CustomerBookings from './Components/CustomerBookings';
 function App() {
   return (
     <div className="App">
@@ -19,6 +20,7 @@ function App() {
         <Route path="/customer" component={CustomerLanding} exact></Route>
         <Route path="/customer/flightsearch" component={FlightSearch} exact></Route>
         <Route path="/employee/viewflights" component={EmployeeViewFlights} exact></Route>
+        <Route path="/customer/bookings" component={CustomerBookings} exact></Route>
         </Switch>
      
     </div>

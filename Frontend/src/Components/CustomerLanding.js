@@ -22,7 +22,7 @@ const CustomerLanding = () => {
                     <div className="search-main-div">
                         <div>
                             <h4>
-                                One Way
+                                Search Flight
                             </h4>
                         </div>
                         
