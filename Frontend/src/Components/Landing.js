@@ -1,16 +1,27 @@
 import React from 'react'
-import {Link} from 'react-router-dom';
+import { Link,useHistory } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css'
 import '../App.css'
-
+import Axios from 'axios'
 import { Navbar,Nav,NavItem,Form,FormControl,Button,Modal} from 'react-bootstrap';
 import {useState } from "react";
 
 const Landing = () => {
-
+    let history=useHistory();
     const[login,setLogin]=useState(false);
     const[email,setEmail] = useState("");
     const[password,setPassword]=useState("");
+
+    const url="http://localhost:3001/user-login";
+    Axios.post( url,{email:email,password:password
+    
+    }).then((response)=>{
+        
+    }
+
+    ).catch(
+
+    )
 
 
     return (

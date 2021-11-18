@@ -3,13 +3,27 @@ import {useState } from "react";
 import '../App.css'
 import Landing from './Landing';
 import 'bootstrap/dist/css/bootstrap.css'
+import Axios from 'axios'
 const Signup = () => {
 
     const[email,setEmail] = useState("");
     const[password,setPassword]=useState("");
     const[firstName,setFirstName] = useState("");
     const[lastName,setLastName]=useState("");
-    const[contact,setContact]=useState("");
+    
+
+    const url="http://localhost:3001/user-registration";
+    Axios.post( url,{first_name:firstName,last_name:lastName,
+    email:email, password:password
+    
+    }).then((response)=>{
+        console.log(response)
+    }
+
+    ).catch(
+
+    )
+
     return (
         <div>
              <Landing/>
@@ -22,7 +36,7 @@ const Signup = () => {
                         </div>
                         <div className="form-group">
                                 <input onChange = {(e)=>setFirstName(e.target.value)} type="text" className="form-control"
-                                       name="firstname" value ={firstName} placeholder="First Name " required={true}
+                                       name="firstname"  value ={firstName} placeholder="First Name " required={true}
                                       />
                         </div>
 
