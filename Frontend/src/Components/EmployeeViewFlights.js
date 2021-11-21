@@ -6,7 +6,11 @@ import 'bootstrap/dist/css/bootstrap.css'
 import '../App.css'
 import Table from 'react-bootstrap/Table'
 import Employee_Landing from './Employee_Landing';
+import {Modal} from 'react-bootstrap';
 const EmployeeViewFlights = () => {
+
+    const[modal,setModal]=useState(false);
+    const[price,setPrice] = useState(0.0);
 
     const FlightData = [
         {
@@ -18,7 +22,8 @@ const EmployeeViewFlights = () => {
             "departure_time":"22:10",
             "arrival_time":"23:15",
             "aircraft":"Boeing 747",
-            "flight_status" : "scheduled"
+            "flight_status" : "Scheduled",
+            "price":150.00
         },
         {
             "flight_no":"UA1234",
@@ -29,7 +34,8 @@ const EmployeeViewFlights = () => {
             "departure_time":"22:10",
             "arrival_time":"23:15",
             "aircraft":"Boeing 747",
-            "flight_status" : "scheduled"
+            "flight_status" : "Scheduled",
+            "price":100.00
         },
         {
             "flight_no":"UA1234",
@@ -40,7 +46,8 @@ const EmployeeViewFlights = () => {
             "departure_time":"22:10",
             "arrival_time":"23:15",
             "aircraft":"Boeing 747",
-            "flight_status" : "scheduled"
+            "flight_status" : "Scheduled",
+            "price":120.00
         },
         {
             "flight_no":"UA1234",
@@ -51,7 +58,8 @@ const EmployeeViewFlights = () => {
             "departure_time":"22:10",
             "arrival_time":"23:15",
             "aircraft":"Boeing 747",
-            "flight_status" : "scheduled"
+            "flight_status" : "Scheduled",
+            "price":90.00
         }
     ]
     return (
@@ -72,6 +80,7 @@ const EmployeeViewFlights = () => {
                         <th>Departure Time</th>
                         <th>Arrival Time</th>
                         <th>Status</th>
+                        <th>Price</th>
                         <th>Update</th>
                         <th>Cancel</th>
                     </tr>
@@ -91,7 +100,11 @@ const EmployeeViewFlights = () => {
                         <td>{val.departure_time}</td>
                         <td>{val.arrival_time}</td>
                         <td>{val.flight_status}</td>
-                        <td><button className="btn btn-primary" >Edit</button></td>
+                        <td>{val.price}</td>
+                        <td><button onClick={()=>{
+                            setModal(true);
+                            setPrice(val.price)
+                        }} className="btn btn-primary" >Edit</button></td>
                         <td><button className="btn btn-primary" >Cancel</button></td>
 
                     </tr>
@@ -101,6 +114,41 @@ const EmployeeViewFlights = () => {
                 </tbody>
             </Table>
             </div>
+
+            <Modal show={modal} onHide={()=>{setModal(false)}}>
+                    <Modal.Header closeButton>
+
+                    </Modal.Header>
+                    <Modal.Body>
+                    <div >
+                         <div className="login-form">
+                            <div className="main-div-login">
+                                <div >
+                                    <h2>Edit Price</h2>
+                                    <p>Please enter new price</p>
+                                </div>
+                        
+                            <div className="form-group">
+                                <input onChange = {(e)=>setPrice(e.target.value)} type="text" className="form-control"
+                                       name="useremail" value ={price} placeholder="price" required={true}
+                                      />
+                            </div>
+                           
+                            
+                            <button className="btn btn-primary sm-5">Edit</button> 
+                            
+                            
+                            
+                    </div>
+                </div>
+            </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                    
+                    </Modal.Footer>
+                    
+
+                </Modal>
         </div>
     )
 }
