@@ -12,7 +12,7 @@ const Signup = () => {
     const[lastName,setLastName]=useState("");
     
 
-    const url="http://localhost:3001/user-registration";
+    const url="http://localhost:5000/user-registration";
     Axios.post( url,{first_name:firstName,last_name:lastName,
     email:email, password:password
     

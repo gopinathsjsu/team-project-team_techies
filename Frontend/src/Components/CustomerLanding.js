@@ -1,16 +1,43 @@
 import React from 'react'
 import CustomerNavbar from './CustomerNavbar'
-import {useState } from "react";
+import {useState,useEffect} from "react";
 import 'bootstrap/dist/css/bootstrap.css'
 import '../App.css'
+import Axios from 'axios'
 
 const CustomerLanding = () => {
-    const[price,setPrice]=useState("");
-    const[aircraft,setAircraft] = useState("");
+    
     const[depDate,setDepDate]=useState("");
-    const[arrDate,setArrDate]=useState("");
-    const[depTime,setDepTime]=useState("");
-    const[arrTime,setArrTime]=useState("");
+    const[origin,setOrigin] = useState("");
+    const[destination,setDestination] = useState("");
+    const[airportData,setAirportData]=useState([]);
+    
+
+    useEffect(()=>{
+        const url ="http://localhost:5000/airport";
+        Axios.get(url)
+        .then((response)=>{
+            setAirportData(response.data);
+        }).catch(()=>{
+            console.log('some error occurred!')
+        })
+    },[])
+
+    const airports=[{
+        "code" : "SJC",
+        "name" : "San Jose International Airport",
+        "city" : "San Jose"
+        },
+        {
+        "code" : "SFO",
+        "name" : "San Francisco International Airport",
+        "city" : "San Francisco"
+        },
+      
+                
+    ]
+      
+
     return (
         <div style={{backgroundColor:"lightblue",height:600}}>
             <CustomerNavbar/>
@@ -25,27 +52,36 @@ const CustomerLanding = () => {
                                 Search Flight
                             </h4>
                         </div>
-                        
-                        <div >
-                        <select id="aircraft" style={{ width: "280px",height:"38px",border:"1px solid black"}}>
-                            <option  value="" disabled selected hidden>Origin City</option>
-                            <option value="SJC">SJC (San Jose Airport)</option>
-                            <option value="LAX">LAX</option>
-                            <option value="ATL">ATL</option>
-                            <option value="BOS">BOS</option>
-                            <option value="MSP">MSP</option>
+                        <div>
+                        <select id="arrival airport" value={origin} onChange={(e)=>{
+                            setOrigin(e.target.value);
+                        }} style={{ width: "280px",height:"38px",border:"1px solid black" }}>
+                            <option value="" disabled selected hidden>Origin City</option>
+                            {airports.map((airport)=>{
+                                return <option value={airport.code}>{airport.code + " ("+ airport.name + ")"}</option>
+                            })}
+                           
                         </select>
                         </div>
+                       
+                        
+                          
                         <br></br>
 
                         <div>
-                        <select id="departure airport" style={{ width: "280px",height:"38px",border:"1px solid black" }}>
-                            <option value="" disabled selected hidden  >Destination City</option>
-                            <option value="SJC">SJC (San Jose Airport)</option>
-                            <option value="LAX">LAX</option>
-                            <option value="ATL">ATL</option>
-                            <option value="BOS">BOS</option>
-                            <option value="MSP">MSP</option>
+                        <select id="departure airport" value={destination} onChange={(e)=>{
+                            setDestination(e.target.value)
+                        }} style={{ width: "280px",height:"38px",border:"1px solid black" }}>
+                            <option value="" disabled selected hidden>Destination City</option>
+                            {airports.filter((value)=>{
+                                if(origin!=value.code){
+                                    return value;
+                                }
+
+                            }).map((airport)=>{
+                                return <option value={airport.code}>{airport.code + " ("+ airport.name + ")"}</option>
+                            })}
+                           
                         </select>
                         </div>
                         <br></br>
@@ -59,6 +95,7 @@ const CustomerLanding = () => {
                         <button className="btn btn-primary">Search</button> 
                         </div>
                 </div>
+                
             </div>
 
          

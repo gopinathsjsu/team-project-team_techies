@@ -12,7 +12,7 @@ const Landing = () => {
     const[email,setEmail] = useState("");
     const[password,setPassword]=useState("");
 
-    const url="http://localhost:3001/user-login";
+    const url="http://localhost:5000/user-login";
     Axios.post( url,{email:email,password:password
     
     }).then((response)=>{

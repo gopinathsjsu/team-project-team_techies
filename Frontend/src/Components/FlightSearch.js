@@ -49,6 +49,9 @@ const FlightSearch = () => {
             "aircraft":"Boeing 747",
         }
     ]
+
+    const arrival_airport=["SJC","LAX","ATL","BOS","MSP"]
+    const departure_airport=["SJC","LAX","ATL","BOS","MSP"]
     return (
         <div style={{backgroundColor:"lightblue",height:600}}>
             <CustomerNavbar/>
@@ -84,7 +87,11 @@ const FlightSearch = () => {
                         <td>{val.departure_time}</td>
                         <td>{val.arrival_time}</td>
                        
-                        <td><button className="btn btn-primary" >Book</button></td>
+                        <td>
+                        <Link  to={{
+                            pathname: "",
+                            flight:val
+                            }}><button className="btn btn-primary" >Book</button></Link></td>
                         
 
                     </tr>
