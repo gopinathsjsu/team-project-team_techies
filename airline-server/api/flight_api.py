@@ -4,6 +4,7 @@ from mongoengine import NotUniqueError
 
 from aircraft_api import get_aircraft_details
 from auth_util import admin_only
+#from booking_api import update_flight_cancellation_in_bookings
 from flight import Flight
 from util.error_codes import ErrorCodes
 
@@ -75,22 +76,19 @@ def get_all_flights(id):
         depart_date = request.args.get('depart_date')
         # return_date = request.args.get('return_date')
 
-        if airport1 is None or airport2 is None or depart_date is None:
-            return jsonify({'message': "Required parameters missing"}), ErrorCodes.BAD_REQUEST
-
         try:
             res = []
-            flights = Flight.objects(departure_date=depart_date,
-                                     departure_airport=airport1,
-                                     arrival_airport=airport2,
-                                     remaining_seats__gte=1)
+            if airport1 is not None or airport2 is not None or depart_date is not None:
+                flights = Flight.objects(departure_date=depart_date,
+                                         departure_airport=airport1,
+                                         arrival_airport=airport2,
+                                         remaining_seats__gte=1)
+
+            else:
+                flights = Flight.objects()
 
             for flight in flights:
-                flight_res = jsonify(flight).json
-                flight_res['aircraft_details'] = f"/aircraft/{flight.aircraft.id}"
-                flight_res['departure_airport_details'] = f"/airport/{flight.departure_airport.id}"
-                flight_res['arrival_airport_details'] = f"/airport/{flight.arrival_airport.id}"
-                res.append(flight_res)
+                res.append(get_details_in_response(flight))
 
             code = ErrorCodes.SUCCESS
 
@@ -108,10 +106,9 @@ def get_all_flights(id):
                 message = "No such flight exists"
                 app.logger.error(f"Error message is: {message}")
                 return jsonify({'message': message}), ErrorCodes.INTERNAL_SERVER_ERROR
-            flight_res = jsonify(flight).json
-            flight_res['aircraft_details'] = f"/aircraft/{flight.aircraft.id}"
-            flight_res['departure_airport_details'] = f"/airport/{flight.departure_airport.id}"
-            flight_res['arrival_airport_details'] = f"/airport/{flight.arrival_airport.id}"
+
+            flight_res = get_details_in_response(flight)
+
             return jsonify(flight_res), ErrorCodes.SUCCESS
         except Exception as error:
             app.logger.error(f"Error message is: {error}")
@@ -128,10 +125,20 @@ def modify_flight():
             message = "No such flight exists"
             app.logger.error(f"Error message is: {message}")
             return jsonify({'message': message}), ErrorCodes.INTERNAL_SERVER_ERROR
-        
-        flight.price = data['price']
+
+        if 'flight_status' in data.keys():
+            flight.price = data['price']
+            flight.mileage_points = data['price'] / 10
+
+        if 'flight_status' in data.keys():
+            flight.flight_status = data['flight_status']
+
+            # update user booking status!!
+            update_flight_cancellation_in_bookings(flight.id, flight.flight_status)
+
         flight.save()
-        return jsonify({'message': "Flight update successful"}), ErrorCodes.SUCCESS
+
+        return jsonify({'message': "Flight update successful", "flight": flight}), ErrorCodes.SUCCESS
     except Exception as error:
         app.logger.error(f"Error message is: {error}")
         return jsonify({'message': "Something went wrong"}), ErrorCodes.INTERNAL_SERVER_ERROR
@@ -144,3 +151,20 @@ def get_flight_by_flight_id(id):
         return None
 
 
+def get_details_in_response(flight):
+
+    flight_res = jsonify(flight).json
+    flight_res['aircraft']['name'] = flight.aircraft.name
+    flight_res['arrival_airport']['code'] = flight.arrival_airport.code
+    flight_res['arrival_airport']['name'] = flight.arrival_airport.name
+    flight_res['arrival_airport']['city'] = flight.arrival_airport.city
+
+    flight_res['departure_airport']['code'] = flight.departure_airport.code
+    flight_res['departure_airport']['name'] = flight.departure_airport.name
+    flight_res['departure_airport']['city'] = flight.departure_airport.city
+
+    # flight_res['aircraft_details'] = f"/aircraft/{flight.aircraft.id}"
+    # flight_res['departure_airport_details'] = f"/airport/{flight.departure_airport.id}"
+    # flight_res['arrival_airport_details'] = f"/airport/{flight.arrival_airport.id}"
+
+    return flight_res

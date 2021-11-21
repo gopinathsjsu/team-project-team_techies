@@ -1,4 +1,4 @@
-from flask import request, jsonify, Blueprint
+from flask import request, jsonify, Blueprint,  current_app as app
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 
@@ -18,26 +18,25 @@ def purchase_seat():
     if request.method == 'POST':
         data = request.get_json()
         try:
-            user_jwt = get_jwt_identity()
-            user = get_user_by_email(user_jwt['user'])
-            booking = get_booking_by_id(user.id, data['booking_id'])
+            booking = get_booking_by_id(data['booking_id'])
             seat = data['seat']
-            flight = get_flight_by_flight_id(booking.flight_id)
-            if booking.seat is not None:
-                return jsonify({'message': "You have already booked a seat for this flight!!"}), ErrorCodes.BAD_REQUEST
-            else:
-                if booking.flight_id.seats[seat] == 0:
+
+            if booking.seat not in ['window', 'aisle', 'middle']:
+                if booking.flight_oid.seats[seat] == 0:
                     return jsonify(
                         {'message': f"All {seat} seats are taken"}), ErrorCodes.BAD_REQUEST
 
                 booking.seat = seat
-                flight.seats[seat] -= 1
                 booking.save()
-                flight.save()
+
+                booking.flight_oid.seats[seat] -= 1
+                booking.flight_oid.save()
 
                 return jsonify({'booking': booking, 'message': "Seat Purchase successful!"}), ErrorCodes.SUCCESS
+            else:
+                return jsonify({'message': "You have already booked a seat for this flight!!"}), ErrorCodes.BAD_REQUEST
 
         except Exception as error:
-            print(error)
+            app.logger.error(f"Error message is {error}")
             return jsonify({'message': "Something went wrong"}), ErrorCodes.INTERNAL_SERVER_ERROR
 

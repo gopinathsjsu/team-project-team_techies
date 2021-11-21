@@ -35,16 +35,24 @@ def booking(b_id):
                 app.logger.error(message)
                 return jsonify({'message': message}), ErrorCodes.BAD_REQUEST
 
+            flight.remaining_seats -= 1  # if more seats, change this
+            flight.save()
+
             booking = Booking(booking_num="#" + ''.join(random.choices(string.ascii_uppercase + string.digits, k=12)),
                               flight_oid=flight.id,
                               customer_oid=user.id,
-                              mileage_points_earned=flight.mileage_points)
+                              booked_price=flight.price,
+                              mileage_points_earned=flight.mileage_points,
+                              flight_status=flight.flight_status,
+                              traveller_details=data['traveler_details'],
+                              payment=data['payment'])
             booking.save()
 
-            flight.remaining_seats -= 1
-            flight.save()
+            user.mileage_points -=data['payment']['reward_points_used']
+            user.save()
+
             app.logger.info("Booking successful")
-            return jsonify({'message': "Booking successful"}), ErrorCodes.SUCCESS
+            return jsonify({'message': "Booking successful", "booking": booking}), ErrorCodes.SUCCESS
 
         except Exception as error:
             app.logger.error(f"Error message is: {error}")
@@ -89,7 +97,18 @@ def booking(b_id):
 
 
 def get_booking_by_id(b_id):
+    print(b_id)
     try:
         return Booking.objects.get(id=b_id)
+    except:
+        return None
+
+
+def update_flight_cancellation_in_bookings(flight_id, flight_status):
+    try:
+        bookings = Booking.objects(flight_oid=flight_id)
+        for booking in bookings:
+            booking.flight_status = flight_status
+            booking.save()
     except:
         return None

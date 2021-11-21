@@ -7,6 +7,7 @@ from aircraft_api import aircraft_bp
 from airport_api import airport_bp
 from booking_api import booking_bp
 from flight_api import flight_bp
+from seats_api import seat_bp
 from user_api import user_bp
 
 app = Flask(__name__)
@@ -25,7 +26,7 @@ jwt = JWTManager()
 db.init_app(app)
 jwt.init_app(app)
 
-blueprints = (user_bp, flight_bp, airport_bp, aircraft_bp, booking_bp)
+blueprints = (user_bp, flight_bp, airport_bp, aircraft_bp, booking_bp, seat_bp)
 
 for blueprint in blueprints:
     app.register_blueprint(blueprint)

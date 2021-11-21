@@ -11,3 +11,4 @@ class User(BaseDocument):
     email = StringField(required=True, unique=True)
     password = StringField(required=True)
     user_type = StringField(required=True, default='customer', choices=['customer', 'admin'])
+    mileage_points = FloatField(required=True, default=10)
