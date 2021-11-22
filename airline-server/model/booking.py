@@ -14,9 +14,10 @@ class Booking(BaseDocument):
     seat = StringField()
     mileage_points_earned = FloatField(required=True)
     booking_history = StringField(required=True, default='booked', choices=['booked', 'changed', 'canceled'])
-
     booked_price = IntField(required=True)
+    seat_price = IntField()
     traveller_details = DictField(required=True)
     flight_status = StringField(required=True)
-    payment = DictField(required=True, fields=['cash', 'reward_points_used'])
+    payment = DictField(required=True)
 
+# fields=['cash', 'reward_points_used']
