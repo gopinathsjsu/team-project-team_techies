@@ -1,2 +1,2 @@
 def calculate_mileage_points(price):
-    return price / 2
+    return price / 5

@@ -46,9 +46,10 @@ Aircraft:
 }
 
 Flight:
+/* 1 */
 {
-    "_id" : ObjectId("619ac7a563b736cef9773d67"),
-    "modified_at" : ISODate("2021-11-21T14:26:45.639Z"),
+    "_id" : ObjectId("619af36650588e5d5593311a"),
+    "modified_at" : ISODate("2021-11-21T17:33:26.360Z"),
     "flight_num" : "AA3457",
     "aircraft" : ObjectId("6184a9d1c2bf805a6ec5164a"),
     "departure_airport" : ObjectId("61849d5f4367d925b16ff24c"),
@@ -58,7 +59,6 @@ Flight:
     "departure_time" : "07:00",
     "arrival_time" : "08:00",
     "price" : 40.0,
-    "mileage_points" : 20,
     "remaining_seats" : 60,
     "seats" : {
         "window" : 20,

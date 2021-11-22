@@ -18,5 +18,6 @@ class Booking(BaseDocument):
     seat_price = IntField()
     traveller_details = DictField(required=True)
     flight_status = StringField(required=True)
-    payment = DictField(required=True, fields=['cash', 'reward_points_used'])
+    payment = DictField(required=True)
 
+# fields=['cash', 'reward_points_used']

@@ -71,7 +71,10 @@ def booking(b_id):
                 user = get_user_by_email(user_jwt['user'])
 
                 user.mileage_points -= booking.mileage_points_earned  # taking back booking rewards
-                user.mileage_points += booking.booked_price  # refund - full in reward points
+
+                # refund
+                print((booking.payment['reward_points_used'] * 0.7) + (booking.payment['cash'] * 0.7))
+                user.mileage_points += (booking.payment['reward_points_used'] * 0.7) + (booking.payment['cash'] * 0.7)
                 user.save()
 
                 message = f'Booking {booking.booking_num} canceled successfully'
@@ -158,6 +161,16 @@ def make_a_booking(booking_num=None):
             app.logger.error(message)
             return jsonify({'message': message}), ErrorCodes.BAD_REQUEST
 
+        if data['payment']['reward_points_used'] > user.mileage_points:
+            message = "Error!! Not enough rewards points"
+            app.logger.error(message)
+            return jsonify({'message': message}), ErrorCodes.CONFLICT
+
+        if data['payment']['reward_points_used'] + data['payment']['cash'] != flight.price:
+            message = "Error!! Payment not sufficient"
+            app.logger.error(message)
+            return jsonify({'message': message}), ErrorCodes.BAD_REQUEST
+
         flight.remaining_seats -= 1  # if more seats, change this
         flight.save()
 
@@ -168,13 +181,14 @@ def make_a_booking(booking_num=None):
                           flight_oid=flight.id,
                           customer_oid=user.id,
                           booked_price=flight.price,
-                          mileage_points_earned=flight.mileage_points,
+                          mileage_points_earned=calculate_mileage_points(data['payment']['cash']),
                           flight_status=flight.flight_status,
                           traveller_details=data['traveler_details'],
                           payment=data['payment'])
         booking.save()
 
         user.mileage_points -= data['payment']['reward_points_used']
+        user.mileage_points += booking.mileage_points_earned
         user.save()
 
         app.logger.info("Booking successful")

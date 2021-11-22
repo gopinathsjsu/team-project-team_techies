@@ -43,7 +43,6 @@ def add_flight():
                         departure_time=data['departure_time'],
                         arrival_time=data['arrival_time'],
                         price=data['price'],
-                        mileage_points=calculate_mileage_points(data['price']),
                         remaining_seats=aircraft.total_seats,
                         seats=aircraft.seats,
                         seat_price=data['seat_price']
@@ -128,7 +127,6 @@ def modify_flight():
 
         if 'price' in data.keys():
             flight.price = data['price']
-            flight.mileage_points = calculate_mileage_points(data['price'])
 
         if 'flight_status' in data.keys():
             flight.flight_status = data['flight_status']

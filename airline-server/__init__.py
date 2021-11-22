@@ -2,6 +2,7 @@ import os
 from flask import Flask
 from flask_mongoengine import MongoEngine
 from flask_jwt_extended import JWTManager
+from flask_cors import CORS
 
 from aircraft_api import aircraft_bp
 from airport_api import airport_bp
@@ -25,6 +26,8 @@ jwt = JWTManager()
 
 db.init_app(app)
 jwt.init_app(app)
+
+CORS(app)
 
 blueprints = (user_bp, flight_bp, airport_bp, aircraft_bp, booking_bp, seat_bp)
 
