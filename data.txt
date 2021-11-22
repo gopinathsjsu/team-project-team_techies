@@ -47,23 +47,28 @@ Aircraft:
 
 Flight:
 {
-    "_id" : ObjectId("6192c60e35480dcd64335f6c"),
-    "modified_at" : ISODate("2021-11-15T13:33:00.696Z"),
-    "flight_num" : "AA1234",
+    "_id" : ObjectId("619ac7a563b736cef9773d67"),
+    "modified_at" : ISODate("2021-11-21T14:26:45.639Z"),
+    "flight_num" : "AA3457",
     "aircraft" : ObjectId("6184a9d1c2bf805a6ec5164a"),
-    "departure_airport" : ObjectId("61849d3f4367d925b16ff24b"),
-    "arrival_airport" : ObjectId("61849d5f4367d925b16ff24c"),
-    "departure_date" : ISODate("2022-01-06T00:00:00.000Z"),
-    "arrival_date" : ISODate("2022-01-06T00:00:00.000Z"),
-    "departure_time" : "10:00",
-    "arrival_time" : "11:00",
+    "departure_airport" : ObjectId("61849d5f4367d925b16ff24c"),
+    "arrival_airport" : ObjectId("61849d3f4367d925b16ff24b"),
+    "departure_date" : ISODate("2022-01-09T00:00:00.000Z"),
+    "arrival_date" : ISODate("2022-01-09T00:00:00.000Z"),
+    "departure_time" : "07:00",
+    "arrival_time" : "08:00",
     "price" : 40.0,
-    "mileage_points" : 4,
-    "remaining_seats" : 54,
+    "mileage_points" : 20,
+    "remaining_seats" : 60,
     "seats" : {
         "window" : 20,
         "middle" : 20,
         "aisle" : 20
+    },
+    "seat_price" : {
+        "window" : 5,
+        "middle" : 0,
+        "aisle" : 3
     },
     "flight_status" : "scheduled"
 }
@@ -134,13 +139,24 @@ Airport:
 }
 
 Booking:
+/* 1 */
 {
-    "_id" : ObjectId("6192d0a8f5cb2f59a7dd4b6e"),
-    "modified_at" : ISODate("2021-11-15T13:27:04.139Z"),
-    "booking_num" : "#940QL3FTF99N",
-    "flight_oid" : ObjectId("6192c74866cb83011fbe931a"),
+    "_id" : ObjectId("619ac7ef63b736cef9773d68"),
+    "modified_at" : ISODate("2021-11-21T15:03:09.991Z"),
+    "booking_num" : "#M1ZE6H5CT9PB",
+    "flight_oid" : ObjectId("619ac7a563b736cef9773d67"),
     "customer_oid" : ObjectId("618176b53dc26f93f1129a9d"),
-    "seat" : "None",
-    "mileage_points_earned" : 4,
-    "booking_history" : "booked"
+    "mileage_points_earned" : 20.0,
+    "booking_history" : "booked",
+    "booked_price" : 40,
+    "traveller_details" : {
+        "name" : "xyz"
+    },
+    "flight_status" : "scheduled",
+    "payment" : {
+        "reward_points_used" : 20,
+        "cash" : 50
+    },
+    "seat" : "window",
+    "seat_price" : 5
 }

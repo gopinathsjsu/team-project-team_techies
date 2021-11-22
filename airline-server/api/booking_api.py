@@ -5,58 +5,21 @@ from flask import request, jsonify, Blueprint,  current_app as app
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from booking import Booking
 from error_codes import ErrorCodes
-from flight_api import get_flight_by_flight_id
+from mileage_rewards import calculate_mileage_points
 from user_api import get_user_by_email
+
+from flight_api import get_flight_by_flight_id
 
 booking_bp = Blueprint('booking_bp', __name__)
 
 
-@booking_bp.route('/booking', defaults={'b_id': None}, methods=['POST', 'GET', 'DELETE'])
+@booking_bp.route('/booking', defaults={'b_id': None}, methods=['POST', 'GET', 'PUT'])
 @booking_bp.route('/booking/<b_id>', methods=['GET', 'DELETE'])
 
 @jwt_required()
 def booking(b_id):
     if request.method == 'POST':
-        app.logger.info("Book a Flight API called")
-        data = request.get_json()
-        try:
-            user_jwt = get_jwt_identity()
-            user = get_user_by_email(user_jwt['user'])
-
-            flight = get_flight_by_flight_id(data['flight_oid'])
-
-            if flight is None:
-                message = "No such Flight exists"
-                app.logger.error(message)
-                return jsonify({'message': message}), ErrorCodes.BAD_REQUEST
-
-            if flight.remaining_seats == 0:
-                message = "Flight is full"
-                app.logger.error(message)
-                return jsonify({'message': message}), ErrorCodes.BAD_REQUEST
-
-            flight.remaining_seats -= 1  # if more seats, change this
-            flight.save()
-
-            booking = Booking(booking_num="#" + ''.join(random.choices(string.ascii_uppercase + string.digits, k=12)),
-                              flight_oid=flight.id,
-                              customer_oid=user.id,
-                              booked_price=flight.price,
-                              mileage_points_earned=flight.mileage_points,
-                              flight_status=flight.flight_status,
-                              traveller_details=data['traveler_details'],
-                              payment=data['payment'])
-            booking.save()
-
-            user.mileage_points -=data['payment']['reward_points_used']
-            user.save()
-
-            app.logger.info("Booking successful")
-            return jsonify({'message': "Booking successful", "booking": booking}), ErrorCodes.SUCCESS
-
-        except Exception as error:
-            app.logger.error(f"Error message is: {error}")
-            return jsonify({'message': "Something went wrong"}), ErrorCodes.INTERNAL_SERVER_ERROR
+        return make_a_booking()
 
     if request.method == 'GET':
         try:
@@ -81,15 +44,87 @@ def booking(b_id):
             app.logger.error(f"Error message is: {error}")
             return jsonify({'message': "Something went wrong"}), ErrorCodes.INTERNAL_SERVER_ERROR
 
+    # cancel reservation
     if request.method == 'DELETE':
         try:
-            user_jwt = get_jwt_identity()
-            user = get_user_by_email(user_jwt['user'])
+            booking = get_booking_by_id(b_id)
+            if not booking:
+                app.logger.error("Booking not found")
+                return jsonify({'message': "Booking not found"}), ErrorCodes.BAD_REQUEST
 
-            if not b_id:
-                return jsonify({'message': "Booking ID required"}), ErrorCodes.BAD_REQUEST
+            elif booking.booking_history == 'canceled':
+                app.logger.error("Booking is already canceled")
+                return jsonify({'message': "Booking is already canceled"}), ErrorCodes.BAD_REQUEST
 
-            return jsonify(get_booking_by_id(b_id)), ErrorCodes.SUCCESS
+            else:
+                booking.booking_history = 'canceled'
+
+                # increasing flight seats
+                booking.flight_oid.remaining_seats += 1
+                if booking.seat in ['window', 'aisle', 'middle']:
+                    booking.flight_oid.seats[booking.seat] += 1
+
+                booking.save()
+                booking.flight_oid.save()
+
+                user_jwt = get_jwt_identity()
+                user = get_user_by_email(user_jwt['user'])
+
+                user.mileage_points -= booking.mileage_points_earned  # taking back booking rewards
+                user.mileage_points += booking.booked_price  # refund - full in reward points
+                user.save()
+
+                message = f'Booking {booking.booking_num} canceled successfully'
+                app.logger.info(message)
+                return jsonify({'message': message}), ErrorCodes.SUCCESS
+
+        except Exception as error:
+            app.logger.error(f"Error message is: {error}")
+            return jsonify({'message': "Something went wrong"}), ErrorCodes.INTERNAL_SERVER_ERROR
+
+    # change reservation
+    if request.method == 'PUT':
+        app.logger.info("Change Booking API called")
+        data = request.get_json()
+        try:
+            booking = get_booking_by_id(data['booking_id'])
+            if not booking:
+                app.logger.error("Booking not found")
+                return jsonify({'message': "Booking not found"}), ErrorCodes.BAD_REQUEST
+
+            elif booking.booking_history == 'changed':
+                app.logger.error("Booking is already changed!!")
+                return jsonify({'message': "You can change the Booking only once!!"}), ErrorCodes.BAD_REQUEST
+
+            elif booking.booking_history == 'canceled':
+                app.logger.error("Booking is already canceled!!")
+                return jsonify({'message': "Booking is already canceled!!"}), ErrorCodes.BAD_REQUEST
+
+            else:
+                booking.booking_history = 'changed'
+
+                # increasing flight seats
+                booking.flight_oid.remaining_seats += 1
+                if booking.seat in ['window', 'aisle', 'middle']:
+                    booking.flight_oid.seats[booking.seat] += 1
+
+                booking.save()
+                booking.flight_oid.save()
+
+                # taking back booking rewards
+                user_jwt = get_jwt_identity()
+                user = get_user_by_email(user_jwt['user'])
+                user.mileage_points -= booking.mileage_points_earned
+                user.save()
+
+                # new booking!!
+                res, code = make_a_booking(booking.booking_num)
+
+                # price changes-- frontend
+
+                message = f'Booking {booking.booking_num} changed successfully'
+                app.logger.info(message)
+                return jsonify({'message': message, 'booking': booking}), ErrorCodes.SUCCESS
 
         except Exception as error:
             print(error)
@@ -104,11 +139,48 @@ def get_booking_by_id(b_id):
         return None
 
 
-def update_flight_cancellation_in_bookings(flight_id, flight_status):
+def make_a_booking(booking_num=None):
+    app.logger.info("Book a Flight API called")
+    data = request.get_json()
     try:
-        bookings = Booking.objects(flight_oid=flight_id)
-        for booking in bookings:
-            booking.flight_status = flight_status
-            booking.save()
-    except:
-        return None
+        user_jwt = get_jwt_identity()
+        user = get_user_by_email(user_jwt['user'])
+
+        flight = get_flight_by_flight_id(data['flight_oid'])
+
+        if flight is None:
+            message = "No such Flight exists"
+            app.logger.error(message)
+            return jsonify({'message': message}), ErrorCodes.BAD_REQUEST
+
+        if flight.remaining_seats == 0:
+            message = "Flight is full"
+            app.logger.error(message)
+            return jsonify({'message': message}), ErrorCodes.BAD_REQUEST
+
+        flight.remaining_seats -= 1  # if more seats, change this
+        flight.save()
+
+        if booking_num is None:
+            booking_num = "#" + ''.join(random.choices(string.ascii_uppercase + string.digits, k=12))
+
+        booking = Booking(booking_num=booking_num,
+                          flight_oid=flight.id,
+                          customer_oid=user.id,
+                          booked_price=flight.price,
+                          mileage_points_earned=flight.mileage_points,
+                          flight_status=flight.flight_status,
+                          traveller_details=data['traveler_details'],
+                          payment=data['payment'])
+        booking.save()
+
+        user.mileage_points -= data['payment']['reward_points_used']
+        user.save()
+
+        app.logger.info("Booking successful")
+        return jsonify({'message': "Booking successful", "booking": booking}), ErrorCodes.SUCCESS
+
+    except Exception as error:
+        app.logger.error(f"Error message is: {error}")
+        return jsonify({'message': "Something went wrong"}), ErrorCodes.INTERNAL_SERVER_ERROR
+

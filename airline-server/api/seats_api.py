@@ -27,6 +27,7 @@ def purchase_seat():
                         {'message': f"All {seat} seats are taken"}), ErrorCodes.BAD_REQUEST
 
                 booking.seat = seat
+                booking.seat_price = booking.flight_oid.seat_price[seat]
                 booking.save()
 
                 booking.flight_oid.seats[seat] -= 1

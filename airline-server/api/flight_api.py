@@ -4,8 +4,9 @@ from mongoengine import NotUniqueError
 
 from aircraft_api import get_aircraft_details
 from auth_util import admin_only
-#from booking_api import update_flight_cancellation_in_bookings
+from cancellation import update_flight_cancellation_in_bookings
 from flight import Flight
+from mileage_rewards import calculate_mileage_points
 from util.error_codes import ErrorCodes
 
 
@@ -31,8 +32,6 @@ def add_flight():
     data = request.get_json()
     try:
         aircraft = get_aircraft_details(data['aircraft'])
-        mileage_points = data['price'] / 10
-
         flight_num = "AA" + data['flight_num']
 
         flight = Flight(flight_num=flight_num,
@@ -44,9 +43,10 @@ def add_flight():
                         departure_time=data['departure_time'],
                         arrival_time=data['arrival_time'],
                         price=data['price'],
-                        mileage_points=mileage_points,
+                        mileage_points=calculate_mileage_points(data['price']),
                         remaining_seats=aircraft.total_seats,
-                        seats=aircraft.seats
+                        seats=aircraft.seats,
+                        seat_price=data['seat_price']
                         )
 
         flight.save()
@@ -126,9 +126,9 @@ def modify_flight():
             app.logger.error(f"Error message is: {message}")
             return jsonify({'message': message}), ErrorCodes.INTERNAL_SERVER_ERROR
 
-        if 'flight_status' in data.keys():
+        if 'price' in data.keys():
             flight.price = data['price']
-            flight.mileage_points = data['price'] / 10
+            flight.mileage_points = calculate_mileage_points(data['price'])
 
         if 'flight_status' in data.keys():
             flight.flight_status = data['flight_status']

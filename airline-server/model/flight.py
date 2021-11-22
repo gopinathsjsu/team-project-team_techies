@@ -21,4 +21,6 @@ class Flight(BaseDocument):
     mileage_points = IntField(required=True)
     remaining_seats = IntField(required=True)
     seats = DictField(required=True, fields=['window', 'aisle', 'middle'])
+    seat_price = DictField(required=True, fields=['window', 'aisle', 'middle'])
     flight_status = StringField(required=True, default='scheduled', choices=['scheduled', 'canceled'])
+
