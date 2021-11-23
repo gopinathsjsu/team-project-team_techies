@@ -18,6 +18,15 @@ const Landing = () => {
     
     }).then((response)=>{
         console.log(response.data);
+        var token = response.headers['Authorization'];
+        localStorage.setItem('token',token);
+        
+        if(response.data[0].user_type=="admin"){
+            history.push("/employee");
+        }
+        else{
+            history.push("/customer");
+        }
     }
 
     ).catch(()=>{

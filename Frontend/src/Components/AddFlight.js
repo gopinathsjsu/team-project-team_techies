@@ -7,7 +7,11 @@ import Axios from 'axios'
 
 const AddFlight = () => {
     
-    const[price,setPrice]=useState(0.0);
+    const[price,setPrice]=useState("");
+    const[flightNumber,setFlightNumber]=useState("");
+    const[windowPrice,setWindowPrice]=useState("");
+    const[middlePrice,setMiddlePrice]=useState("");
+    const[aislePrice,setAislePrice]=useState("");
     const[aircraft,setAircraft] = useState("");
     const[aircraftData,setAircraftData] = useState([]);
     const[depDate,setDepDate]=useState("");
@@ -47,8 +51,12 @@ const AddFlight = () => {
     },
 ]
 
-    const url="http://localhost:5000/flight";
-    Axios.post( url,{
+    const addNewFlight = (e)=>{
+        e.preventDefault();
+        const url="http://localhost:5000/flight";
+        Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+        Axios.post( url,{
+        flight_num:flightNumber,  
         aircraft:aircraft,
         departure_airport:depAirport,
         arrival_airport:arrAirport,
@@ -56,7 +64,11 @@ const AddFlight = () => {
         arrival_date:arrDate,
         departure_time:depTime,
         arrival_time:arrTime,
-        price:price
+        price:parseFloat(price),
+        seat_price:{window:parseFloat(windowPrice),
+        middle:parseFloat(middlePrice),
+        aisle:parseFloat(aislePrice)
+    }
 
     
     }).then((response)=>{
@@ -68,8 +80,12 @@ const AddFlight = () => {
     }
 
     )
+
+    }
+    
     useEffect(()=>{
         const url ="http://localhost:5000/aircraft";
+        Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
         Axios.get(url)
         .then((response)=>{
             setAircraftData(response.data);
@@ -80,6 +96,7 @@ const AddFlight = () => {
 
     useEffect(()=>{
         const url ="http://localhost:5000/airport";
+        Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
         Axios.get(url)
         .then((response)=>{
             setAirportData(response.data);
@@ -97,12 +114,18 @@ const AddFlight = () => {
                             <h2>Add a flight</h2>
                             
                         </div>
+
+                        <div className="form-group">
+                                <input onChange = {(e)=>setFlightNumber(e.target.value)} type="text" className="form-control"
+                                       name="flight number" value ={flightNumber} placeholder="Flight Number" required={true}
+                                      />
+                            </div>
                         <div >
                         <select id="aircraft" value={aircraft} onChange={(e)=>{
                             setAircraft(e.target.value);
                         }} style={{ width: "280px",height:"38px",border:"1px solid black" }}>
                             <option value="" disabled selected hidden>Select Aircraft</option>
-                            {aircrafts.map((aircraft)=>{
+                            {aircraftData.map((aircraft)=>{
                                 return <option value={aircraft.name}>{aircraft.name}</option>
                             })}
                         </select>
@@ -114,7 +137,7 @@ const AddFlight = () => {
                             setDepAirport(e.target.value);
                         }} style={{ width: "280px",height:"38px",border:"1px solid black" }}>
                             <option value="" disabled selected hidden>Select Departure Airport</option>
-                            {airports.map((airport)=>{
+                            {airportData.map((airport)=>{
                                 return <option value={airport.code}>{airport.code + " ("+ airport.name + ")"}</option>
                             })}
                         </select>
@@ -126,7 +149,7 @@ const AddFlight = () => {
                             setArrAirport(e.target.value)
                         }} style={{ width: "280px",height:"38px",border:"1px solid black" }}>
                             <option value="" disabled selected hidden>Select Arrival Airport</option>
-                            {airports.filter((value)=>{
+                            {airportData.filter((value)=>{
                                 if(depAirport!=value.code){
                                     return value;
                                 }
@@ -169,8 +192,25 @@ const AddFlight = () => {
                                        name="price" value ={price} placeholder="Price" required={true}
                                        />
                             </div>
+                            <div className="form-group">
+                                <input onChange = {(e)=>setWindowPrice(e.target.value)} type="text" className="form-control"
+                                       name="windowprice" value ={windowPrice} placeholder="Window Seat Price" required={true}
+                                       />
+                            </div>
+                            <div className="form-group">
+                                <input onChange = {(e)=>setMiddlePrice(e.target.value)} type="text" className="form-control"
+                                       name="middleprice" value ={middlePrice} placeholder="Middle Seat Price" required={true}
+                                       />
+                            </div>
+                            <div className="form-group">
+                                <input onChange = {(e)=>setAislePrice(e.target.value)} type="text" className="form-control"
+                                       name="aisleprice" value ={aislePrice} placeholder="Aisle Seat Price" required={true}
+                                       />
+                            </div>
                             
-                            <button className="btn btn-primary">Add</button> 
+                            <button onClick={(e)=>{
+                                addNewFlight(e);
+                            }}className="btn btn-primary">Add</button> 
                             
                             
                             
