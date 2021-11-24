@@ -5,7 +5,7 @@ from mongoengine import NotUniqueError
 from passlib.hash import pbkdf2_sha256 as sha256
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 
-from user import User
+from model.user import User
 from util.error_codes import ErrorCodes
 
 user_bp = Blueprint('user_bp', __name__)

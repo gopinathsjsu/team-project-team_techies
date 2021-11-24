@@ -2,10 +2,8 @@ from flask import request, jsonify, Blueprint,  current_app as app
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 
-from booking_api import get_booking_by_id
-from error_codes import ErrorCodes
-from flight_api import get_flight_by_flight_id
-from user_api import get_user_by_email
+from api.booking_api import get_booking_by_id
+from util.error_codes import ErrorCodes
 
 seat_bp = Blueprint('seat_bp', __name__)
 

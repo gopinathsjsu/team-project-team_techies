@@ -1,5 +1,5 @@
 from mongoengine import *
-from base_document import BaseDocument
+from model.base_document import BaseDocument
 
 
 class Airport(BaseDocument):

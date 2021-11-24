@@ -2,7 +2,7 @@ from functools import wraps
 from flask import jsonify
 from flask_jwt_extended import verify_jwt_in_request, get_jwt_identity
 
-from error_codes import ErrorCodes
+from util.error_codes import ErrorCodes
 
 
 def admin_only(fn):

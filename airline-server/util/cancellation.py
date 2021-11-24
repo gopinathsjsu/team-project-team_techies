@@ -1,4 +1,4 @@
-from booking import Booking
+from model.booking import Booking
 
 
 def update_flight_cancellation_in_bookings(flight_id, flight_status):

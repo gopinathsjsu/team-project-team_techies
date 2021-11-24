@@ -3,12 +3,12 @@ import string
 
 from flask import request, jsonify, Blueprint,  current_app as app
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from booking import Booking
-from error_codes import ErrorCodes
-from mileage_rewards import calculate_mileage_points
-from user_api import get_user_by_email
+from model.booking import Booking
+from util.error_codes import ErrorCodes
+from util.mileage_rewards import calculate_mileage_points
+from api.user_api import get_user_by_email
 
-from flight_api import get_flight_by_flight_id
+from api.flight_api import get_flight_by_flight_id
 
 booking_bp = Blueprint('booking_bp', __name__)
 

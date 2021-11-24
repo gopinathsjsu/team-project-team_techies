@@ -1,7 +1,7 @@
 from mongoengine import *
-from base_document import BaseDocument
-from flight import Flight
-from user import User
+from model.base_document import BaseDocument
+from model.flight import Flight
+from model.user import User
 
 
 class Booking(BaseDocument):

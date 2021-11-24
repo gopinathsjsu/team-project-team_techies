@@ -2,11 +2,10 @@ from flask import request, jsonify, Blueprint, current_app as app
 from flask_jwt_extended import jwt_required
 from mongoengine import NotUniqueError
 
-from aircraft_api import get_aircraft_details
-from auth_util import admin_only
-from cancellation import update_flight_cancellation_in_bookings
-from flight import Flight
-from mileage_rewards import calculate_mileage_points
+from api.aircraft_api import get_aircraft_details
+from util.auth_util import admin_only
+from util.cancellation import update_flight_cancellation_in_bookings
+from model.flight import Flight
 from util.error_codes import ErrorCodes
 
 

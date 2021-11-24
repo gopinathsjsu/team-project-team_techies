@@ -2,8 +2,8 @@ from flask import request, jsonify, Blueprint, current_app as app
 from flask_jwt_extended import jwt_required
 from mongoengine import NotUniqueError
 
-from airport import Airport
-from auth_util import admin_only
+from model.airport import Airport
+from util.auth_util import admin_only
 from util.error_codes import ErrorCodes
 
 

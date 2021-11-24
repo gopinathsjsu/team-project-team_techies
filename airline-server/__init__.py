@@ -1,17 +1,18 @@
-import os
 from flask import Flask
 from flask_mongoengine import MongoEngine
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 
-from aircraft_api import aircraft_bp
-from airport_api import airport_bp
-from booking_api import booking_bp
-from flight_api import flight_bp
-from seats_api import seat_bp
-from user_api import user_bp
+
+from .api.aircraft_api import *
+from .api.airport_api import airport_bp
+from .api.booking_api import booking_bp
+from .api.flight_api import flight_bp
+from .api.seats_api import seat_bp
+from .api.user_api import user_bp
 
 app = Flask(__name__)
+app.debug = False
 
 app.config['SECRET_KEY'] = "airline_dev"
 

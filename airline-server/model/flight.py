@@ -1,8 +1,8 @@
 from mongoengine import *
 
-from aircraft import Aircraft
-from airport import Airport
-from base_document import BaseDocument
+from model.aircraft import Aircraft
+from model.airport import Airport
+from model.base_document import BaseDocument
 
 
 class Flight(BaseDocument):

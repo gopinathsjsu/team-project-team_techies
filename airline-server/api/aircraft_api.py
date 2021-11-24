@@ -1,8 +1,8 @@
 from flask import jsonify, Blueprint, current_app as app
 from flask_jwt_extended import jwt_required
 
-from aircraft import Aircraft
-from auth_util import admin_only
+from model.aircraft import Aircraft
+from util.auth_util import admin_only
 from util.error_codes import ErrorCodes
 
 
