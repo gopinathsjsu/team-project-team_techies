@@ -3,6 +3,8 @@ import CustomerNavbar from './CustomerNavbar'
 import {useState,useEffect} from "react";
 import 'bootstrap/dist/css/bootstrap.css'
 import '../App.css'
+import Table from 'react-bootstrap/Table'
+import { Link } from 'react-router-dom';
 import Axios from 'axios'
 
 const CustomerLanding = () => {
@@ -11,10 +13,30 @@ const CustomerLanding = () => {
     const[origin,setOrigin] = useState("");
     const[destination,setDestination] = useState("");
     const[airportData,setAirportData]=useState([]);
+    const[flightSearch,setFlightSearch]=useState([]);
+
+    const searchFlight = (e)=>{
+
+        e.preventDefault();
+        const url ="http://localhost:5000/flight";
+        Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+        Axios.get(url,{
+            params: {
+              depart_date:depDate,
+              airport1:origin,
+              airport2:destination
+            }})
+        .then((response)=>{
+            setFlightSearch(response.data);
+        }).catch(()=>{
+            console.log('some error occurred!')
+        })
     
+    }
 
     useEffect(()=>{
         const url ="http://localhost:5000/airport";
+        Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
         Axios.get(url)
         .then((response)=>{
             setAirportData(response.data);
@@ -39,7 +61,7 @@ const CustomerLanding = () => {
       
 
     return (
-        <div style={{backgroundColor:"lightblue",height:600}}>
+        <div style={{backgroundColor:"lightblue",height:"1200px"}}>
             <CustomerNavbar/>
             <div style={{paddingTop:"20px",color:"blue"}}>
                 <h2>You are now free to move about the country...</h2>
@@ -57,8 +79,8 @@ const CustomerLanding = () => {
                             setOrigin(e.target.value);
                         }} style={{ width: "280px",height:"38px",border:"1px solid black" }}>
                             <option value="" disabled selected hidden>Origin City</option>
-                            {airports.map((airport)=>{
-                                return <option value={airport.code}>{airport.code + " ("+ airport.name + ")"}</option>
+                            {airportData.map((airport)=>{
+                                return <option value={airport._id}>{airport.code + " ("+ airport.name + ")"}</option>
                             })}
                            
                         </select>
@@ -73,13 +95,13 @@ const CustomerLanding = () => {
                             setDestination(e.target.value)
                         }} style={{ width: "280px",height:"38px",border:"1px solid black" }}>
                             <option value="" disabled selected hidden>Destination City</option>
-                            {airports.filter((value)=>{
-                                if(origin!=value.code){
+                            {airportData.filter((value)=>{
+                                if(origin!=value._id){
                                     return value;
                                 }
 
                             }).map((airport)=>{
-                                return <option value={airport.code}>{airport.code + " ("+ airport.name + ")"}</option>
+                                return <option value={airport._id}>{airport.code + " ("+ airport.name + ")"}</option>
                             })}
                            
                         </select>
@@ -92,11 +114,60 @@ const CustomerLanding = () => {
                                       />
                         </div>
                         <br></br>
-                        <button className="btn btn-primary">Search</button> 
+                        <button onClick={(e)=>searchFlight(e)} className="btn btn-primary">Search</button> 
                         </div>
                 </div>
                 
             </div>
+            {flightSearch.length>0 && <div>
+                <h4>Flight search results....</h4>
+            <div style={{paddingTop:"30px",backgroundColor:"lightblue"}} >
+            <Table >
+                <thead>
+                    <tr>
+                        
+                        <th>Flight Number</th>
+                        <th>AirCraft</th>
+                        <th>Departure Airport</th>
+                        <th>Arrival Airport</th>
+                        <th>Departure Date</th>
+                        <th>Arrival Date</th>
+                        <th>Departure Time</th>
+                        <th>Arrival Time</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {flightSearch
+                .map((val,idx)=>{
+                return(
+                    
+                    <tr>
+                        <td>{val.flight_no}</td>
+                        <td>{val.aircraft}</td>
+                        <td>{val.departure_airport}</td>
+                        <td>{val.arrival_airport}</td>
+                        <td>{val.departure_date}</td>
+                        <td>{val.arrival_date}</td>
+                        <td>{val.departure_time}</td>
+                        <td>{val.arrival_time}</td>
+                       
+                        <td>
+                        <Link  to={{
+                            pathname: "",
+                            flight:val
+                            }}><button className="btn btn-primary" >Book</button></Link></td>
+                        
+
+                    </tr>
+                    
+                )
+            })}
+                </tbody>
+            </Table>
+            </div>
+                
+                </div>}    
 
          
             

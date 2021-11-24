@@ -11,18 +11,25 @@ const Signup = () => {
     const[firstName,setFirstName] = useState("");
     const[lastName,setLastName]=useState("");
     
-
-    const url="http://localhost:5000/user-registration";
-    Axios.post( url,{first_name:firstName,last_name:lastName,
-    email:email, password:password
+    const signup = (e)=>{
+        console.log("inside");
+        e.preventDefault();
+        const url="http://localhost:5000/user-registration";
+        Axios.post( url,{first_name:firstName,last_name:lastName,
+        email:email, password:password
+        
+        }).then((response)=>{
+            console.log(response)
+        }
     
-    }).then((response)=>{
-        console.log(response)
+        ).catch(()=>{
+            console.log("some error occurred")
+        }
+    
+        )
     }
 
-    ).catch(
-
-    )
+   
 
     return (
         <div>
@@ -58,7 +65,7 @@ const Signup = () => {
                                        />
                             </div>
                             
-                            <button className="btn btn-primary">Sign up</button> 
+                            <button onClick={(e)=>signup(e)}className="btn btn-primary">Sign up</button> 
                             
                             
                             

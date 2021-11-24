@@ -12,16 +12,31 @@ const Landing = () => {
     const[email,setEmail] = useState("");
     const[password,setPassword]=useState("");
 
-    const url="http://localhost:5000/user-login";
-    Axios.post( url,{email:email,password:password
+    const userLogin = (e)=>{
+        const url="http://localhost:5000/user";
+        Axios.post( url,{email:email,password:password
     
     }).then((response)=>{
+        console.log(response.data);
+        var token = response.headers['Authorization'];
+        localStorage.setItem('token',token);
         
+        if(response.data[0].user_type=="admin"){
+            history.push("/employee");
+        }
+        else{
+            history.push("/customer");
+        }
     }
 
-    ).catch(
+    ).catch(()=>{
+        console.log("some error occurred");
+    }
 
     )
+
+    }
+    
 
 
     return (
@@ -66,7 +81,7 @@ const Landing = () => {
                                        />
                             </div>
                             
-                            <button className="btn btn-primary sm-5">Login</button> 
+                            <button onClick={(e)=>userLogin(e)} className="btn btn-primary sm-5">Login</button> 
                             
                             
                             
