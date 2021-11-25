@@ -2,7 +2,7 @@
 team-project-team_techies created by GitHub Classroom
 
 Team Members: <br/>
-Abhishek Reddy Isireddy - 015489240 <br/>
+Abhishek Reddy - 015489240 <br/>
 Sai Kapadekar 015937727 <br/>
 Nidhi Tholar Kuchur 014738776 <br/>
 Sameer Joshi - 015219308 <br/>
