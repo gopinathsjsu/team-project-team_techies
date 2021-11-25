@@ -6,20 +6,48 @@ import Axios from 'axios'
 
 
 const Home = (props) =>{
+  let user = {
+    email: 'nidhi@gmail.com'
+  };
+
+  Axios.get('http://localhost:5000/user', user).
+    then((response)=>{
+      console.log('User get api response: ', response)
+      if (response.status === 200) {
+        // console.log('');
+      }
+    }).catch(
+      console.log('Something went wrong! HERE!@@@@')
+    )
+
+  console.log('######', props.location.flight);
+
+  props.location.flight = {
+    
+  }
 
   const [flightInfo] = useState({
-    flight_num: (props.location.flight.flight_no) ? (props.flight.flight_no) : 'DUMMY DATA',
-    departure_airport: (props.location.flight.departure_airport) ? (props.flight.departure_airport) : 'DUMMY DATA',
-    departure_date: (props.location.flight.departure_date) ? (props.flight.departure_date) : 'DUMMY DATA1',
-    arrival_airport: (props.location.flight.arrival_airport) ? (props.flight.arrival_airport) : 'DUMMY DATA2',
-    arrival_date: (props.location.flight.arrival_date) ? (props.flight.arrival_date) : 'DUMMY DATA3',
-    price: (props.location.flight.price) ? (props.flight.price) : 'DUMMY DATA4'
+    // flight_num: (props.location.flight.flight_no) ? (props.location.flight.flight_no) : 'DUMMY DATA',
+    // departure_airport: (props.location.flight.departure_airport) ? (props.flight.departure_airport) : 'DUMMY DATA',
+    // departure_date: (props.location.flight.departure_date) ? (props.flight.departure_date) : 'DUMMY DATA1',
+    // arrival_airport: (props.location.flight.arrival_airport) ? (props.flight.arrival_airport) : 'DUMMY DATA2',
+    // arrival_date: (props.location.flight.arrival_date) ? (props.flight.arrival_date) : 'DUMMY DATA3',
+    // price: (props.location.flight.price) ? (props.flight.price) : 'DUMMY DATA4'
+
+    flight_num: (props.location.flight) ? (props.location.flight.flight_no ? props.location.flight.flight_no : 'DUMMY DATA') : 'DUMMY DATA',
+    departure_airport: (props.location.flight) ? (props.location.flight.departure_airport ? props.location.flight.departure_airport: 'DUMMY DATA') : 'DUMMY DATA',
+    departure_date: (props.location.flight) ? (props.location.flight.departure_date ? props.location.flight.departure_date : 'DUMMY DATA1') : 'DUMMY DATA1',
+    arrival_airport: (props.location.flight) ? (props.location.flight.arrival_airport ? props.location.flight.arrival_airport: 'DUMMY DATA2') : 'DUMMY DATA2',
+    arrival_date: (props.location.flight) ? (props.location.flight.arrival_date ? props.location.flight.arrival_date: 'DUMMY DATA3') : 'DUMMY DATA3',
+    price: (props.location.flight) ? (props.location.flight.price ? props.location.flight.price: 3000) : 3000
   });
   const [cardNumber,setCardNumber] = useState('')
   const [name,setName] = useState('')
   const [cvv,setCvv] = useState('')
   const [expirydate,setExpiryDate] = useState('')
-  const [price,setPrice] = useState(props?.price)
+  // const [price,setPrice] = useState(props?.price)
+  const [price,setPrice] = useState(flightInfo.price)
+  const [priceDiscount,setPriceDiscount] = useState(5);
   const [travellerDetails,setTravellerDetails] = useState({firstName:'',title:'',id:'',lastName:'',email:'',dob:'',nationality:'',contactNo:''})
 
   let bookingData = {
@@ -29,20 +57,24 @@ const Home = (props) =>{
       name,
       cvv,
       expirydate,
-      price
+      price: parseInt(price) - parseInt(priceDiscount)
     }
   }
 
-  const url="http://localhost:3001/booking";
-  Axios.post(url, bookingData).
-    then((response)=>{
-      console.log('Booking api response: ', response)
-      if (response.status === 200) {
-        console.log('Booking api response successfully executed!');
-      }
-    }).catch(
-      console.log('Something went wrong!')
-    )
+  function clearRedeemInput(e) {
+    document.getElementById('price-discount-input').value = '';
+  }
+
+  // const url="http://localhost:5000/booking";
+  // Axios.post(url, bookingData).
+  //   then((response)=>{
+  //     console.log('Booking api response: ', response)
+  //     if (response.status === 200) {
+  //       console.log('Booking api response successfully executed!');
+  //     }
+  //   }).catch(
+  //     console.log('Something went wrong!')
+  //   )
 
     return (
     
@@ -108,7 +140,7 @@ const Home = (props) =>{
                     <h6 class="my-0">Price</h6>
 
                   </div>
-                  <span class="text-success">{flightInfo.price}</span>
+                  <span class="text-success">${flightInfo.price}</span>
 
                 </li>
 
@@ -128,19 +160,19 @@ const Home = (props) =>{
                   <div class="text-success">
                     <h6 class="my-0">Discount</h6>
                   </div>
-                  <span class="text-success">-$5</span>
+                  <span class="text-success">-${priceDiscount}</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between">
                   <span>Total Price(USD)</span>
-                  <strong>$price-discount</strong>
+                  <strong>${price - priceDiscount}</strong>
                 </li>
               </ul>
 
               <form class="card p-2">
                 <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Enter Discount Amount"/>
+                  <input id="price-discount-input" onChange = {e => setPriceDiscount(e.target.value)} type="number" class="form-control" placeholder="Enter Discount Amount"/>
                   <div class="input-group-append">
-                    <button  type="button" class="btn btn-secondary">Redeem</button>
+                    <button onClick = {e => clearRedeemInput()} type="button" class="btn btn-secondary">Redeem</button>
                   </div>
                 </div>
               </form>
@@ -261,12 +293,35 @@ const Home = (props) =>{
                 <button class="btn btn-primary btn-lg btn-block" type="button" onClick={() => {
 
                     // alert('HI')
-                    console.log('@@@',travellerDetails);
-                    console.log('@@@',cardNumber);
-                    console.log('@@@',name);
-                    console.log('@@@',cvv);
-                    console.log('@@@',expirydate);
-                    console.log('@@@',price);
+                    // console.log('@@@',travellerDetails);
+                    // console.log('@@@',cardNumber);
+                    // console.log('@@@',name);
+                    // console.log('@@@',cvv);
+                    // console.log('@@@',expirydate);
+                    // console.log('@@@',price);
+
+                    console.log('Booking data: ', bookingData);
+                    bookingData = {
+                      "booking_id":"619ade645bf1fa1382a63771",
+                      "flight_oid": "619af36650588e5d5593311a",
+                      "traveler_details": bookingData.travellerDetails,
+                      "payment" :{ "reward_points_used" : 20,
+                        "cash": 50}
+                      }
+                  
+                    console.log('Booking data for testing: ', bookingData);
+
+
+                    const url="http://localhost:5000/booking";
+                    Axios.post(url, bookingData).
+                      then((response)=>{
+                        console.log('Booking api response: ', response)
+                        if (response.status === 200) {
+                          console.log('Booking api - successfully executed!');
+                        }
+                      }).catch(
+                        console.log('Something went wrong!')
+                      )
 
 
                 }}>Book</button>
