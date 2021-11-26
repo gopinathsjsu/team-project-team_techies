@@ -3,13 +3,17 @@ import '../CSS/Home.css'
 //bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Axios from 'axios'
-
+import userInfo from './UserProfile'
 
 const Home = (props) =>{
   let user = {
     email: 'nidhi@gmail.com'
   };
 
+  console.log(userInfo)
+  
+  
+  /*
   Axios.get('http://localhost:5000/user', user).
     then((response)=>{
       console.log('User get api response: ', response)
@@ -23,8 +27,10 @@ const Home = (props) =>{
   console.log('######', props.location.flight);
 
   props.location.flight = {
-    
   }
+
+*/
+
 
   const [flightInfo] = useState({
     // flight_num: (props.location.flight.flight_no) ? (props.location.flight.flight_no) : 'DUMMY DATA',
@@ -50,15 +56,23 @@ const Home = (props) =>{
   const [priceDiscount,setPriceDiscount] = useState(5);
   const [travellerDetails,setTravellerDetails] = useState({firstName:'',title:'',id:'',lastName:'',email:'',dob:'',nationality:'',contactNo:''})
 
-  let bookingData = {
+
+
+                    /*
+
+"{""flight_oid"": ""6192cf0795636ba8b9bf824a"",
+""traveler_details"": {""name"":""xyz""},
+""payment"" :{ ""reward_points_used"" : 20,
+  ""cash"": 50}
+}"
+
+                    */
+
+
+  let bookingData = {flight_oid: "6192cf0795636ba8b9bf824a",
     travellerDetails, //{firstName:'',title:'',id:'',lastName:'',email:'',dob:'',nationality:'',contactNo:''}
-    paymentData: {
-      cardNumber,
-      name,
-      cvv,
-      expirydate,
-      price: parseInt(price) - parseInt(priceDiscount)
-    }
+    payment:{reward_points_used : 20,
+  cash: 50}
   }
 
   function clearRedeemInput(e) {
@@ -311,7 +325,7 @@ const Home = (props) =>{
                   
                     console.log('Booking data for testing: ', bookingData);
 
-
+/*
                     const url="http://localhost:5000/booking";
                     Axios.post(url, bookingData).
                       then((response)=>{
@@ -322,6 +336,22 @@ const Home = (props) =>{
                       }).catch(
                         console.log('Something went wrong!')
                       )
+
+*/
+
+/*
+
+        const url ="http://localhost:5000/user";
+        Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+        Axios.get(url)
+        .then((response)=>{
+            console.log(response.data);
+        }).catch(()=>{
+            console.log('some error occurred!')
+        })
+
+*/
+
 
 
                 }}>Book</button>
