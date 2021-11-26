@@ -10,6 +10,8 @@ import EmployeeViewFlights from './Components/EmployeeViewFlights';
 import CustomerBookings from './Components/CustomerBookings';
 import UserProfile from './Components/UserProfile';
 import Home from './Components/Home';
+import PurchaseSeats from './Components/PurchaseSeats';
+
 function App() {
   return (
     <div className="App">
@@ -24,6 +26,7 @@ function App() {
         <Route path="/employee/viewflights" component={EmployeeViewFlights} exact></Route>
         <Route path="/customer/bookings" component={CustomerBookings} exact></Route>
         <Route path="/customer/profile" component={UserProfile} exact></Route>
+        <Route path="/customer/purchase-seats" component={PurchaseSeats} exact></Route>
         </Switch>
      
     </div>
