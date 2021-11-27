@@ -6,3 +6,4 @@
 venv/
 .idea/
 ~$API_documentation.xlsx
+package-lock.json

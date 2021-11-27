@@ -44,6 +44,7 @@ def add_flight():
                         price=data['price'],
                         remaining_seats=aircraft.total_seats,
                         seats=aircraft.seats,
+                        seat_chart=aircraft.seat_chart,
                         seat_price=data['seat_price']
                         )
 

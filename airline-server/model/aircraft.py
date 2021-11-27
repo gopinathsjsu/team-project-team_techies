@@ -9,6 +9,7 @@ class Aircraft(BaseDocument):
     name = StringField(required=True)
     total_seats = IntField(required=True)
     seats = DictField(required=True, fields=['window', 'aisle', 'middle'])
+    seat_chart = DictField(required=True, fields=['window', 'aisle', 'middle'])
 
 
 

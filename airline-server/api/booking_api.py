@@ -77,7 +77,7 @@ def booking(b_id):
                 user.mileage_points += (booking.payment['reward_points_used'] * 0.7) + (booking.payment['cash'] * 0.7)
                 user.save()
 
-                message = f'Booking {booking.booking_num} canceled successfully'
+                message = f'Booking {booking.booking_num} canceled successfully. {user.mileage_points} points have been added to your rewards as per refund policy'
                 app.logger.info(message)
                 return jsonify({'message': message}), ErrorCodes.SUCCESS
 
