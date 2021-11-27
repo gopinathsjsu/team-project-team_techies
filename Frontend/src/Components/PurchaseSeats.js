@@ -8,6 +8,7 @@ class PurchaseSeats extends Component {
         super();
 
         this.state = {
+            booking_id: '',
             seatTypeSelected: 'window',
             seatNumberSelected: ''
         }
@@ -20,7 +21,7 @@ class PurchaseSeats extends Component {
     componentDidMount = () => {
         this.setState({
             seatTypeSelected: document.getElementById('seat-type-selection').value,
-            seatNumberSelected: document.getElementById('seat-number-selection').value
+            // seatNumberSelected: document.getElementById('seat-number-selection').value
         });
     }
 
@@ -55,11 +56,12 @@ class PurchaseSeats extends Component {
         console.log('Seat data finalized: ', this.state);
 
         let data = {
+            booking_id: this.state.booking_id,
             seat_type: this.state.seatTypeSelected,
-            seat_number: this.state.seatNumberSelected
+            // seat_number: this.state.seatNumberSelected
         }
 
-        Axios.get('http://localhost:5000/purchase_seat', data).
+        Axios.get('http://localhost:5000/booking/purchase_seat', data).
             then((response)=>{
             console.log('User get api response: ', response)
             if (response.status === 200) {
@@ -106,12 +108,12 @@ class PurchaseSeats extends Component {
                     </select>
                 </div>
 
-                <div id="seat-number-box" className="seat-selection">
+                {/* <div id="seat-number-box" className="seat-selection">
                     <h3>Seat Number</h3>
                     <select onChange={this.seatNumberSelectHandler} name="seat-number-selection" id="seat-number-selection">
                         {dropdown}
                     </select>
-                </div>
+                </div> */}
 
                 <button onClick={this.seatSelectSubmission} className="purchase-btns">Puchase Now</button>
                 <button className="purchase-btns">Purchase Later</button>

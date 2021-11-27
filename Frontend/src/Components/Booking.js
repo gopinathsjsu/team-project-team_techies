@@ -1,11 +1,11 @@
 import React,{useState} from 'react';
-import '../CSS/Home.css'
+import '../CSS/Booking.css'
 //bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Axios from 'axios'
 import userInfo from './UserProfile'
 
-const Home = (props) => {
+const Booking = (props) => {
   let user = {
     email: 'nidhi@gmail.com'
   };
@@ -266,11 +266,16 @@ const Home = (props) => {
                   //     }
                   // }
 
+                  let traveler_details = {
+                    ...bookingData.travellerDetails,
+                    name: bookingData.travellerDetails.firstName + ' ' + bookingData.travellerDetails.lastName
+                  }
+
                   // CHECK if card details need to be sent to backend
                   let bookingDataForApi = {
-                    booking_id: '', // CHECK THIS
+                    //booking_id: '', // CHECK THIS
                     flight_oid: '', // CHECK THIS
-                    traveler_details: bookingData.travellerDetails,
+                    traveler_details: traveler_details,
                     payment: {
                       reward_points_used: 20, // CHECK AND UPDATE THIS
                       cash: (price - priceDiscount)
@@ -287,10 +292,12 @@ const Home = (props) => {
                         alert('Successfully booked!');
                         console.log('Booking api successfully executed!');
 
+                        // this.nextPath('/customer/purchase-seats');
                         // CHECK THIS
                         // After this API call; How should I redirect to PurchaseSeats page (component)
                       }
                     }).catch(
+                      // this.nextPath('/customer/purchase-seats'),
                       console.log('Something went wrong in booking api for data: ', bookingDataForApi)
                     )
               }}>Book</button>
@@ -302,4 +309,4 @@ const Home = (props) => {
   )
 };
 
-export default Home;
+export default Booking;

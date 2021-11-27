@@ -154,7 +154,7 @@ const CustomerLanding = () => {
                        
                         <td>
                         <Link  to={{
-                            pathname: "",
+                            pathname: "/booking",
                             flight:val
                             }}><button className="btn btn-primary" >Book</button></Link></td>
                         

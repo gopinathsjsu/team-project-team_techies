@@ -9,7 +9,7 @@ import FlightSearch from './Components/FlightSearch';
 import EmployeeViewFlights from './Components/EmployeeViewFlights';
 import CustomerBookings from './Components/CustomerBookings';
 import UserProfile from './Components/UserProfile';
-import Home from './Components/Home';
+import Booking from './Components/Booking';
 import PurchaseSeats from './Components/PurchaseSeats';
 
 function App() {
@@ -17,7 +17,7 @@ function App() {
     <div className="App">
       <Switch>
         <Route exact path="/" component={Landing}></Route>
-        <Route exact path="/home" component={Home}></Route>
+        <Route exact path="/booking" component={Booking}></Route>
         <Route path="/signup" component={Signup}></Route>
         <Route path="/employee" component={Employee_Landing} exact></Route>
         <Route path="/employee/addflight" component={AddFlight} exact></Route>
