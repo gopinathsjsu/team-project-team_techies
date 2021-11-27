@@ -1,0 +1,26 @@
+.purchase-seats-box {
+    text-align: left;
+    padding: 25px;
+}
+
+.purchase-btns {
+    padding: 15px;
+    margin: 10px;
+}
+
+.seat-selection {
+    border: 1px solid grey;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+#seat-type-selection {
+    padding: 5px 15px;
+    border-radius: 8px;
+}
+
+#seat-number-selection {
+    padding: 5px 15px;
+    border-radius: 8px;
+}
