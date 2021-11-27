@@ -1,39 +1,28 @@
 User:
-/* 1 */
 {
     "_id" : ObjectId("618176b53dc26f93f1129a9d"),
-    "modified_at" : ISODate("2021-11-02T10:34:45.037Z"),
+    "modified_at" : ISODate("2021-11-27T10:19:27.202Z"),
     "first_name" : "nidhi",
     "last_name" : "tholar",
     "email" : "nidhi@gmail.com",
     "password" : "$pbkdf2-sha256$29000$I4QwZixlrFXKube2trYWwg$8Gal2fxoRXZxWysuJYkqhCG2KC7Hj9F95GywQ7PZOAI",
-    "user_type" : "admin"
+    "user_type" : "admin",
+    "mileage_points" : 6.0
 }
 
 /* 2 */
 {
-    "_id" : ObjectId("618190269934168b6712c56e"),
-    "modified_at" : ISODate("2021-11-02T12:23:18.585Z"),
+    "_id" : ObjectId("619af3cb50588e5d5593311b"),
+    "modified_at" : ISODate("2021-11-21T18:12:10.289Z"),
     "first_name" : "john",
     "last_name" : "doe",
-    "email" : "john@gmail.com",
-    "password" : "$pbkdf2-sha256$29000$qxWi9B6jVIrROmfMWUtp7Q$mvfNEhBcH/f.R5e8GbLxAEXWOjS7h2PLRfc./LjND5Y",
-    "user_type" : "customer"
+    "email" : "john2@gmail.com",
+    "password" : "$pbkdf2-sha256$29000$da51zlkLYexdK2XsvVfKeQ$s52WGryJG.rUchJcH/1rPPvjd4kq.WgZn/ScIV7XIQI",
+    "user_type" : "customer",
+    "mileage_points" : 80.0
 }
 
 Aircraft:
-
-{
-    "_id" : ObjectId("6184a9d1c2bf805a6ec5164a"),
-    "name" : "Boeing 737",
-    "total_seats" : 60,
-    "seats" : {
-        "window" : 20,
-        "middle" : 20,
-        "aisle" : 20
-    }
-}
-
 {
     "_id" : ObjectId("6184aa07c2bf805a6ec51679"),
     "name" : "Airbus A320",
@@ -42,14 +31,25 @@ Aircraft:
         "window" : 30,
         "middle" : 30,
         "aisle" : 30
+    },
+    "seat_chart" : {
+        "window" : [
+            "1C"
+        ],
+        "middle" : [
+            "1B"
+        ],
+        "aisle" : [
+            "1A"
+        ]
     }
 }
 
 Flight:
 /* 1 */
 {
-    "_id" : ObjectId("619af36650588e5d5593311a"),
-    "modified_at" : ISODate("2021-11-21T17:33:26.360Z"),
+    "_id" : ObjectId("61a26d7d500dc3da968da8f1"),
+    "modified_at" : ISODate("2021-11-27T10:38:04.216Z"),
     "flight_num" : "AA3457",
     "aircraft" : ObjectId("6184a9d1c2bf805a6ec5164a"),
     "departure_airport" : ObjectId("61849d5f4367d925b16ff24c"),
@@ -59,9 +59,9 @@ Flight:
     "departure_time" : "07:00",
     "arrival_time" : "08:00",
     "price" : 40.0,
-    "remaining_seats" : 60,
+    "remaining_seats" : 59,
     "seats" : {
-        "window" : 20,
+        "window" : 17,
         "middle" : 20,
         "aisle" : 20
     },
@@ -70,7 +70,16 @@ Flight:
         "middle" : 0,
         "aisle" : 3
     },
-    "flight_status" : "scheduled"
+    "flight_status" : "scheduled",
+    "seat_chart" : {
+        "window" : [],
+        "middle" : [
+            "1B"
+        ],
+        "aisle" : [
+            "1A"
+        ]
+    }
 }
 
 Airport:
@@ -141,12 +150,12 @@ Airport:
 Booking:
 /* 1 */
 {
-    "_id" : ObjectId("619ac7ef63b736cef9773d68"),
-    "modified_at" : ISODate("2021-11-21T15:03:09.991Z"),
-    "booking_num" : "#M1ZE6H5CT9PB",
-    "flight_oid" : ObjectId("619ac7a563b736cef9773d67"),
+    "_id" : ObjectId("61a276afea9044c96dd4c200"),
+    "modified_at" : ISODate("2021-11-27T13:23:25.581Z"),
+    "booking_num" : "#UWJH25G7UTCE",
+    "flight_oid" : ObjectId("61a26d7d500dc3da968da8f1"),
     "customer_oid" : ObjectId("618176b53dc26f93f1129a9d"),
-    "mileage_points_earned" : 20.0,
+    "mileage_points_earned" : 6.0,
     "booking_history" : "booked",
     "booked_price" : 40,
     "traveller_details" : {
@@ -154,9 +163,10 @@ Booking:
     },
     "flight_status" : "scheduled",
     "payment" : {
-        "reward_points_used" : 20,
-        "cash" : 50
+        "reward_points_used" : 10,
+        "cash" : 30
     },
-    "seat" : "window",
-    "seat_price" : 5
+    "seat_num" : "1C",
+    "seat_price" : 5,
+    "seat_type" : "window"
 }

@@ -8,7 +8,7 @@ from util.error_codes import ErrorCodes
 from util.mileage_rewards import calculate_mileage_points
 from api.user_api import get_user_by_email
 
-from api.flight_api import get_flight_by_flight_id
+from api.flight_api import get_flight_by_flight_id, get_details_in_response
 
 booking_bp = Blueprint('booking_bp', __name__)
 
@@ -31,13 +31,13 @@ def booking(b_id):
                 bookings = Booking.objects(customer_oid=user.id)
                 for booking in bookings:
                     booking_res = jsonify(booking).json
-                    booking_res['flight_details'] = f"/flight/{booking.flight_oid.id}"
+                    booking_res['flight_oid'] = get_details_in_response(booking.flight_oid)
                     res.append(booking_res)
                 return jsonify(res), ErrorCodes.SUCCESS
             else:
                 booking = get_booking_by_id(b_id)
                 booking_res = jsonify(booking).json
-                booking_res['flight_details'] = f"/flight/{booking.flight_oid.id}"
+                booking_res['flight_oid'] = get_details_in_response(booking.flight_oid)
                 return jsonify(booking_res), ErrorCodes.SUCCESS
 
         except Exception as error:
@@ -167,7 +167,7 @@ def make_a_booking(booking_num=None):
             return jsonify({'message': message}), ErrorCodes.CONFLICT
 
         if data['payment']['reward_points_used'] + data['payment']['cash'] != flight.price:
-            message = "Error!! Payment not sufficient"
+            message = "Error in Payment!!"
             app.logger.error(message)
             return jsonify({'message': message}), ErrorCodes.BAD_REQUEST
 
