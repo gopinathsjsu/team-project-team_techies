@@ -1,6 +1,7 @@
 import { React, Component } from 'react';
 import '../CSS/PurchaseSeats.css';
 import Axios from 'axios';
+import { useLocation, useHistory } from 'react-router-dom';
 
 class PurchaseSeats extends Component {
     
@@ -68,6 +69,8 @@ class PurchaseSeats extends Component {
                 console.log('purchase_seat successfully executed!');
             }
             }).catch(
+
+                this.props.history.push('/'),
             console.log('Something went wrong in purchase_seat API for api input data: ', data)
             )
     }
@@ -83,6 +86,8 @@ class PurchaseSeats extends Component {
                 seatArr.push(i + "C");
             }
         }
+
+        console.log("Abs",seatArr)
 
         let dropdown = (
             seatArr.map((num) => {
@@ -108,12 +113,12 @@ class PurchaseSeats extends Component {
                     </select>
                 </div>
 
-                {/* <div id="seat-number-box" className="seat-selection">
+                <div id="seat-number-box" className="seat-selection">
                     <h3>Seat Number</h3>
                     <select onChange={this.seatNumberSelectHandler} name="seat-number-selection" id="seat-number-selection">
                         {dropdown}
                     </select>
-                </div> */}
+                </div>
 
                 <button onClick={this.seatSelectSubmission} className="purchase-btns">Puchase Now</button>
                 <button className="purchase-btns">Purchase Later</button>

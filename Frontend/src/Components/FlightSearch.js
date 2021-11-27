@@ -18,6 +18,7 @@ const FlightSearch = () => {
             "arrival_time":"23:15",
             "aircraft":"Boeing 747",
         },
+        
         {
             "flight_no":"UA1234",
             "departure_airport":"ORD",
