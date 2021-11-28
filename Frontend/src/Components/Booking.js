@@ -3,7 +3,9 @@ import '../CSS/Booking.css'
 //bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Axios from 'axios'
-import userInfo from './UserProfile'
+import userInfo from './UserProfile'    
+
+import {useHistory } from 'react-router-dom';
 
 const Booking = (props) => {
   let user = {
@@ -33,6 +35,7 @@ const Booking = (props) => {
     arrival_date: (props.location.flight) ? (props.location.flight.arrival_date ? props.location.flight.arrival_date: 'DUMMY DATA3') : 'DUMMY DATA3',
     price: (props.location.flight) ? (props.location.flight.price ? props.location.flight.price: 3000) : 3000
   });
+
   const [cardNumber,setCardNumber] = useState('')
   const [name,setName] = useState('')
   const [cvv,setCvv] = useState('')
@@ -41,6 +44,9 @@ const Booking = (props) => {
   const [price,setPrice] = useState(flightInfo.price)
   const [priceDiscount,setPriceDiscount] = useState(5); // CHECK THIS - If the default price discount should be 5
   const [travellerDetails,setTravellerDetails] = useState({firstName:'',id:'',lastName:'',email:'',dob:'',nationality:'',contactNo:''})
+
+
+  const history = useHistory(); //added/changed this
 
   let bookingData = {
     flight_oid: "6192cf0795636ba8b9bf824a",  // CHECK THIS. From where will we get this value?
@@ -298,6 +304,7 @@ const Booking = (props) => {
                       }
                     }).catch(
                       // this.nextPath('/customer/purchase-seats'),
+                      history.push('/customer/purchase-seats'), // Shift - CHECK THIS
                       console.log('Something went wrong in booking api for data: ', bookingDataForApi)
                     )
               }}>Book</button>

@@ -22,4 +22,5 @@ class Flight(BaseDocument):
     seats = DictField(required=True, fields=['window', 'aisle', 'middle'])
     seat_price = DictField(required=True, fields=['window', 'aisle', 'middle'])
     flight_status = StringField(required=True, default='scheduled', choices=['scheduled', 'canceled'])
+    seat_chart = DictField(required=True, fields=['window', 'aisle', 'middle'])
 
