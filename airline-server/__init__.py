@@ -21,7 +21,7 @@ app.config['MONGODB_SETTINGS'] = {
     'host': 'localhost', #$(DB_HOST)
     'port': 27017
 }
-
+print("It is working!")
 db = MongoEngine()
 jwt = JWTManager()
 

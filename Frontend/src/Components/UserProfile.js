@@ -34,14 +34,14 @@ const UserProfile = () => {
             </div>
             
             <div>
-            <h4>{userInfo[0].first_name}</h4>
+            <h4>{userDetails[0].first_name}</h4>
             </div>
             <div style={{paddingTop:"20px"}}>
             <h4><strong> Last Name : </strong></h4>
             </div>
 
             <div>
-            <h4> {userInfo[0].last_name}</h4>
+            <h4> {userDetails[0].last_name}</h4>
             </div>
 
             <div style={{paddingTop:"20px"}}>
@@ -49,7 +49,7 @@ const UserProfile = () => {
             </div>
 
             <div>
-            <h4> {userInfo[0].email}</h4>
+            <h4> {userDetails[0].email}</h4>
             </div>
 
             <div style={{paddingTop:"20px"}}>
@@ -57,7 +57,7 @@ const UserProfile = () => {
             </div>
 
             <div>
-            <h4> {userInfo[0].mileage_points}</h4>
+            <h4> {userDetails[0].mileage_points}</h4>
             </div>
             
         </div>

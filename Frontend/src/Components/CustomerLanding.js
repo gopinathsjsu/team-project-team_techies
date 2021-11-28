@@ -15,6 +15,51 @@ const CustomerLanding = () => {
     const[airportData,setAirportData]=useState([]);
     const[flightSearch,setFlightSearch]=useState([]);
 
+    const mockData=[
+        {
+            "_id": {
+                "$oid": "6192c60e35480dcd64335f6c"
+            },
+            "aircraft": {
+                "$oid": "6184a9d1c2bf805a6ec5164a",
+                "name": "Boeing 737"
+            },
+            "arrival_airport": {
+                "$oid": "61849d5f4367d925b16ff24c",
+                "city": "San Francisco",
+                "code": "SFO",
+                "name": "San Francisco International Airport"
+            },
+            "arrival_date": {
+                "$date": 1641427200000
+            },
+            "arrival_time": "11:00",
+            "departure_airport": {
+                "$oid": "61849d3f4367d925b16ff24b",
+                "city": "San Jose",
+                "code": "SJC",
+                "name": "San Jose International Airport"
+            },
+            "departure_date": {
+                "$date": 1641427200000
+            },
+            "departure_time": "10:00",
+            "flight_num": "AA1234",
+            "flight_status": "scheduled",
+            "mileage_points": 4,
+            "modified_at": {
+                "$date": 1637159368425
+            },
+            "price": 50.0,
+            "remaining_seats": 54,
+            "seats": {
+                "aisle": 20,
+                "middle": 20,
+                "window": 20
+            }
+        }
+    ]
+
     const searchFlight = (e)=>{
 
         e.preventDefault();
@@ -119,7 +164,7 @@ const CustomerLanding = () => {
                 </div>
                 
             </div>
-            {flightSearch.length>0 && <div>
+            {mockData.length>0 && <div>
                 <h4>Flight search results....</h4>
             <div style={{paddingTop:"30px",backgroundColor:"lightblue"}} >
             <Table >
@@ -138,17 +183,17 @@ const CustomerLanding = () => {
                     </tr>
                 </thead>
                 <tbody>
-                {flightSearch
+                {mockData
                 .map((val,idx)=>{
                 return(
                     
                     <tr>
-                        <td>{val.flight_no}</td>
-                        <td>{val.aircraft}</td>
-                        <td>{val.departure_airport}</td>
-                        <td>{val.arrival_airport}</td>
-                        <td>{val.departure_date}</td>
-                        <td>{val.arrival_date}</td>
+                        <td>{val.flight_num}</td>
+                        <td>{val.aircraft.name}</td>
+                        <td>{val.departure_airport.code}</td>
+                        <td>{val.arrival_airport.code}</td>
+                        <td>{val.departure_date.$date}</td>
+                        <td>{val.arrival_date.$date}</td>
                         <td>{val.departure_time}</td>
                         <td>{val.arrival_time}</td>
                        

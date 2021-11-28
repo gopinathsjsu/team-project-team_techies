@@ -13,23 +13,40 @@ const Landing = () => {
     const[password,setPassword]=useState("");
     const[userInfo,setUserInfo]=useState([]);
 
+    const mockData = [
+        {
+            "message": "User - nidhi@gmail.com login successfully",
+            "user": {
+                "first_name": "nidhi",
+                "user_type": "employer"
+            }
+        }
+    ]
+
     const userLogin = (e)=>{
         setLogin(false);
         const url="http://localhost:5000/user";
         Axios.post( url,{email:email,password:password
     
-    }).then((response)=>{
-        console.log(response.data);
+    }).then(async(response)=>{
+        var userResponseData = await response.data;
+        console.log(userResponseData);
         setUserInfo(response.data);
-        var token = response.headers['Authorization'];
+        var enitreToken = response.headers.get('Authorization');
+        var mainToken = enitreToken.split(" ");
+        var token = mainToken[1];
         localStorage.setItem('token',token);
+
+        userResponseData.map((loginuser)=>{
+            if(loginuser.user.user_type=="admin"){
+                history.push("/employee");
+            }
+            else{
+                history.push("/customer");
+            }
+        })
         
-        if(userInfo[0].user.user_type=="admin"){
-            history.push("/employee");
-        }
-        else{
-            history.push("/customer");
-        }
+       
     }
 
     ).catch(()=>{
@@ -40,7 +57,6 @@ const Landing = () => {
 
     }
     
-
 
     return (
         <div>
@@ -99,7 +115,7 @@ const Landing = () => {
 
                 </Modal>
             
-            
+           
             
    
         </div>
@@ -107,3 +123,5 @@ const Landing = () => {
 }
 
 export default Landing
+
+

@@ -12,15 +12,30 @@ const EmployeeViewFlights = () => {
 
     const[modal,setModal]=useState(false);
     const[price,setPrice] = useState(0.0);
+    const[flightId,setFlightId] = useState("");
     const[flightData,setFlightData] = useState([]);
 
-    const updatePrice=(e)=>{
+    const cancelFlight=(e,flight_id)=>{
         e.preventDefault();
         const url ="http://localhost:5000/flight";
         Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
-        Axios.put(url,{price:price})
+        Axios.put(url,{flight_status:'canceled',id:flight_id})
         .then((response)=>{
             console.log("flight price updated successfully");
+        }).catch(()=>{
+            console.log('some error occurred!')
+        })
+
+    }
+
+    const updatePrice=(e,flight_id)=>{
+        e.preventDefault();
+        setModal(false);
+        const url ="http://localhost:5000/flight";
+        Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+        Axios.put(url,{price:price,id:flight_id})
+        .then((response)=>{
+            console.log("flight cancelled successfully");
         }).catch(()=>{
             console.log('some error occurred!')
         })
@@ -37,58 +52,65 @@ const EmployeeViewFlights = () => {
         })
     },[])
 
+const mockData = [
+    {
+        "_id": {
+            "$oid": "61a26d7d500dc3da968da8f1"
+        },
+        "aircraft": {
+            "$oid": "6184a9d1c2bf805a6ec5164a",
+            "name": "Boeing 737"
+        },
+        "arrival_airport": {
+            "$oid": "61849d3f4367d925b16ff24b",
+            "city": "San Jose",
+            "code": "SJC",
+            "name": "San Jose International Airport"
+        },
+        "arrival_date": {
+            "$date": 1641686400000
+        },
+        "arrival_time": "08:00",
+        "departure_airport": {
+            "$oid": "61849d5f4367d925b16ff24c",
+            "city": "San Francisco",
+            "code": "SFO",
+            "name": "San Francisco International Airport"
+        },
+        "departure_date": {
+            "$date": 1641686400000
+        },
+        "departure_time": "07:00",
+        "flight_num": "AA3457",
+        "flight_status": "scheduled",
+        "modified_at": {
+            "$date": 1638019405576
+        },
+        "price": 40.0,
+        "remaining_seats": 59,
+        "seat_chart": {
+            "aisle": [
+                "1A"
+            ],
+            "middle": [
+                "1B"
+            ],
+            "window": []
+        },
+        "seat_price": {
+            "aisle": 3,
+            "middle": 0,
+            "window": 5
+        },
+        "seats": {
+            "aisle": 20,
+            "middle": 20,
+            "window": 16
+        }
+    }
+]
 
-
-    // const FlightData = [
-    //     {
-    //         "flight_no":"UA1234",
-    //         "departure_airport":"ORD",
-    //         "arrival_airport":"LAX",
-    //         "departure_date":"2019-06-24",
-    //         "arrival_date":"2019-06-24",
-    //         "departure_time":"22:10",
-    //         "arrival_time":"23:15",
-    //         "aircraft":"Boeing 747",
-    //         "flight_status" : "Scheduled",
-    //         "price":150.00
-    //     },
-    //     {
-    //         "flight_no":"UA1234",
-    //         "departure_airport":"ORD",
-    //         "arrival_airport":"LAX",
-    //         "departure_date":"2019-06-24",
-    //         "arrival_date":"2019-06-24",
-    //         "departure_time":"22:10",
-    //         "arrival_time":"23:15",
-    //         "aircraft":"Boeing 747",
-    //         "flight_status" : "Scheduled",
-    //         "price":100.00
-    //     },
-    //     {
-    //         "flight_no":"UA1234",
-    //         "departure_airport":"ORD",
-    //         "arrival_airport":"LAX",
-    //         "departure_date":"2019-06-24",
-    //         "arrival_date":"2019-06-24",
-    //         "departure_time":"22:10",
-    //         "arrival_time":"23:15",
-    //         "aircraft":"Boeing 747",
-    //         "flight_status" : "Scheduled",
-    //         "price":120.00
-    //     },
-    //     {
-    //         "flight_no":"UA1234",
-    //         "departure_airport":"ORD",
-    //         "arrival_airport":"LAX",
-    //         "departure_date":"2019-06-24",
-    //         "arrival_date":"2019-06-24",
-    //         "departure_time":"22:10",
-    //         "arrival_time":"23:15",
-    //         "aircraft":"Boeing 747",
-    //         "flight_status" : "Scheduled",
-    //         "price":90.00
-    //     }
-    // ]
+    
     return (
         <div style={{backgroundColor:"lightblue",height:600}}>
             <Employee_Landing/>
@@ -113,26 +135,29 @@ const EmployeeViewFlights = () => {
                     </tr>
                 </thead>
                 <tbody>
-                {flightData
+                {mockData
                 .map((val,idx)=>{
                 return(
                     
                     <tr>
-                        <td>{val.flight_no}</td>
-                        <td>{val.aircraft}</td>
-                        <td>{val.departure_airport}</td>
-                        <td>{val.arrival_airport}</td>
-                        <td>{val.departure_date}</td>
-                        <td>{val.arrival_date}</td>
+                        <td>{val.flight_num}</td>
+                        <td>{val.aircraft.name}</td>
+                        <td>{val.departure_airport.city}</td>
+                        <td>{val.arrival_airport.city}</td>
+                        <td>{val.departure_date.$date}</td>
+                        <td>{val.arrival_date.$date}</td>
                         <td>{val.departure_time}</td>
                         <td>{val.arrival_time}</td>
                         <td>{val.flight_status}</td>
                         <td>{val.price}</td>
                         <td><button onClick={()=>{
                             setModal(true);
-                            setPrice(val.price)
+                            setPrice(val.price);
+                            setFlightId(val._id)
                         }} className="btn btn-primary" >Edit</button></td>
-                        <td><button className="btn btn-primary" >Cancel</button></td>
+                        <td><button onClick = {(e)=>{
+                            setFlightId(val._id)
+                            cancelFlight(e,flightId)}}className="btn btn-primary" >Cancel</button></td>
 
                     </tr>
                     
@@ -162,7 +187,7 @@ const EmployeeViewFlights = () => {
                             </div>
                            
                             
-                            <button onClick={(e)=>updatePrice(e)} className="btn btn-primary sm-5">Edit</button> 
+                            <button onClick={(e)=>updatePrice(e,flightId)} className="btn btn-primary sm-5">Edit</button> 
                             
                             
                             

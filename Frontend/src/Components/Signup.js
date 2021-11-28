@@ -22,8 +22,8 @@ const Signup = () => {
             console.log(response)
         }
     
-        ).catch(()=>{
-            console.log("some error occurred")
+        ).catch((response)=>{
+            console.log(response)
         }
     
         )
