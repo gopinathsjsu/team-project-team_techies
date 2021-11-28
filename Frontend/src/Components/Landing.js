@@ -37,7 +37,7 @@ const Landing = () => {
         var token = mainToken[1];
         localStorage.setItem('token',token);
 
-        userResponseData.map((loginuser)=>{
+        userInfo.map((loginuser)=>{
             if(loginuser.user.user_type=="admin"){
                 history.push("/employee");
             }

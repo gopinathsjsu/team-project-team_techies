@@ -25,7 +25,10 @@ const UserProfile = () => {
     return (
         <div>
             <CustomerNavbar/>
-            <h3><strong> Profile</strong></h3>
+            {userInfo.map((user)=>{
+                return(
+                    <div>
+                        <h3><strong> Profile</strong></h3>
             <div style={{paddingTop:"20px"}}>
                 <img src="../../profile_202.jpg"></img>
             </div>
@@ -34,14 +37,14 @@ const UserProfile = () => {
             </div>
             
             <div>
-            <h4>{userDetails[0].first_name}</h4>
+            <h4>{user.first_name}</h4>
             </div>
             <div style={{paddingTop:"20px"}}>
             <h4><strong> Last Name : </strong></h4>
             </div>
 
             <div>
-            <h4> {userDetails[0].last_name}</h4>
+            <h4> {user.last_name}</h4>
             </div>
 
             <div style={{paddingTop:"20px"}}>
@@ -49,7 +52,7 @@ const UserProfile = () => {
             </div>
 
             <div>
-            <h4> {userDetails[0].email}</h4>
+            <h4> {user.email}</h4>
             </div>
 
             <div style={{paddingTop:"20px"}}>
@@ -57,8 +60,12 @@ const UserProfile = () => {
             </div>
 
             <div>
-            <h4> {userDetails[0].mileage_points}</h4>
+            <h4> {user.mileage_points}</h4>
             </div>
+                    </div>    
+                )
+            })}
+            
             
         </div>
     )

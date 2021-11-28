@@ -164,7 +164,7 @@ const CustomerLanding = () => {
                 </div>
                 
             </div>
-            {mockData.length>0 && <div>
+            {flightSearch.length>0 && <div>
                 <h4>Flight search results....</h4>
             <div style={{paddingTop:"30px",backgroundColor:"lightblue"}} >
             <Table >
@@ -183,7 +183,7 @@ const CustomerLanding = () => {
                     </tr>
                 </thead>
                 <tbody>
-                {mockData
+                {flightSearch
                 .map((val,idx)=>{
                 return(
                     

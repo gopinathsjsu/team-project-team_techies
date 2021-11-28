@@ -26,6 +26,7 @@ function App() {
         <Route path="/employee/viewflights" component={EmployeeViewFlights} exact></Route>
         <Route path="/customer/bookings" component={CustomerBookings} exact></Route>
         <Route path="/customer/profile" component={UserProfile} exact></Route>
+        
         <Route path="/customer/purchase-seats" component={PurchaseSeats} exact></Route>
         </Switch>
      

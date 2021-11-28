@@ -135,7 +135,7 @@ const mockData = [
                     </tr>
                 </thead>
                 <tbody>
-                {mockData
+                {flightData
                 .map((val,idx)=>{
                 return(
                     
@@ -153,10 +153,10 @@ const mockData = [
                         <td><button onClick={()=>{
                             setModal(true);
                             setPrice(val.price);
-                            setFlightId(val._id)
+                            setFlightId(val._id.$oid)
                         }} className="btn btn-primary" >Edit</button></td>
                         <td><button onClick = {(e)=>{
-                            setFlightId(val._id)
+                            setFlightId(val._id.$oid)
                             cancelFlight(e,flightId)}}className="btn btn-primary" >Cancel</button></td>
 
                     </tr>
