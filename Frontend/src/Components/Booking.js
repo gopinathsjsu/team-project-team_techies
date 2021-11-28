@@ -13,8 +13,8 @@ const Booking = (props) => {
   };
   // console.log(userInfo)
   
-  /* ------------- CHECK THIS ----------------
-     ------ API to fetch reward points -------
+  //------------- CHECK THIS ----------------
+    // ------ API to fetch reward points -------
 
     Axios.get('http://localhost:5000/user', user).
       then((response)=>{
@@ -25,7 +25,7 @@ const Booking = (props) => {
       }).catch(
         console.log('Something went wrong! HERE!@@@@')
       )
-  */
+  
 
   const [flightInfo] = useState({
     flight_num: (props.location.flight) ? (props.location.flight.flight_no ? props.location.flight.flight_no : 'DUMMY DATA') : 'DUMMY DATA',
