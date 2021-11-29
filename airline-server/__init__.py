@@ -11,18 +11,20 @@ from .api.flight_api import flight_bp
 from .api.seats_api import seat_bp
 from .api.user_api import user_bp
 
+import db
+
 app = Flask(__name__)
 app.debug = False
 
 app.config['SECRET_KEY'] = "airline_dev"
 
-app.config['MONGODB_SETTINGS'] = {
+"""app.config['MONGODB_SETTINGS'] = {
     'db': 'airline_db',
     'host': 'localhost', #$(DB_HOST)
     'port': 27017
 }
 print("It is working!")
-db = MongoEngine()
+db = MongoEngine()"""
 jwt = JWTManager()
 
 db.init_app(app)
@@ -38,7 +40,7 @@ for blueprint in blueprints:
 
 @app.route('/')
 def hello():
-    return 'Airline App!'
+    return db.list_collection_names()
 
 
 
