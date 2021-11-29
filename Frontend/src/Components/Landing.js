@@ -18,14 +18,30 @@ const Landing = () => {
             "message": "User - nidhi@gmail.com login successfully",
             "user": {
                 "first_name": "nidhi",
-                "user_type": "employer"
+                "user_type": "admin"
             }
         }
     ]
 
+    const mockuserlogin = (e)=>{
+        setLogin(false);
+        console.log(mockData[0].user.user_type);
+        mockData.map((loginuser)=>{
+            if(loginuser.user.user_type=="admin"){
+               // history.push("/employee");
+               window.location.href="http://localhost:3000/employee"
+            }
+            if(loginuser.user.user_type=="customer"){
+                window.location.href="http://localhost:3000/customer"
+            }
+        })
+        
+
+    }
     const userLogin = (e)=>{
         setLogin(false);
         const url="http://localhost:5000/user";
+        
         Axios.post( url,{email:email,password:password
     
     }).then(async(response)=>{
@@ -39,10 +55,11 @@ const Landing = () => {
 
         userInfo.map((loginuser)=>{
             if(loginuser.user.user_type=="admin"){
-                history.push("/employee");
+               // history.push("/employee");
+               window.location.href="http://localhost:3000/employee"
             }
-            else{
-                history.push("/customer");
+            if(loginuser.user.user_type=="customer"){
+                window.location.href="http://localhost:3000/customer"
             }
         })
         

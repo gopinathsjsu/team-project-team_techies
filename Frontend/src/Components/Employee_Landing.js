@@ -10,7 +10,7 @@ const Employee_Landing = () => {
 
 
     return (
-        <div>
+        <div style={{}}>
             <Navbar bg="dark" variant="dark" sticky="top">
                 <Navbar.Brand>Techies Airline</Navbar.Brand>
                 <Nav>
@@ -19,6 +19,7 @@ const Employee_Landing = () => {
                     <Nav.Link href="/employee/viewflights"> View Flights </Nav.Link>
                 </Nav>
                 </Navbar>
+                
             
         </div>
     )
