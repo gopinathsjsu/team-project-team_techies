@@ -3,7 +3,7 @@ from flask_mongoengine import MongoEngine
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 import pymongo
-
+from mongoengine import connect
 
 from api.aircraft_api import *
 from api.airport_api import airport_bp
@@ -19,7 +19,7 @@ app.debug = False
 connection_url = "mongodb+srv://SaiK:Mongo01%21@clustertechies.sdi1q.mongodb.net/techiesDb?retryWrites=true&w=majority"
 client = pymongo.MongoClient(connection_url)
 db= client.get_database('techiesDb')
-
+DEFAULT_CONNECTION_NAME = connect('techiesDb')
 app.config['SECRET_KEY'] = "airline_dev"
 
 """app.config['MONGODB_SETTINGS'] = {

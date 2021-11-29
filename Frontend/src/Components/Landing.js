@@ -40,34 +40,36 @@ const Landing = () => {
     }
     const userLogin = (e)=>{
         setLogin(false);
+        e.preventDefault();
         const url="http://localhost:5000/user";
         
         Axios.post( url,{email:email,password:password
     
     }).then(async(response)=>{
         var userResponseData = await response.data;
-        console.log(userResponseData);
+        console.log(userResponseData.user.user_type);
+      //  console.log(response.headers['authorization'])
         setUserInfo(response.data);
-        var enitreToken = response.headers.get('Authorization');
+        var enitreToken = response.headers['authorization'];
         var mainToken = enitreToken.split(" ");
         var token = mainToken[1];
         localStorage.setItem('token',token);
 
-        userInfo.map((loginuser)=>{
-            if(loginuser.user.user_type=="admin"){
+        
+            if(userResponseData.user.user_type=="admin"){
                // history.push("/employee");
                window.location.href="http://localhost:3000/employee"
             }
-            if(loginuser.user.user_type=="customer"){
+            if(userResponseData.user.user_type=="customer"){
                 window.location.href="http://localhost:3000/customer"
             }
-        })
+       
         
        
     }
 
-    ).catch(()=>{
-        console.log("some error occurred");
+    ).catch((response)=>{
+        console.log(response);
     }
 
     )
