@@ -18,8 +18,9 @@ const PurchaseSeats = ({}) => {
 
     useEffect(()=>{
         const url ="http://localhost:5000/booking/purchase_seat/" +booking.id;
-        Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
-        Axios.get(url)
+        // Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+        const token = localStorage.getItem('token');
+        Axios.get(url, {headers: {"Authorization" : `Bearer ${token}`} })
         .then((response)=>{
             console.log(response.data);
             for (const [key, value] of Object.entries(response.data['num_of_seats'])) {
