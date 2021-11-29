@@ -13,8 +13,7 @@ airport_bp = Blueprint('airport_bp', __name__)
 @airport_bp.route('/airport', defaults={'id': None}, methods=['POST', 'GET'])
 @airport_bp.route('/airport/<id>', methods=['GET'])
 
-@admin_only
-@jwt_required()
+
 def airport(id):
     if request.method == 'POST':
         app.logger.info("Add airport API called")
@@ -22,7 +21,7 @@ def airport(id):
     else:
         return get_all_airports(id)
 
-
+@admin_only
 def add_airport():
     data = request.get_json()
     try:
@@ -47,7 +46,7 @@ def add_airport():
 
     return jsonify(message), code
 
-
+@jwt_required()
 def get_all_airports(id):
     try:
         if not id:
