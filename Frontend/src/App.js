@@ -11,6 +11,7 @@ import CustomerBookings from './Components/CustomerBookings';
 import UserProfile from './Components/UserProfile';
 import Booking from './Components/Booking';
 import PurchaseSeats from './Components/PurchaseSeats';
+import EmployeeHome from './Components/EmployeeHome';
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
         <Route exact path="/" component={Landing}></Route>
         <Route exact path="/booking" component={Booking}></Route>
         <Route path="/signup" component={Signup}></Route>
-        <Route path="/employee" component={Employee_Landing} exact></Route>
+        <Route path="/employee" component={EmployeeHome} exact></Route>
         <Route path="/employee/addflight" component={AddFlight} exact></Route>
         <Route path="/customer" component={CustomerLanding} exact></Route>
         <Route path="/customer/flightsearch" component={FlightSearch} exact></Route>
