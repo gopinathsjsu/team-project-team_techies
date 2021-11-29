@@ -5,12 +5,12 @@ from flask_cors import CORS
 import pymongo
 
 
-from .api.aircraft_api import *
-from .api.airport_api import airport_bp
-from .api.booking_api import booking_bp
-from .api.flight_api import flight_bp
-from .api.seats_api import seat_bp
-from .api.user_api import user_bp
+from api.aircraft_api import *
+from api.airport_api import airport_bp
+from api.booking_api import booking_bp
+from api.flight_api import flight_bp
+from api.seats_api import seat_bp
+from api.user_api import user_bp
 
 
 
