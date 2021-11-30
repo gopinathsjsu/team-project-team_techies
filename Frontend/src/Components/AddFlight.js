@@ -56,7 +56,7 @@ const AddFlight = () => {
         const url="http://localhost:5000/flight";
         const token = localStorage.getItem('token');
         //Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
-        Axios.post( url,{headers: {"Authorization" : `Bearer ${token}`}},{
+        Axios.post( url,{
         flight_num:flightNumber,  
         aircraft:aircraft,
         departure_airport:depAirport,
@@ -72,7 +72,7 @@ const AddFlight = () => {
     }
 
     
-    }).then((response)=>{
+    },{headers: {"Authorization" : `Bearer ${token}`}}).then((response)=>{
         console.log(response)
     }
 
@@ -90,6 +90,7 @@ const AddFlight = () => {
        const token = localStorage.getItem('token');
         Axios.get(url,{headers: {"Authorization" : `Bearer ${token}`}})
         .then((response)=>{
+            console.log(response)
             setAircraftData(response.data);
         }).catch(()=>{
             console.log('some error occurred!')
@@ -102,6 +103,7 @@ const AddFlight = () => {
         const token = localStorage.getItem('token');
         Axios.get(url,{headers: {"Authorization" : `Bearer ${token}`}})
         .then((response)=>{
+            console.log(response)
             setAirportData(response.data);
         }).catch(()=>{
             console.log('some error occurred!')
@@ -129,7 +131,7 @@ const AddFlight = () => {
                         }} style={{ width: "280px",height:"38px",border:"1px solid black" }}>
                             <option value="" disabled selected hidden>Select Aircraft</option>
                             {aircraftData.map((aircraft)=>{
-                                return <option value={aircraft.name}>{aircraft.name}</option>
+                                return <option value={aircraft.id}>{aircraft.name}</option>
                             })}
                         </select>
                         </div>
@@ -141,7 +143,7 @@ const AddFlight = () => {
                         }} style={{ width: "280px",height:"38px",border:"1px solid black" }}>
                             <option value="" disabled selected hidden>Select Departure Airport</option>
                             {airportData.map((airport)=>{
-                                return <option value={airport.code}>{airport.code + " ("+ airport.name + ")"}</option>
+                                return <option value={airport.id}>{airport.code + " ("+ airport.name + ")"}</option>
                             })}
                         </select>
                         </div>
@@ -153,11 +155,11 @@ const AddFlight = () => {
                         }} style={{ width: "280px",height:"38px",border:"1px solid black" }}>
                             <option value="" disabled selected hidden>Select Arrival Airport</option>
                             {airportData.filter((value)=>{
-                                if(depAirport!=value.code){
+                                if(depAirport!=value.id){
                                     return value;
                                 }
                             }).map((airport)=>{
-                                return <option value={airport.code}>{airport.code + " ("+ airport.name + ")"}</option>
+                                return <option value={airport.id}>{airport.code + " ("+ airport.name + ")"}</option>
                             })}
                         </select>
                         </div>

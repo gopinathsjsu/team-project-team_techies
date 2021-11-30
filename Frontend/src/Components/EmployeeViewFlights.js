@@ -20,7 +20,8 @@ const EmployeeViewFlights = () => {
         const url ="http://localhost:5000/flight";
         const token = localStorage.getItem('token');
       //  Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
-        Axios.put(url,{headers: {"Authorization" : `Bearer ${token}`}},{flight_status:'canceled',id:flight_id})
+        Axios.put(url,{flight_status:'canceled',flight_id:flight_id},
+        {headers: {"Authorization" : `Bearer ${token}`}})
         .then((response)=>{
             console.log("flight price updated successfully");
         }).catch(()=>{
@@ -35,7 +36,8 @@ const EmployeeViewFlights = () => {
         const url ="http://localhost:5000/flight";
         const token = localStorage.getItem('token');
       //  Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
-        Axios.put(url,{headers: {"Authorization" : `Bearer ${token}`}},{price:price,id:flight_id})
+        Axios.put(url,{price:price,flight_id:flight_id},
+            {headers: {"Authorization" : `Bearer ${token}`}})
         .then((response)=>{
             console.log("flight cancelled successfully");
         }).catch(()=>{
@@ -147,8 +149,8 @@ const mockData = [
                         <td>{val.aircraft.name}</td>
                         <td>{val.departure_airport.city}</td>
                         <td>{val.arrival_airport.city}</td>
-                        <td>{val.departure_date.$date}</td>
-                        <td>{val.arrival_date.$date}</td>
+                        <td>{val.departure_date}</td>
+                        <td>{val.arrival_date}</td>
                         <td>{val.departure_time}</td>
                         <td>{val.arrival_time}</td>
                         <td>{val.flight_status}</td>
@@ -156,11 +158,11 @@ const mockData = [
                         <td><button onClick={()=>{
                             setModal(true);
                             setPrice(val.price);
-                            setFlightId(val._id.$oid)
+                            setFlightId(val.id)
                         }} className="btn btn-primary" >Edit</button></td>
                         <td><button onClick = {(e)=>{
-                            setFlightId(val._id.$oid)
-                            cancelFlight(e,flightId)}}className="btn btn-primary" >Cancel</button></td>
+                            //setFlightId(val.id)
+                            cancelFlight(e,val.id)}}className="btn btn-primary" >Cancel</button></td>
 
                     </tr>
                     
