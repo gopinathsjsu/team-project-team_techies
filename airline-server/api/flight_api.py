@@ -81,7 +81,9 @@ def get_all_flights(id):
                 flights = Flight.objects(departure_date=depart_date,
                                          departure_airport=airport1,
                                          arrival_airport=airport2,
-                                         remaining_seats__gte=1)
+                                         remaining_seats__gte=1,
+                                         flight_status='scheduled'
+                                         )
 
             else:
                 flights = Flight.objects()

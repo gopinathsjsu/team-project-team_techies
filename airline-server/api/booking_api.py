@@ -37,7 +37,7 @@ def booking(b_id):
             else:
                 app.logger.info(f"Get Booking by ID API called")
                 booking = get_booking_by_id(b_id)
-                booking_res = get_details_in_response(booking)
+                booking_res = get_booking_details_in_response(booking)
                 return jsonify(booking_res), ErrorCodes.SUCCESS
 
         except Exception as error:
@@ -61,8 +61,9 @@ def booking(b_id):
 
                 # increasing flight seats
                 booking.flight_oid.remaining_seats += 1
-                if booking.seat in ['window', 'aisle', 'middle']:
-                    booking.flight_oid.seats[booking.seat] += 1
+                if 'seat' in booking:
+                    if booking.seat in ['window', 'aisle', 'middle']:
+                        booking.flight_oid.seats[booking.seat] += 1
 
                 booking.save()
                 booking.flight_oid.save()
@@ -197,6 +198,7 @@ def make_a_booking(booking_num=None):
     except Exception as error:
         app.logger.error(f"Error message is: {error}")
         return jsonify({'message': "Something went wrong"}), ErrorCodes.INTERNAL_SERVER_ERROR
+
 
 def get_booking_details_in_response(booking):
     booking_res = {}
