@@ -74,11 +74,11 @@ def booking(b_id):
                 user.mileage_points -= booking.mileage_points_earned  # taking back booking rewards
 
                 # refund
-                print((booking.payment['reward_points_used'] * 0.7) + (booking.payment['cash'] * 0.7))
-                user.mileage_points += (booking.payment['reward_points_used'] * 0.7) + (booking.payment['cash'] * 0.7)
+                refund = (booking.payment['reward_points_used'] * 0.7) + (booking.payment['cash'] * 0.7)
+                user.mileage_points += refund
                 user.save()
 
-                message = f'Booking {booking.booking_num} canceled successfully. {user.mileage_points} points have been added to your rewards as per refund policy'
+                message = f'Booking {booking.booking_num} canceled successfully. {refund} points have been added to your rewards as per refund policy'
                 app.logger.info(message)
                 return jsonify({'message': message}), ErrorCodes.SUCCESS
 
@@ -109,8 +109,9 @@ def booking(b_id):
 
                 # increasing flight seats
                 booking.flight_oid.remaining_seats += 1
-                if booking.seat in ['window', 'aisle', 'middle']:
-                    booking.flight_oid.seats[booking.seat] += 1
+                if 'seat' in booking:
+                    if booking.seat in ['window', 'aisle', 'middle']:
+                        booking.flight_oid.seats[booking.seat] += 1
 
                 booking.save()
                 booking.flight_oid.save()
@@ -154,6 +155,11 @@ def make_a_booking(booking_num=None):
 
         if flight is None:
             message = "No such Flight exists"
+            app.logger.error(message)
+            return jsonify({'message': message}), ErrorCodes.BAD_REQUEST
+
+        if flight.flight_status =='canceled':
+            message = "Sorry! This Flight is canceled"
             app.logger.error(message)
             return jsonify({'message': message}), ErrorCodes.BAD_REQUEST
 

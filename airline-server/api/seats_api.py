@@ -36,7 +36,7 @@ def purchase_seat(id):
                 booking.seat_num = seat_num
                 booking.save()
 
-                return jsonify({'booking': booking, 'message': "Seat Purchase successful!"}), ErrorCodes.SUCCESS
+                return jsonify({'booking': str(booking.id), 'message': "Seat Purchase successful!"}), ErrorCodes.SUCCESS
             else:
                 return jsonify({'message': "You have already booked a seat for this flight!!"}), ErrorCodes.BAD_REQUEST
 
