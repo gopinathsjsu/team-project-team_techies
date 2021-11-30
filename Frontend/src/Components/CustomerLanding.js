@@ -194,8 +194,8 @@ const CustomerLanding = () => {
                         <td>{val.aircraft.name}</td>
                         <td>{val.departure_airport.code}</td>
                         <td>{val.arrival_airport.code}</td>
-                        <td>{val.departure_date.$date}</td>
-                        <td>{val.arrival_date.$date}</td>
+                        <td>{val.departure_date}</td>
+                        <td>{val.arrival_date}</td>
                         <td>{val.departure_time}</td>
                         <td>{val.arrival_time}</td>
                        

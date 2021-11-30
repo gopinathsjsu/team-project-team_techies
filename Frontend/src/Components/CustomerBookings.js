@@ -14,6 +14,7 @@ const CustomerBookings = () => {
      //   Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
         Axios.get(url,{headers: {"Authorization" : `Bearer ${token}`}})
         .then((response)=>{
+            console.log(response.data)
             setBookingData(response.data);
         }).catch(()=>{
             console.log('some error occurred!')
@@ -231,16 +232,19 @@ const CustomerBookings = () => {
                     
                         <td>{val.flight_oid.departure_airport.code}</td>
                         <td>{val.flight_oid.arrival_airport.code}</td>
-                        <td>{val.flight_oid.departure_date.$date}</td>
-                        <td>{val.flight_oid.arrival_date.$date}</td>
+                        <td>{val.flight_oid.departure_date}</td>
+                        <td>{val.flight_oid.arrival_date}</td>
                        
                         <td>{val.flight_oid.departure_time}</td>
                         <td>{val.flight_oid.arrival_time}</td>
-                        <td>{val.flight_status}</td>
-                        {val.seat_num.length<1 && <td><button className="btn btn-primary" >Book Seat</button></td>}
-                        {val.seat_num.length>0 && <div></div>}
-                        
-                        <td><button onClick = {(e)=>cancelBooking(e,val._id.$oid)}className="btn btn-primary" >Cancel</button></td>
+                        <td>{val.booking_history}</td>
+                        {val.seat_num==null && <td><Link  to={{
+                            pathname: "/customer/purchase-seats",
+                            bookingid:val.id
+                            }}><button className="btn btn-primary" >Book Seat</button></Link></td>}
+                        {val.seat_num!=null && <div></div>}
+                        {val.booking_history=='booked' && <td><button onClick = {(e)=>cancelBooking(e,val.id)}className="btn btn-primary" >Cancel</button></td>}
+                        {val.booking_history=='canceled' && <div></div>}
                         
 
                     </tr>

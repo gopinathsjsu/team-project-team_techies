@@ -4,9 +4,9 @@ import Axios from 'axios';
 import { useLocation, useHistory } from 'react-router-dom';
 
 
-const PurchaseSeats = ({}) => {
+const PurchaseSeats = (props) => {
 
-    const booking = {id:'61a276afea9044c96dd4c200'}
+    const booking = props.location.bookingid;
 
     const[seatPriceData,setseatPriceData]=useState([]);
     const[seatNumDictData,setseatNumData]=useState([]);
@@ -17,7 +17,7 @@ const PurchaseSeats = ({}) => {
     
 
     useEffect(()=>{
-        const url ="http://localhost:5000/booking/purchase_seat/" +booking.id;
+        const url ="http://localhost:5000/booking/purchase_seat/" +booking;
         // Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
         const token = localStorage.getItem('token');
         Axios.get(url, {headers: {"Authorization" : `Bearer ${token}`}})
@@ -46,12 +46,12 @@ const PurchaseSeats = ({}) => {
         const token = localStorage.getItem('token');
         const url="http://localhost:5000/booking/purchase_seat";
        // Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
-        Axios.post( url,{headers: {"Authorization" : `Bearer ${token}`}},{
-            booking_id:booking.id,  
+        Axios.post( url,{
+            booking_id:booking,  
             seat_type:selectedSeatType,
             seat_num:selectedSeatNum
       
-    }).then((response)=>{
+    },{headers: {"Authorization" : `Bearer ${token}`}}).then((response)=>{
         console.log(response)
     }
 
