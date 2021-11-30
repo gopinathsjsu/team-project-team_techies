@@ -64,8 +64,8 @@ const CustomerLanding = () => {
 
         e.preventDefault();
         const url ="http://localhost:5000/flight";
-        Axios.defaults.headers.common['authorization'] = localStorage.getItem('token');
-        Axios.get(url,{
+        const token = localStorage.getItem('token');
+        Axios.get(url,{headers: {"Authorization" : `Bearer ${token}`}},{
             params: {
               depart_date:depDate,
               airport1:origin,
@@ -82,8 +82,9 @@ const CustomerLanding = () => {
     useEffect(()=>{
         console.log(localStorage.getItem('token'))
         const url ="http://localhost:5000/airport";
-        Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
-        Axios.get(url)
+        const token = localStorage.getItem('token');
+      
+        Axios.get(url,{headers: {"Authorization" : `Bearer ${token}`}})
         .then((response)=>{
             setAirportData(response.data);
         }).catch(()=>{

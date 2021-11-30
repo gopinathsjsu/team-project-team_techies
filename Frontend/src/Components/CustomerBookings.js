@@ -10,8 +10,9 @@ const CustomerBookings = () => {
     const[bookingData,setBookingData] = useState([]);
     useEffect(()=>{
         const url ="http://localhost:5000/booking";
-        Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
-        Axios.get(url)
+        const token = localStorage.getItem('token');
+     //   Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+        Axios.get(url,{headers: {"Authorization" : `Bearer ${token}`}})
         .then((response)=>{
             setBookingData(response.data);
         }).catch(()=>{
@@ -22,8 +23,9 @@ const CustomerBookings = () => {
     const cancelBooking = (e,booking_id)=>{
         e.preventDefault();
         const url ="http://localhost:5000/booking/"+booking_id;
-        Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
-        Axios.delete(url)
+        const token = localStorage.getItem('token');
+        //Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+        Axios.delete(url,{headers: {"Authorization" : `Bearer ${token}`}})
         .then((response)=>{
             console.log(response.data);
         }).catch(()=>{
