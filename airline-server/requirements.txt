@@ -3,5 +3,3 @@ flask-mongoengine==1.0.0
 passlib==1.7.4
 flask_jwt_extended==4.3.1
 flask-cors==3.0.10
-pymongo[srv]
-Flask-PyMongo

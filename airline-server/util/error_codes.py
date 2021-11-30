@@ -9,5 +9,20 @@ class ErrorCodes:
     CONFLICT = 409
     FORBIDDEN = 403
 
+import json
+from bson import ObjectId
+
+class JSONEncoder(json.JSONEncoder):
+    def default(self, o):
+        print("here")
+        print(o)
+        print(o.id)
+        o = o.id
+        if isinstance(o, ObjectId):
+            print("ahhhh")
+            return str(o)
+        return json.JSONEncoder.default(self, o)
+
+
 
 

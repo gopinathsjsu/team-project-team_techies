@@ -1,10 +1,12 @@
+from flask_mongoengine import BaseQuerySet
 from mongoengine import *
 import datetime
 
 
 class BaseDocument(Document):
     meta = {
-        'abstract': True
+        'abstract': True,
+        #'queryset_class': BaseQuerySet
     }
     modified_at = DateTimeField()
     modified_by = StringField()

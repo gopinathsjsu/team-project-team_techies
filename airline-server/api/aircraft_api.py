@@ -19,10 +19,27 @@ def aircraft(id):
     try:
         if not id:
             app.logger.info("Get aircraft API called")
-            return jsonify(Aircraft.objects()), ErrorCodes.SUCCESS
+            aircrafts = Aircraft.objects()
+            res = []
+            for aircraft in aircrafts:
+                temp = {}
+                temp["id"] = str(aircrafts.id)
+                temp['total_seats'] = aircrafts.total_seats
+                temp['name'] = aircrafts.name
+                temp['seat_chart'] = aircrafts.seat_chart
+                res.append(temp)
+
+            return jsonify(res), ErrorCodes.SUCCESS
         else:
+
             app.logger.info("Get aircraft_by_id API called")
-            return jsonify(get_aircraft_details(id)), ErrorCodes.SUCCESS
+            aircraft = get_aircraft_details(id)
+            temp = {}
+            temp["id"] = str(aircraft.id)
+            temp['total_seats'] = aircraft.total_seats
+            temp['name'] = aircraft.name
+            temp['seat_chart'] = aircraft.seat_chart
+            return jsonify(temp), ErrorCodes.SUCCESS
 
     except Exception as error:
         app.logger.error(f"Error message is {error}")

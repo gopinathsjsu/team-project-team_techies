@@ -1,11 +1,13 @@
-from flask import request, jsonify, Blueprint, current_app as app
+import json
+
+from bson import json_util
+from flask import request, jsonify, Blueprint, current_app as app, make_response
 from flask_jwt_extended import jwt_required
 from mongoengine import NotUniqueError
 
 from model.airport import Airport
 from util.auth_util import admin_only
-from util.error_codes import ErrorCodes
-
+from util.error_codes import ErrorCodes, JSONEncoder
 
 airport_bp = Blueprint('airport_bp', __name__)
 
@@ -13,7 +15,7 @@ airport_bp = Blueprint('airport_bp', __name__)
 @airport_bp.route('/airport', defaults={'id': None}, methods=['POST', 'GET'])
 @airport_bp.route('/airport/<id>', methods=['GET'])
 
-
+@jwt_required()
 def airport(id):
     if request.method == 'POST':
         app.logger.info("Add airport API called")
@@ -51,10 +53,27 @@ def get_all_airports(id):
     try:
         if not id:
             app.logger.info("get_all_airports API called")
-            return jsonify(Airport.objects()), ErrorCodes.SUCCESS
+            airports = Airport.objects()
+            res = []
+            for airport in airports:
+                temp = {}
+                temp["id"] = str(airport.id)
+                temp['code'] = airport.code
+                temp['name'] = airport.name
+                temp['city'] = airport.city
+                res.append(temp)
+
+            return jsonify(res), ErrorCodes.SUCCESS
+
         else:
             app.logger.info("Get airport_by_ID API called")
-            return jsonify(get_airport_by_id(id)), ErrorCodes.SUCCESS
+            airport = get_airport_by_id(id)
+            temp = {}
+            temp["id"] = str(airport.id)
+            temp['code'] = airport.code
+            temp['name'] = airport.name
+            temp['city'] = airport.city
+            return jsonify(temp), ErrorCodes.SUCCESS
 
     except Exception as error:
         app.logger.error(f"Error message is {error}")
