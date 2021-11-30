@@ -217,7 +217,7 @@ const CustomerBookings = () => {
                         <th>Departure Time</th>
                         <th>Arrival Time</th>
                         <th>Status</th>
-                        <th>Purchase</th>
+                        <th>Seat</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -232,8 +232,8 @@ const CustomerBookings = () => {
                     
                         <td>{val.flight_oid.departure_airport.code}</td>
                         <td>{val.flight_oid.arrival_airport.code}</td>
-                        <td>{val.flight_oid.departure_date}</td>
-                        <td>{val.flight_oid.arrival_date}</td>
+                        <td>{(val.flight_oid.departure_date).slice(0,-12)}</td>
+                        <td>{(val.flight_oid.arrival_date).slice(0,-12)}</td>
                        
                         <td>{val.flight_oid.departure_time}</td>
                         <td>{val.flight_oid.arrival_time}</td>
@@ -242,7 +242,7 @@ const CustomerBookings = () => {
                             pathname: "/customer/purchase-seats",
                             bookingid:val.id
                             }}><button className="btn btn-primary" >Book Seat</button></Link></td>}
-                        {val.seat_num!=null && <div></div>}
+                        {val.seat_num!=null && <div>{val.seat_num}</div>}
                         {val.booking_history=='booked' && <td><button onClick = {(e)=>cancelBooking(e,val.id)}className="btn btn-primary" >Cancel</button></td>}
                         {val.booking_history=='canceled' && <div></div>}
                         

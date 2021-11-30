@@ -2,9 +2,14 @@ import { React, Component, useState,useEffect } from 'react';
 import '../CSS/PurchaseSeats.css';
 import Axios from 'axios';
 import { useLocation, useHistory } from 'react-router-dom';
-
+import Popup from './Popup'
 
 const PurchaseSeats = (props) => {
+
+    const [isOpen, setIsOpen] = useState(false);
+    const togglePopup = () => {
+        setIsOpen(!isOpen);
+    }
 
     const booking = props.location.bookingid;
 
@@ -52,6 +57,7 @@ const PurchaseSeats = (props) => {
             seat_num:selectedSeatNum
       
     },{headers: {"Authorization" : `Bearer ${token}`}}).then((response)=>{
+        window.location.href="http://localhost:3000/customer/bookings"
         console.log(response)
     }
 
@@ -64,7 +70,7 @@ const PurchaseSeats = (props) => {
     return (
         <div>
             <div className="purchase-seats-box">
-                    <h1 style={{fontWeight: "bold"}}>Purchase Seats</h1>
+                    <h1 style={{fontWeight: "bold"}}>Book Seats</h1>
             </div>
 
             <div id="seat-type-box" className="seat-selection">
@@ -106,10 +112,25 @@ const PurchaseSeats = (props) => {
                 </select>
             </div>
 
-            <button onClick={(e)=>{
+            <button style={{fontFamily: SourceSans}} onClick={(e)=>{
                                 purchaseSeat(e);
-                            }}className="btn btn-primary">Purchase Seat</button> 
+                            }}className="btn btn-primary">Book Seat</button> 
 
+        {/* <input
+      type="button"
+      value="Click to Open Popup"
+      onClick={togglePopup}
+    />
+    
+    {isOpen && <Popup
+      content={<>
+        <b>Design your Popup</b>
+        <p></p>
+        <button>Test button</button>
+      </>}
+      handleClose={togglePopup}
+    />} */}
+    
         </div>
         
     )
