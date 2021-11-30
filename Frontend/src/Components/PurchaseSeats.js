@@ -112,7 +112,7 @@ const PurchaseSeats = (props) => {
                 </select>
             </div>
 
-            <button style={{fontFamily: SourceSans}} onClick={(e)=>{
+            <button onClick={(e)=>{
                                 purchaseSeat(e);
                             }}className="btn btn-primary">Book Seat</button> 
 
