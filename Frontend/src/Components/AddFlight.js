@@ -54,8 +54,9 @@ const AddFlight = () => {
     const addNewFlight = (e)=>{
         e.preventDefault();
         const url="http://localhost:5000/flight";
-        Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
-        Axios.post( url,{
+        const token = localStorage.getItem('token');
+        //Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+        Axios.post( url,{headers: {"Authorization" : `Bearer ${token}`}},{
         flight_num:flightNumber,  
         aircraft:aircraft,
         departure_airport:depAirport,
@@ -85,8 +86,9 @@ const AddFlight = () => {
     
     useEffect(()=>{
         const url ="http://localhost:5000/aircraft";
-        Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
-        Axios.get(url)
+       // Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+       const token = localStorage.getItem('token');
+        Axios.get(url,{headers: {"Authorization" : `Bearer ${token}`}})
         .then((response)=>{
             setAircraftData(response.data);
         }).catch(()=>{
@@ -96,8 +98,9 @@ const AddFlight = () => {
 
     useEffect(()=>{
         const url ="http://localhost:5000/airport";
-        Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
-        Axios.get(url)
+        //Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+        const token = localStorage.getItem('token');
+        Axios.get(url,{headers: {"Authorization" : `Bearer ${token}`}})
         .then((response)=>{
             setAirportData(response.data);
         }).catch(()=>{

@@ -10,7 +10,7 @@ const Employee_Landing = () => {
 
 
     return (
-        <div style={{}}>
+        <div>
             <Navbar bg="dark" variant="dark" sticky="top">
                 <Navbar.Brand>Techies Airline</Navbar.Brand>
                 <Nav>

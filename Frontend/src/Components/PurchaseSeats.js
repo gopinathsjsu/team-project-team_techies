@@ -20,7 +20,7 @@ const PurchaseSeats = ({}) => {
         const url ="http://localhost:5000/booking/purchase_seat/" +booking.id;
         // Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
         const token = localStorage.getItem('token');
-        Axios.get(url, {headers: {"Authorization" : `Bearer ${token}`} })
+        Axios.get(url, {headers: {"Authorization" : `Bearer ${token}`}})
         .then((response)=>{
             console.log(response.data);
             for (const [key, value] of Object.entries(response.data['num_of_seats'])) {
@@ -43,9 +43,10 @@ const PurchaseSeats = ({}) => {
     const purchaseSeat = (e)=>{
         e.preventDefault();
         setSelectedSeatNum(e.target.value)
+        const token = localStorage.getItem('token');
         const url="http://localhost:5000/booking/purchase_seat";
-        Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
-        Axios.post( url,{
+       // Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+        Axios.post( url,{headers: {"Authorization" : `Bearer ${token}`}},{
             booking_id:booking.id,  
             seat_type:selectedSeatType,
             seat_num:selectedSeatNum

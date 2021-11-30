@@ -14,8 +14,9 @@ const UserProfile = () => {
 
     useEffect(()=>{
         const url ="http://localhost:5000/user";
-        Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
-        Axios.get(url)
+        const token = localStorage.getItem('token');
+       // Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+        Axios.get(url,{headers: {"Authorization" : `Bearer ${token}`}})
         .then((response)=>{
             setUserInfo(response.data);
         }).catch(()=>{

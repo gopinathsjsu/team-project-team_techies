@@ -18,8 +18,9 @@ const EmployeeViewFlights = () => {
     const cancelFlight=(e,flight_id)=>{
         e.preventDefault();
         const url ="http://localhost:5000/flight";
-        Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
-        Axios.put(url,{flight_status:'canceled',id:flight_id})
+        const token = localStorage.getItem('token');
+      //  Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+        Axios.put(url,{headers: {"Authorization" : `Bearer ${token}`}},{flight_status:'canceled',id:flight_id})
         .then((response)=>{
             console.log("flight price updated successfully");
         }).catch(()=>{
@@ -32,8 +33,9 @@ const EmployeeViewFlights = () => {
         e.preventDefault();
         setModal(false);
         const url ="http://localhost:5000/flight";
-        Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
-        Axios.put(url,{price:price,id:flight_id})
+        const token = localStorage.getItem('token');
+      //  Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+        Axios.put(url,{headers: {"Authorization" : `Bearer ${token}`}},{price:price,id:flight_id})
         .then((response)=>{
             console.log("flight cancelled successfully");
         }).catch(()=>{
@@ -43,8 +45,9 @@ const EmployeeViewFlights = () => {
     }
     useEffect(()=>{
         const url ="http://localhost:5000/flight";
-        Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
-        Axios.get(url)
+        const token = localStorage.getItem('token');
+       // Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+        Axios.get(url,{headers: {"Authorization" : `Bearer ${token}`}})
         .then((response)=>{
             setFlightData(response.data);
         }).catch(()=>{
