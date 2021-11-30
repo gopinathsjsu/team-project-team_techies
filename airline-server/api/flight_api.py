@@ -150,16 +150,42 @@ def get_flight_by_flight_id(id):
 
 
 def get_details_in_response(flight):
+    flight_res = {}
+    print(flight.aircraft.name)
+    aircraft={}
+    aircraft['name'] = flight.aircraft.name
+    aircraft['id'] = str(flight.aircraft.id)
+    flight_res['aircraft'] = aircraft
 
-    flight_res = jsonify(flight).json
-    flight_res['aircraft']['name'] = flight.aircraft.name
-    flight_res['arrival_airport']['code'] = flight.arrival_airport.code
-    flight_res['arrival_airport']['name'] = flight.arrival_airport.name
-    flight_res['arrival_airport']['city'] = flight.arrival_airport.city
+    arrival_airport = {}
+    arrival_airport['id'] = str(flight.arrival_airport.id)
+    arrival_airport['code'] = flight.arrival_airport.code
+    arrival_airport['name'] = flight.arrival_airport.name
+    arrival_airport['city'] = flight.arrival_airport.city
+    flight_res['arrival_airport'] = arrival_airport
 
-    flight_res['departure_airport']['code'] = flight.departure_airport.code
-    flight_res['departure_airport']['name'] = flight.departure_airport.name
-    flight_res['departure_airport']['city'] = flight.departure_airport.city
+    departure_airport = {}
+    departure_airport['id'] = str(flight.departure_airport.id)
+    departure_airport['code'] = flight.departure_airport.code
+    departure_airport['name'] = flight.departure_airport.name
+    departure_airport['city'] = flight.departure_airport.city
+    flight_res['departure_airport'] = departure_airport
+
+    flight_res['id'] = str(flight.id)
+    flight_res['arrival_date'] = flight.arrival_date
+    flight_res['arrival_time'] = flight.arrival_time
+    flight_res['departure_date'] = flight.departure_date
+    flight_res['departure_time'] = flight.departure_time
+
+    flight_res['flight_num'] = flight.flight_num
+    flight_res['price'] = flight.price
+    flight_res['remaining_seats'] = flight.remaining_seats
+    flight_res['seats'] = flight.seats
+    flight_res['seat_price'] = flight.seat_price
+    flight_res['flight_status'] = flight.flight_status
+    flight_res['seat_chart'] = flight.seat_chart
+
+
 
     # flight_res['aircraft_details'] = f"/aircraft/{flight.aircraft.id}"
     # flight_res['departure_airport_details'] = f"/airport/{flight.departure_airport.id}"
