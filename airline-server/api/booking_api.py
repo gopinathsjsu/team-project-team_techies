@@ -19,6 +19,7 @@ booking_bp = Blueprint('booking_bp', __name__)
 @jwt_required()
 def booking(b_id):
     if request.method == 'POST':
+        app.logger.info(f"Make a Booking API called")
         return make_a_booking()
 
     if request.method == 'GET':
@@ -27,17 +28,16 @@ def booking(b_id):
             user = get_user_by_email(user_jwt['user'])
 
             if not b_id:
+                app.logger.info(f"Get Bookings of Customer API called")
                 res = []
                 bookings = Booking.objects(customer_oid=user.id)
                 for booking in bookings:
-                    booking_res = jsonify(booking).json
-                    booking_res['flight_oid'] = get_details_in_response(booking.flight_oid)
-                    res.append(booking_res)
+                    res.append(get_booking_details_in_response(booking))
                 return jsonify(res), ErrorCodes.SUCCESS
             else:
+                app.logger.info(f"Get Booking by ID API called")
                 booking = get_booking_by_id(b_id)
-                booking_res = jsonify(booking).json
-                booking_res['flight_oid'] = get_details_in_response(booking.flight_oid)
+                booking_res = get_details_in_response(booking)
                 return jsonify(booking_res), ErrorCodes.SUCCESS
 
         except Exception as error:
@@ -127,7 +127,7 @@ def booking(b_id):
 
                 message = f'Booking {booking.booking_num} changed successfully'
                 app.logger.info(message)
-                return jsonify({'message': message, 'booking': booking}), ErrorCodes.SUCCESS
+                return jsonify({'message': message, 'booking': str(booking.id)}), ErrorCodes.SUCCESS
 
         except Exception as error:
             print(error)
@@ -192,9 +192,25 @@ def make_a_booking(booking_num=None):
         user.save()
 
         app.logger.info("Booking successful")
-        return jsonify({'message': "Booking successful"}), ErrorCodes.SUCCESS
+        return jsonify({'message': "Booking successful", "booking": str(booking.id)}), ErrorCodes.SUCCESS
 
     except Exception as error:
         app.logger.error(f"Error message is: {error}")
         return jsonify({'message': "Something went wrong"}), ErrorCodes.INTERNAL_SERVER_ERROR
 
+def get_booking_details_in_response(booking):
+    booking_res = {}
+    booking_res['id'] = str(booking.id)
+    booking_res['booking_num'] = booking.booking_num
+    booking_res['mileage_points_earned'] = booking.mileage_points_earned
+    booking_res['booking_history'] = booking.booking_history
+    booking_res['booked_price'] = booking.booked_price
+    booking_res['traveller_details'] = booking.traveller_details
+    booking_res['flight_status'] = booking.flight_status
+    booking_res['payment'] = booking.payment
+    booking_res['seat_num'] = booking.seat_num
+    booking_res['seat_price'] = booking.seat_price
+    booking_res['seat_type'] = booking.seat_type
+    booking_res['flight_oid'] = get_details_in_response(booking.flight_oid)
+
+    return booking_res

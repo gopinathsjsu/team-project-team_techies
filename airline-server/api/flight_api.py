@@ -151,7 +151,7 @@ def get_flight_by_flight_id(id):
 
 def get_details_in_response(flight):
     flight_res = {}
-    print(flight.aircraft.name)
+
     aircraft={}
     aircraft['name'] = flight.aircraft.name
     aircraft['id'] = str(flight.aircraft.id)
