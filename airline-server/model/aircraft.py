@@ -4,7 +4,7 @@ from model.base_document import BaseDocument
 
 class Aircraft(BaseDocument):
     meta = {
-        "collection": "aircraft"
+        "collection": "Aircraft"
     }
     name = StringField(required=True)
     total_seats = IntField(required=True)

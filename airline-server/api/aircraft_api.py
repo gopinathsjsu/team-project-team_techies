@@ -23,10 +23,10 @@ def aircraft(id):
             res = []
             for aircraft in aircrafts:
                 temp = {}
-                temp["id"] = str(aircrafts.id)
-                temp['total_seats'] = aircrafts.total_seats
-                temp['name'] = aircrafts.name
-                temp['seat_chart'] = aircrafts.seat_chart
+                temp["id"] = str(aircraft.id)
+                temp['total_seats'] = aircraft.total_seats
+                temp['name'] = aircraft.name
+                temp['seat_chart'] = aircraft.seat_chart
                 res.append(temp)
 
             return jsonify(res), ErrorCodes.SUCCESS
