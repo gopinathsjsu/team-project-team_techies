@@ -136,7 +136,7 @@ def modify_flight():
 
         flight.save()
 
-        return jsonify({'message': "Flight update successful", "flight": flight}), ErrorCodes.SUCCESS
+        return jsonify({'message': "Flight update successful"}), ErrorCodes.SUCCESS
     except Exception as error:
         app.logger.error(f"Error message is: {error}")
         return jsonify({'message': "Something went wrong"}), ErrorCodes.INTERNAL_SERVER_ERROR

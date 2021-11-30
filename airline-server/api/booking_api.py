@@ -192,7 +192,7 @@ def make_a_booking(booking_num=None):
         user.save()
 
         app.logger.info("Booking successful")
-        return jsonify({'message': "Booking successful", "booking": booking}), ErrorCodes.SUCCESS
+        return jsonify({'message': "Booking successful"}), ErrorCodes.SUCCESS
 
     except Exception as error:
         app.logger.error(f"Error message is: {error}")
