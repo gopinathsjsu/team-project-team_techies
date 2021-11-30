@@ -18,6 +18,7 @@ const UserProfile = () => {
        // Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
         Axios.get(url,{headers: {"Authorization" : `Bearer ${token}`}})
         .then((response)=>{
+            console.log(response)
             setUserInfo(response.data);
         }).catch(()=>{
             console.log('some error occurred!')
@@ -26,8 +27,7 @@ const UserProfile = () => {
     return (
         <div>
             <CustomerNavbar/>
-            {userInfo.map((user)=>{
-                return(
+            
                     <div>
                         <h3><strong> Profile</strong></h3>
             <div style={{paddingTop:"20px"}}>
@@ -38,14 +38,14 @@ const UserProfile = () => {
             </div>
             
             <div>
-            <h4>{user.first_name}</h4>
+            <h4>{userInfo.first_name}</h4>
             </div>
             <div style={{paddingTop:"20px"}}>
             <h4><strong> Last Name : </strong></h4>
             </div>
 
             <div>
-            <h4> {user.last_name}</h4>
+            <h4> {userInfo.last_name}</h4>
             </div>
 
             <div style={{paddingTop:"20px"}}>
@@ -53,7 +53,7 @@ const UserProfile = () => {
             </div>
 
             <div>
-            <h4> {user.email}</h4>
+            <h4> {userInfo.email}</h4>
             </div>
 
             <div style={{paddingTop:"20px"}}>
@@ -61,12 +61,10 @@ const UserProfile = () => {
             </div>
 
             <div>
-            <h4> {user.mileage_points}</h4>
+            <h4> {userInfo.mileage_points}</h4>
             </div>
                     </div>    
-                )
-            })}
-            
+             
             
         </div>
     )

@@ -127,7 +127,7 @@ const CustomerLanding = () => {
                         }} style={{ width: "280px",height:"38px",border:"1px solid black" }}>
                             <option value="" disabled selected hidden>Origin City</option>
                             {airportData.map((airport)=>{
-                                return <option value={airport._id}>{airport.code + " ("+ airport.name + ")"}</option>
+                                return <option value={airport.id}>{airport.code + " ("+ airport.name + ")"}</option>
                             })}
                            
                         </select>
@@ -143,12 +143,12 @@ const CustomerLanding = () => {
                         }} style={{ width: "280px",height:"38px",border:"1px solid black" }}>
                             <option value="" disabled selected hidden>Destination City</option>
                             {airportData.filter((value)=>{
-                                if(origin!=value._id){
+                                if(origin!=value.id){
                                     return value;
                                 }
 
                             }).map((airport)=>{
-                                return <option value={airport._id}>{airport.code + " ("+ airport.name + ")"}</option>
+                                return <option value={airport.id}>{airport.code + " ("+ airport.name + ")"}</option>
                             })}
                            
                         </select>
