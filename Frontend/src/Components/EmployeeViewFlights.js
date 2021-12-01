@@ -24,6 +24,7 @@ const EmployeeViewFlights = () => {
         {headers: {"Authorization" : `Bearer ${token}`}})
         .then((response)=>{
             console.log("flight price updated successfully");
+            window.location.reload();
         }).catch(()=>{
             console.log('some error occurred!')
         })
@@ -40,6 +41,7 @@ const EmployeeViewFlights = () => {
             {headers: {"Authorization" : `Bearer ${token}`}})
         .then((response)=>{
             console.log("flight cancelled successfully");
+            window.location.reload();
         }).catch(()=>{
             console.log('some error occurred!')
         })

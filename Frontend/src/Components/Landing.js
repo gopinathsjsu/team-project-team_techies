@@ -28,11 +28,12 @@ const Landing = () => {
         console.log(mockData[0].user.user_type);
         mockData.map((loginuser)=>{
             if(loginuser.user.user_type=="admin"){
-               // history.push("/employee");
-               window.location.href="http://localhost:3000/employee"
+               history.push("/employee");
+               //window.location.href="http://localhost:3000/employee"
             }
             if(loginuser.user.user_type=="customer"){
-                window.location.href="http://localhost:3000/customer"
+                history.push("/customer");
+                //window.location.href="http://localhost:3000/customer"
             }
         })
         

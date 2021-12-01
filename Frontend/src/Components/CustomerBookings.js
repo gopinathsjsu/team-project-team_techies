@@ -29,6 +29,7 @@ const CustomerBookings = () => {
         Axios.delete(url,{headers: {"Authorization" : `Bearer ${token}`}})
         .then((response)=>{
             console.log(response.data);
+            window.location.reload();
         }).catch(()=>{
             console.log('some error occurred!')
         })
@@ -238,11 +239,11 @@ const CustomerBookings = () => {
                         <td>{val.flight_oid.departure_time}</td>
                         <td>{val.flight_oid.arrival_time}</td>
                         <td>{val.booking_history}</td>
-                        {val.seat_num==null && <td><Link  to={{
+                        {val.seat_num==null && val.booking_history!='canceled' && <td><Link  to={{
                             pathname: "/customer/purchase-seats",
                             bookingid:val.id
                             }}><button className="btn btn-primary" >Book Seat</button></Link></td>}
-                        {val.seat_num!=null && <div>{val.seat_num}</div>}
+                        {val.seat_num!=null && val.booking_history!='canceled' && <div>{val.seat_num}</div>}
                         {val.booking_history=='booked' && <td><button onClick = {(e)=>cancelBooking(e,val.id)}className="btn btn-primary" >Cancel</button></td>}
                         {val.booking_history=='canceled' && <div></div>}
                         
