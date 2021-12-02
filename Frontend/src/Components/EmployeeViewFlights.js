@@ -119,7 +119,7 @@ const mockData = [
 
     
     return (
-        <div style={{backgroundColor:"lightblue",height:600}}>
+        <div style={{backgroundColor:"lightblue",height:700}}>
             <Employee_Landing/>
             <h4>Our Flights...</h4>
             <div style={{paddingTop:"30px"}} >
@@ -151,20 +151,25 @@ const mockData = [
                         <td>{val.aircraft.name}</td>
                         <td>{val.departure_airport.city}</td>
                         <td>{val.arrival_airport.city}</td>
-                        <td>{val.departure_date}</td>
-                        <td>{val.arrival_date}</td>
+                        <td>{val.departure_date.slice(0,16)}</td>
+                        <td>{val.arrival_date.slice(0,16)}</td>
                         <td>{val.departure_time}</td>
                         <td>{val.arrival_time}</td>
                         <td>{val.flight_status}</td>
                         <td>{val.price}</td>
+                        {val.flight_status=="scheduled" && 
                         <td><button onClick={()=>{
                             setModal(true);
                             setPrice(val.price);
                             setFlightId(val.id)
-                        }} className="btn btn-primary" >Edit</button></td>
+                        }} className="btn btn-primary" >Edit</button></td> }
+                        
+                        {val.flight_status=="scheduled" &&
                         <td><button onClick = {(e)=>{
-                            //setFlightId(val.id)
+                            
                             cancelFlight(e,val.id)}}className="btn btn-primary" >Cancel</button></td>
+                        }
+                        
 
                     </tr>
                     

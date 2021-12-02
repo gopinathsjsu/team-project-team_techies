@@ -201,7 +201,7 @@ const CustomerBookings = () => {
         }
     ]
     return (
-        <div style={{backgroundColor:"lightblue",height:600}}>
+        <div style={{backgroundColor:"lightblue",height:650}}>
             <CustomerNavbar/>
             <h4>My Bookings</h4>
             <div style={{paddingTop:"30px"}} >

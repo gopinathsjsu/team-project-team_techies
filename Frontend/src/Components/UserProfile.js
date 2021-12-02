@@ -25,7 +25,7 @@ const UserProfile = () => {
         })
     },[])
     return (
-        <div>
+        <div style={{backgroundColor:"lightblue",height:750}}>
             <CustomerNavbar/>
             
                     <div>
