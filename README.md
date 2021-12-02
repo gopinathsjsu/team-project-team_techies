@@ -14,3 +14,9 @@ Flask <br/>
 MongoDB <br/>
 React <br/>
 
+
+Tasks :<br/>
+Abhishek  - Frontend and Documentation <br/>
+Nidhi  - Backend and Database <br/>
+Sai  - AWS and Database <br/>
+Sameer - Frontend <br/>
