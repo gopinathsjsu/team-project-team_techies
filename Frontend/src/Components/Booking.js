@@ -50,8 +50,8 @@ const bookFlight = (e)=>{
     email:email
   },
 payment:{
-  reward_points_used:Math.ceil(maxRewards),
-  cash:flightInfo.price - Math.ceil(maxRewards)
+  reward_points_used:maxRewards,
+  cash:flightInfo.price - maxRewards
 }},
     {headers: {"Authorization" : `Bearer ${token}`}})
   .then((response)=>{
@@ -135,11 +135,11 @@ payment:{
                             </div>
                             <div>
                                 <h4> Allowed points to redeem -  </h4>
-                                <h4>{Math.ceil(maxRewards)}</h4>
+                                <h4>{maxRewards}</h4>
                             </div>
                             <div>
                                 <h4>Effective price ($) - </h4>
-                                <h4>{flightInfo.price - Math.ceil(maxRewards)}</h4>
+                                <h4>{flightInfo.price - maxRewards}</h4>
                             </div>
                             <button onClick={(e)=>bookFlight(e)} className="btn btn-primary sm-5">Book</button> 
                             
