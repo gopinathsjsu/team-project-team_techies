@@ -4,6 +4,7 @@ import {useState,useEffect} from "react";
 import '../App.css'
 import Employee_Landing from './Employee_Landing';
 import Axios from 'axios'
+import { baseUrl } from '../Constants/url';
 
 const AddFlight = () => {
     
@@ -53,7 +54,7 @@ const AddFlight = () => {
 
     const addNewFlight = (e)=>{
         e.preventDefault();
-        const url="http://localhost:5000/flight";
+        const url= baseUrl+"/flight";
         const token = localStorage.getItem('token');
         //Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
         Axios.post( url,{
@@ -86,7 +87,7 @@ const AddFlight = () => {
     }
     
     useEffect(()=>{
-        const url ="http://localhost:5000/aircraft";
+        const url =baseUrl+"/aircraft";
        // Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
        const token = localStorage.getItem('token');
         Axios.get(url,{headers: {"Authorization" : `Bearer ${token}`}})
@@ -99,7 +100,7 @@ const AddFlight = () => {
     },[])
 
     useEffect(()=>{
-        const url ="http://localhost:5000/airport";
+        const url =baseUrl+"/airport";
         //Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
         const token = localStorage.getItem('token');
         Axios.get(url,{headers: {"Authorization" : `Bearer ${token}`}})

@@ -2,6 +2,7 @@ import React from 'react'
 import CustomerNavbar from './CustomerNavbar'
 import {useState,useEffect} from "react";
 import Axios from 'axios'
+import { baseUrl } from '../Constants/url';
 const UserProfile = () => {
     const userDetails = [{
         "email":"sameerjoshi42@gmail.com",
@@ -13,7 +14,7 @@ const UserProfile = () => {
     const[userInfo,setUserInfo] = useState([]);
 
     useEffect(()=>{
-        const url ="http://localhost:5000/user";
+        const url =baseUrl+"/user";
         const token = localStorage.getItem('token');
        // Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
         Axios.get(url,{headers: {"Authorization" : `Bearer ${token}`}})

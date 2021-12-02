@@ -6,6 +6,7 @@ import '../App.css'
 import Table from 'react-bootstrap/Table'
 import { Link } from 'react-router-dom';
 import Axios from 'axios'
+import { baseUrl } from '../Constants/url';
 
 const CustomerLanding = () => {
     
@@ -63,7 +64,7 @@ const CustomerLanding = () => {
     const searchFlight = (e)=>{
 
         e.preventDefault();
-        const url ="http://localhost:5000/flight";
+        const url =baseUrl+"/flight";
         const token = localStorage.getItem('token');
         Axios.get(url,{
             params: {
@@ -81,7 +82,7 @@ const CustomerLanding = () => {
 
     useEffect(()=>{
         console.log(localStorage.getItem('token'))
-        const url ="http://localhost:5000/airport";
+        const url =baseUrl+"/airport";
         const token = localStorage.getItem('token');
       
         Axios.get(url,{headers: {"Authorization" : `Bearer ${token}`}})
@@ -108,7 +109,7 @@ const CustomerLanding = () => {
       
 
     return (
-        <div style={{backgroundColor:"lightblue",height:"1200px"}}>
+        <div style={{backgroundColor:"lightblue",height:"1700px"}}>
             <CustomerNavbar/>
             <div style={{paddingTop:"20px",color:"blue"}}>
                 <h2>You are now free to move about the country...</h2>

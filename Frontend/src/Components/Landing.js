@@ -5,6 +5,7 @@ import '../App.css'
 import Axios from 'axios'
 import { Navbar,Nav,NavItem,Form,FormControl,Button,Modal} from 'react-bootstrap';
 import {useState } from "react";
+import { baseUrl } from '../Constants/url';
 
 const Landing = () => {
     let history=useHistory();
@@ -42,7 +43,7 @@ const Landing = () => {
     const userLogin = (e)=>{
         setLogin(false);
         e.preventDefault();
-        const url="http://localhost:5000/user";
+        const url=baseUrl+"/user";
         
         Axios.post( url,{email:email,password:password
     
@@ -58,11 +59,12 @@ const Landing = () => {
 
         
             if(userResponseData.user.user_type=="admin"){
-               // history.push("/employee");
-               window.location.href="http://localhost:3000/employee"
+               history.push("/employee");
+               //window.location.href="http://localhost:3000/employee"
             }
             if(userResponseData.user.user_type=="customer"){
-                window.location.href="http://localhost:3000/customer"
+                history.push("/customer");
+                //window.location.href="http://localhost:3000/customer"
             }
        
         

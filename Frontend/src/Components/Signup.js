@@ -4,6 +4,7 @@ import '../App.css'
 import Landing from './Landing';
 import 'bootstrap/dist/css/bootstrap.css'
 import Axios from 'axios'
+import { baseUrl } from '../Constants/url';
 const Signup = () => {
 
     const[email,setEmail] = useState("");
@@ -14,7 +15,7 @@ const Signup = () => {
     const signup = (e)=>{
         console.log("inside");
         e.preventDefault();
-        const url="http://localhost:5000/user-registration";
+        const url=baseUrl+"/user-registration";
         Axios.post( url,{first_name:firstName,last_name:lastName,
         email:email, password:password
         

@@ -3,9 +3,10 @@ import '../CSS/PurchaseSeats.css';
 import Axios from 'axios';
 import { useLocation, useHistory } from 'react-router-dom';
 import Popup from './Popup'
+import { baseUrl } from '../Constants/url';
 
 const PurchaseSeats = (props) => {
-
+    let history=useHistory();
     const [isOpen, setIsOpen] = useState(false);
     const togglePopup = () => {
         setIsOpen(!isOpen);
@@ -22,7 +23,7 @@ const PurchaseSeats = (props) => {
     
 
     useEffect(()=>{
-        const url ="http://localhost:5000/booking/purchase_seat/" +booking;
+        const url =baseUrl+"/booking/purchase_seat/" +booking;
         // Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
         const token = localStorage.getItem('token');
         Axios.get(url, {headers: {"Authorization" : `Bearer ${token}`}})
@@ -49,7 +50,7 @@ const PurchaseSeats = (props) => {
         e.preventDefault();
         setSelectedSeatNum(e.target.value)
         const token = localStorage.getItem('token');
-        const url="http://localhost:5000/booking/purchase_seat";
+        const url=baseUrl+"/booking/purchase_seat";
        // Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
         Axios.post( url,{
             booking_id:booking,  
@@ -57,7 +58,8 @@ const PurchaseSeats = (props) => {
             seat_num:selectedSeatNum
       
     },{headers: {"Authorization" : `Bearer ${token}`}}).then((response)=>{
-        window.location.href="http://localhost:3000/customer/bookings"
+        //window.location.href="http://localhost:3000/customer/bookings"
+        history.push("/customer/bookings");
         console.log(response)
     }
 

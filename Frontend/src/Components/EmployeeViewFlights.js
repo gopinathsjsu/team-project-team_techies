@@ -8,6 +8,8 @@ import Table from 'react-bootstrap/Table'
 import Employee_Landing from './Employee_Landing';
 import {Modal} from 'react-bootstrap';
 import Axios from 'axios'
+import { baseUrl } from '../Constants/url';
+
 const EmployeeViewFlights = () => {
 
     const[modal,setModal]=useState(false);
@@ -15,9 +17,21 @@ const EmployeeViewFlights = () => {
     const[flightId,setFlightId] = useState("");
     const[flightData,setFlightData] = useState([]);
 
+    useEffect(()=>{
+        const url =baseUrl+"/flight";
+        const token = localStorage.getItem('token');
+       // Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+        Axios.get(url,{headers: {"Authorization" : `Bearer ${token}`}})
+        .then((response)=>{
+            setFlightData(response.data);
+        }).catch(()=>{
+            console.log('some error occurred!')
+        })
+    },[])
+
     const cancelFlight=(e,flight_id)=>{
         e.preventDefault();
-        const url ="http://localhost:5000/flight";
+        const url =baseUrl+"/flight";
         const token = localStorage.getItem('token');
       //  Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
         Axios.put(url,{flight_status:'canceled',flight_id:flight_id},
@@ -34,7 +48,7 @@ const EmployeeViewFlights = () => {
     const updatePrice=(e,flight_id)=>{
         e.preventDefault();
         setModal(false);
-        const url ="http://localhost:5000/flight";
+        const url =baseUrl+"/flight";
         const token = localStorage.getItem('token');
       //  Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
         Axios.put(url,{price:price,flight_id:flight_id},
@@ -47,17 +61,7 @@ const EmployeeViewFlights = () => {
         })
 
     }
-    useEffect(()=>{
-        const url ="http://localhost:5000/flight";
-        const token = localStorage.getItem('token');
-       // Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
-        Axios.get(url,{headers: {"Authorization" : `Bearer ${token}`}})
-        .then((response)=>{
-            setFlightData(response.data);
-        }).catch(()=>{
-            console.log('some error occurred!')
-        })
-    },[])
+   
 
 const mockData = [
     {

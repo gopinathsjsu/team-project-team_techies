@@ -6,6 +6,8 @@ import 'bootstrap/dist/css/bootstrap.css'
 import '../App.css'
 import Table from 'react-bootstrap/Table'
 import Axios from 'axios'
+import { baseUrl } from '../Constants/url';
+
 const Booking = (props) => {
   const[userInfo,setUserInfo] = useState([]);
   const[maxRewards,setMaxRewards] = useState("")
@@ -18,7 +20,7 @@ const Booking = (props) => {
   const depart_date = flightInfo.departure_date.slice(0,16);
   const arrival_date = flightInfo.arrival_date.slice(0,16);
   useEffect(()=>{
-    const url ="http://localhost:5000/user";
+    const url =baseUrl+"/user";
     const token = localStorage.getItem('token');
    // Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
     Axios.get(url,{headers: {"Authorization" : `Bearer ${token}`}})
@@ -40,7 +42,7 @@ const Booking = (props) => {
 
 const bookFlight = (e)=>{
   e.preventDefault();
-  const url ="http://localhost:5000/booking";
+  const url =baseUrl+"/booking";
   const token = localStorage.getItem('token');
  // Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
   Axios.post(url,{flight_oid:flightInfo.id,traveler_details:{

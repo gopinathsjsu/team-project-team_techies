@@ -6,10 +6,12 @@ import 'bootstrap/dist/css/bootstrap.css'
 import '../App.css'
 import Table from 'react-bootstrap/Table'
 import Axios from 'axios'
+import { baseUrl } from '../Constants/url';
+
 const CustomerBookings = () => {
     const[bookingData,setBookingData] = useState([]);
     useEffect(()=>{
-        const url ="http://localhost:5000/booking";
+        const url =baseUrl+"/booking";
         const token = localStorage.getItem('token');
      //   Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
         Axios.get(url,{headers: {"Authorization" : `Bearer ${token}`}})
@@ -23,7 +25,7 @@ const CustomerBookings = () => {
 
     const cancelBooking = (e,booking_id)=>{
         e.preventDefault();
-        const url ="http://localhost:5000/booking/"+booking_id;
+        const url =baseUrl+"/booking/"+booking_id;
         const token = localStorage.getItem('token');
         //Axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
         Axios.delete(url,{headers: {"Authorization" : `Bearer ${token}`}})
