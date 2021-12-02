@@ -65,12 +65,12 @@ const CustomerLanding = () => {
         e.preventDefault();
         const url ="http://localhost:5000/flight";
         const token = localStorage.getItem('token');
-        Axios.get(url,{headers: {"Authorization" : `Bearer ${token}`}},{
+        Axios.get(url,{
             params: {
               depart_date:depDate,
               airport1:origin,
               airport2:destination
-            }})
+            }},{headers: {"Authorization" : `Bearer ${token}`}})
         .then((response)=>{
             setFlightSearch(response.data);
         }).catch(()=>{
@@ -164,7 +164,8 @@ const CustomerLanding = () => {
                         <button onClick={(e)=>searchFlight(e)} className="btn btn-primary">Search</button> 
                         </div>
                 </div>
-                
+
+               
             </div>
             {flightSearch.length>0 && <div>
                 <h4>Flight search results....</h4>
@@ -194,8 +195,8 @@ const CustomerLanding = () => {
                         <td>{val.aircraft.name}</td>
                         <td>{val.departure_airport.code}</td>
                         <td>{val.arrival_airport.code}</td>
-                        <td>{val.departure_date}</td>
-                        <td>{val.arrival_date}</td>
+                        <td>{val.departure_date.slice(0,16)}</td>
+                        <td>{val.arrival_date.slice(0,16)}</td>
                         <td>{val.departure_time}</td>
                         <td>{val.arrival_time}</td>
                        

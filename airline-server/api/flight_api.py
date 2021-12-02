@@ -66,7 +66,7 @@ def add_flight():
 
     return jsonify(message), code
 
-@jwt_required()
+# @jwt_required()
 def get_all_flights(id):
     if not id:
         app.logger.info(f"Get flights API called")

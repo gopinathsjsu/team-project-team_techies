@@ -13,7 +13,11 @@ const CustomerNavbar = () => {
                     <Nav.Link href="/customer"> Home </Nav.Link>
                     <Nav.Link href="/customer/bookings"> My Bookings  </Nav.Link>
                     <Nav.Link href="/customer/profile"> My Profile </Nav.Link>
-                    <Nav.Link href="/"> Logout </Nav.Link>
+                    <Nav.Link onClick ={()=>{
+                        var token=localStorage.getItem('token');
+                        token="";
+                        localStorage.setItem('token',token);
+                    }} href="/"> Logout </Nav.Link>
                 </Nav>
                 </Navbar>
         </div>

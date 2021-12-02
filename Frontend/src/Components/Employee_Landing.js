@@ -17,6 +17,12 @@ const Employee_Landing = () => {
                     <Nav.Link href="/employee"> Home </Nav.Link>
                     <Nav.Link href="/employee/addflight"> Add Flights  </Nav.Link>
                     <Nav.Link href="/employee/viewflights"> View Flights </Nav.Link>
+                    <Nav.Link onClick ={()=>{
+                        var token=localStorage.getItem('token');
+                        token="";
+                        localStorage.setItem('token',token);
+                    }} href="/"> Logout </Nav.Link>
+                    
                 </Nav>
                 </Navbar>
                 

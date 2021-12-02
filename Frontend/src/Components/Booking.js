@@ -1,10 +1,10 @@
 import React from 'react'
-
 import { Link } from 'react-router-dom';
 import CustomerNavbar from './CustomerNavbar'
 import {useState,useEffect} from "react";
 import 'bootstrap/dist/css/bootstrap.css'
 import '../App.css'
+import Table from 'react-bootstrap/Table'
 import Axios from 'axios'
 const Booking = (props) => {
   const[userInfo,setUserInfo] = useState([]);
@@ -12,6 +12,7 @@ const Booking = (props) => {
   const[firstName,setFirstName] = useState("");
   const[lastName,setLastName] = useState("");
   const[email,setEmail] = useState("");
+  const[success,setSuccess]=useState('');
   
   const flightInfo = props.location.flight;
   const depart_date = flightInfo.departure_date.slice(0,16);
@@ -53,6 +54,7 @@ payment:{
     {headers: {"Authorization" : `Bearer ${token}`}})
   .then((response)=>{
       console.log(response)
+      setSuccess('Flight booked successfully!!');
      
 
   }).catch(()=>{
@@ -70,14 +72,36 @@ payment:{
       <div>
         <h3>Iternary:</h3>
       </div>
-      <div>
-      <h4> Flight Details :{"  "+flightInfo.flight_num+"  "+flightInfo.aircraft.name} </h4>
-      <h4> Departure Airport :{"  "+flightInfo.departure_airport.code +" - "+ flightInfo.departure_airport.name} </h4>
-      <h4> Arrival Airport :{"  "+flightInfo.arrival_airport.code +" - "+ flightInfo.arrival_airport.name} </h4>
-      <h4> Departure Details :{"  "+depart_date +" "+ flightInfo.departure_time} </h4>
-      <h4> Arrival Details :{"  "+arrival_date + " "+ flightInfo.arrival_time} </h4>
-      <h4> Price :{"   $ "+flightInfo.price} </h4>
-      </div>
+      <div style={{paddingTop:"30px",backgroundColor:"lightblue"}} >
+            <Table >
+                <thead>
+                    <tr>
+                        
+                        <th>Flight Details</th>
+                        <th>Departure Airport</th>
+                        <th>Arrival Airport</th>
+                        <th>Departure Details</th>
+                        <th>Arrival Details</th>
+                        <th>Price </th>
+                        
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                        <td>{flightInfo.flight_num+"  "+flightInfo.aircraft.name}</td>
+                        <td>{flightInfo.departure_airport.code +" - "+ flightInfo.departure_airport.name}</td>
+                        <td>{flightInfo.arrival_airport.code +" - "+ flightInfo.arrival_airport.name}</td>
+                        <td>{depart_date +" "+ flightInfo.departure_time}</td>
+                        <td>{arrival_date + " "+ flightInfo.arrival_time}</td>
+                        <td>{"$ "+flightInfo.price}</td>
+                        
+                    </tr>
+                    
+              </tbody>
+            </Table>
+        </div>
+     
       
                          <div className="login-form">
                             <div className="booking-div">
@@ -120,7 +144,9 @@ payment:{
                     </div>
                 </div>
            
-            
+                <div style={{width: "100%",float: "center",color:'green'}}>
+                <h3>{success}</h3>
+            </div>
       
       
     </div>

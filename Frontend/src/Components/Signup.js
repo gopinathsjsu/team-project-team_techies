@@ -10,7 +10,7 @@ const Signup = () => {
     const[password,setPassword]=useState("");
     const[firstName,setFirstName] = useState("");
     const[lastName,setLastName]=useState("");
-    
+    const[success,setSuccess]=useState('');
     const signup = (e)=>{
         console.log("inside");
         e.preventDefault();
@@ -20,6 +20,7 @@ const Signup = () => {
         
         }).then((response)=>{
             console.log(response)
+            setSuccess('Signed up successfully!!');
         }
     
         ).catch((response)=>{
@@ -71,6 +72,9 @@ const Signup = () => {
                             
                     </div>
                 </div>
+            </div>
+            <div style={{width: "100%",float: "center",color:'green'}}>
+                <h3>{success}</h3>
             </div>
         </div>
     )

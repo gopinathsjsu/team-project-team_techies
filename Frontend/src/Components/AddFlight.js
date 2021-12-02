@@ -21,7 +21,7 @@ const AddFlight = () => {
     const[depAirport,setDepAirport]=useState("");
     const[airportData,setAirportData]=useState([]);
     const[arrAirport,setArrAirport]=useState("");
-    
+    const[success,setSuccess]=useState('');
 
 
 
@@ -73,6 +73,7 @@ const AddFlight = () => {
 
     
     },{headers: {"Authorization" : `Bearer ${token}`}}).then((response)=>{
+        setSuccess('Flight added successfully!!');
         console.log(response)
     }
 
@@ -222,7 +223,9 @@ const AddFlight = () => {
                     </div>
                 </div>
             </div>
-            
+            <div style={{width: "100%",float: "center",color:'green'}}>
+                <h3>{success}</h3>
+            </div>
         </div>
     )
 }
