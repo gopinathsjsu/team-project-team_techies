@@ -111,7 +111,7 @@ const AddFlight = () => {
         })
     },[])
     return (
-        <div>
+        <div style={{backgroundColor:"lightblue",height:1250}}>
             <Employee_Landing/>
             <div className="container">
             <div className="login-form">
