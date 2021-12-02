@@ -4,6 +4,7 @@ import Axios from 'axios';
 import { useLocation, useHistory } from 'react-router-dom';
 import Popup from './Popup'
 import { baseUrl } from '../Constants/url';
+import CustomerNavbar from './CustomerNavbar'
 
 const PurchaseSeats = (props) => {
     let history=useHistory();
@@ -71,6 +72,7 @@ const PurchaseSeats = (props) => {
 
     return (
         <div>
+            <CustomerNavbar/>
             <div className="purchase-seats-box">
                     <h1 style={{fontWeight: "bold"}}>Book Seats</h1>
             </div>
