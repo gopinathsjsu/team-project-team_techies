@@ -183,13 +183,13 @@ const AddFlight = () => {
                         
                         
                             <div className="form-group">
-                                <input onChange = {(e)=>setDepTime(e.target.value)} type="text" className="form-control"
+                                <input onChange = {(e)=>setDepTime(e.target.value)} type="time" className="form-control"
                                        name="dep time" value ={depTime} placeholder="Departure Time" required={true}
                                       />
                             </div>
 
                             <div className="form-group">
-                                <input onChange = {(e)=>setArrTime(e.target.value)} type="text" className="form-control"
+                                <input onChange = {(e)=>setArrTime(e.target.value)} type="time" className="form-control"
                                        name="arr time" value ={arrTime} placeholder="Arrival Time" required={true}
                                       />
                             </div>
