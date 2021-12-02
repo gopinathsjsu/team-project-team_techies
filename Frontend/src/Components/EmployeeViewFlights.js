@@ -141,6 +141,7 @@ const mockData = [
                         <th>Arrival Time</th>
                         <th>Status</th>
                         <th>Price</th>
+                        <th>Available Seats</th>
                         <th>Update</th>
                         <th>Cancel</th>
                     </tr>
@@ -160,7 +161,8 @@ const mockData = [
                         <td>{val.departure_time}</td>
                         <td>{val.arrival_time}</td>
                         <td>{val.flight_status}</td>
-                        <td>{val.price}</td>
+                        <td>$ {val.price}</td>
+                        <td>{val.remaining_seats}</td>
                         {val.flight_status=="scheduled" && 
                         <td><button onClick={()=>{
                             setModal(true);

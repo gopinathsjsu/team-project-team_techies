@@ -35,6 +35,12 @@
     font-family: 'Times New Roman', Times, serif;
 }
 
+
+.text-style-bold {
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+}
+
 .signup-btn {
     color: white;
     background-color: rgb(75, 70, 70);

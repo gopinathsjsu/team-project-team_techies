@@ -108,7 +108,7 @@ payment:{
                          <div className="login-form">
                             <div className="booking-div">
                                 <div >
-                                    <h2>Add passenger details - </h2>
+                                    <h2 className="text-style-bold">Enter passenger details </h2>
                                     
                                 </div>
                         
@@ -131,15 +131,15 @@ payment:{
                             {/* <button className="btn btn-primary sm-5">Login</button>  */}
                             
                             <div>
-                                <h4>Your total rewards points -  {userInfo.mileage_points}</h4>
+                                <h4 className="text-style-user">Your current Rewards points:  {userInfo.mileage_points}</h4>
                             </div>
                             <div>
-                                <h4> Allowed points to redeem -  </h4>
-                                <h4>{maxRewards}</h4>
+                                <h4 className="text-style-user"> Allowed points to redeem:  {maxRewards} </h4>
+   
                             </div>
                             <div>
-                                <h4>Effective price ($) - </h4>
-                                <h4>{flightInfo.price - maxRewards}</h4>
+                                <h4 className="text-style-user">Effective price: </h4>
+                                <h4 className="text-style-bold">$ {flightInfo.price - maxRewards}</h4>
                             </div>
                             <button onClick={(e)=>bookFlight(e)} className="btn btn-primary sm-5">Book</button> 
                             
