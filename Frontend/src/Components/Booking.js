@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+
 import CustomerNavbar from './CustomerNavbar'
 import {useState,useEffect} from "react";
 import 'bootstrap/dist/css/bootstrap.css'
@@ -7,8 +7,10 @@ import '../App.css'
 import Table from 'react-bootstrap/Table'
 import Axios from 'axios'
 import { baseUrl } from '../Constants/url';
+import { Link,useHistory } from 'react-router-dom';
 
 const Booking = (props) => {
+  let history=useHistory();
   const[userInfo,setUserInfo] = useState([]);
   const[maxRewards,setMaxRewards] = useState("")
   const[firstName,setFirstName] = useState("");
@@ -57,7 +59,7 @@ payment:{
   .then((response)=>{
       console.log(response)
       setSuccess('Flight booked successfully!!');
-     
+      history.push("/customer/bookings");
 
   }).catch(()=>{
       console.log('some error occurred!')
