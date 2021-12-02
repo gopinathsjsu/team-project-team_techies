@@ -107,8 +107,8 @@ const Landing = () => {
                          <div className="login-form">
                             <div className="main-div-login">
                                 <div >
-                                    <h2>Login</h2>
-                                    <p>Please enter your email and password</p>
+                                    <h2 className="text-style-user">Login</h2>
+                                    <p className="text-style-user">Please enter your email and password</p>
                                 </div>
                         
                             <div className="form-group">
@@ -122,7 +122,7 @@ const Landing = () => {
                                        />
                             </div>
                             
-                            <button onClick={(e)=>userLogin(e)} className="btn btn-primary sm-5">Login</button> 
+                            <button onClick={(e)=>userLogin(e)} className="login-btn">Login</button> 
                             
                             
                             

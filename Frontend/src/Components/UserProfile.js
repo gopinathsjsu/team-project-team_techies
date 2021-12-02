@@ -1,5 +1,6 @@
 import React from 'react'
 import CustomerNavbar from './CustomerNavbar'
+import '../CSS/PurchaseSeats.css';
 import {useState,useEffect} from "react";
 import Axios from 'axios'
 import { baseUrl } from '../Constants/url';
@@ -26,43 +27,43 @@ const UserProfile = () => {
         })
     },[])
     return (
-        <div style={{backgroundColor:"lightblue",height:750}}>
+        <div style={{backgroundImage: "linear-gradient(45deg, #bad1d5, white)", height:750}}>
             <CustomerNavbar/>
             
                     <div>
-                        <h3><strong> Profile</strong></h3>
+                        <h3 style={{paddingTop: 20}} className="text-style-user"><strong> Profile</strong></h3>
             <div style={{paddingTop:"20px"}}>
                 <img src="../../profile_202.jpg"></img>
             </div>
             <div style={{paddingTop:"20px"}}>
-            <h4><strong> First Name : </strong></h4>
+            <h4 className="text-style-user"><strong> First Name : </strong></h4>
             </div>
             
             <div>
-            <h4>{userInfo.first_name}</h4>
+            <h4 className="text-style-user">{userInfo.first_name}</h4>
             </div>
             <div style={{paddingTop:"20px"}}>
-            <h4><strong> Last Name : </strong></h4>
+            <h4 className="text-style-user"><strong> Last Name : </strong></h4>
             </div>
 
             <div>
-            <h4> {userInfo.last_name}</h4>
+            <h4 className="text-style-user"> {userInfo.last_name}</h4>
             </div>
 
             <div style={{paddingTop:"20px"}}>
-            <h4><strong> Email : </strong></h4>
+            <h4 className="text-style-user"><strong> Email : </strong></h4>
             </div>
 
             <div>
-            <h4> {userInfo.email}</h4>
+            <h4 className="text-style-user"> {userInfo.email}</h4>
             </div>
 
             <div style={{paddingTop:"20px"}}>
-            <h4><strong> Reward Points : </strong></h4>
+            <h4 className="text-style-user"><strong> Reward Points : </strong></h4>
             </div>
 
             <div>
-            <h4> {userInfo.mileage_points}</h4>
+            <h4 className="text-style-user"> {userInfo.mileage_points}</h4>
             </div>
                     </div>    
              

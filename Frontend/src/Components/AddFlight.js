@@ -112,13 +112,13 @@ const AddFlight = () => {
         })
     },[])
     return (
-        <div style={{backgroundColor:"lightblue",height:1250}}>
+        <div style={{backgroundImage: "linear-gradient(45deg, #bad1d5, white)",height:1250}}>
             <Employee_Landing/>
             <div className="container">
             <div className="login-form">
                     <div className="main-div">
                         <div className="panel">
-                            <h2>Add a flight</h2>
+                            <h2 className="text-style-user">Add a Flight</h2>
                             
                         </div>
 
@@ -217,7 +217,7 @@ const AddFlight = () => {
                             
                             <button onClick={(e)=>{
                                 addNewFlight(e);
-                            }}className="btn btn-primary">Add</button> 
+                            }}className="add-flight-btn">Add</button> 
                             
                             
                             

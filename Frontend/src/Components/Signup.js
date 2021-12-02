@@ -40,7 +40,7 @@ const Signup = () => {
             <div className="login-form">
                     <div className="main-div">
                         <div className="panel">
-                            <h2>Sign up</h2>
+                            <h2 className="text-style-user">Sign up</h2>
                             
                         </div>
                         <div className="form-group">

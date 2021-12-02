@@ -70,12 +70,12 @@ const PurchaseSeats = (props) => {
     }
 
     return (
-        <div>
+        <div style={{backgroundImage: "linear-gradient(45deg, #bad1d5, white)"}}>
             <div className="purchase-seats-box">
-                    <h1 style={{fontWeight: "bold"}}>Book Seats</h1>
+                    <h1 className="book-seats-h">Book Seats</h1>
             </div>
 
-            <div id="seat-type-box" className="seat-selection">
+            {/* <div id="seat-type-box" className="seat-selection">
                 <h3>Seat Price</h3>
             
                 <ul>
@@ -85,7 +85,7 @@ const PurchaseSeats = (props) => {
                     }
                     
                 </ul>
-            </div>
+            </div> */}
             
             <div id="seat-type-box" className="seat-selection">
                 <h3>Seat Type</h3>
@@ -114,9 +114,9 @@ const PurchaseSeats = (props) => {
                 </select>
             </div>
 
-            <button onClick={(e)=>{
+            <button style= {{margin:"20px"}} className="book-seat-btn" onClick={(e)=>{
                                 purchaseSeat(e);
-                            }}className="btn btn-primary">Book Seat</button> 
+                            }}>Book Seat</button> 
 
         {/* <input
       type="button"

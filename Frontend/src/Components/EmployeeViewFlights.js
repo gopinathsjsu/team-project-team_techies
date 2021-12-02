@@ -123,7 +123,7 @@ const mockData = [
 
     
     return (
-        <div style={{backgroundColor:"lightblue",height:700}}>
+        <div style={{backgroundImage: "linear-gradient(45deg, #bad1d5, white)",height:700}}>
             <Employee_Landing/>
             <h4>Our Flights...</h4>
             <div style={{paddingTop:"30px"}} >
@@ -166,12 +166,12 @@ const mockData = [
                             setModal(true);
                             setPrice(val.price);
                             setFlightId(val.id)
-                        }} className="btn btn-primary" >Edit</button></td> }
+                        }} className="book-seat-btn" >Edit</button></td> }
                         
                         {val.flight_status=="scheduled" &&
                         <td><button onClick = {(e)=>{
                             
-                            cancelFlight(e,val.id)}}className="btn btn-primary" >Cancel</button></td>
+                            cancelFlight(e,val.id)}}className="book-seat-btn" >Cancel</button></td>
                         }
                         
 

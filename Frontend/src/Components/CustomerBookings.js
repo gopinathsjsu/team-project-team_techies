@@ -203,7 +203,7 @@ const CustomerBookings = () => {
         }
     ]
     return (
-        <div style={{backgroundColor:"lightblue",height:650}}>
+        <div style={{ backgroundImage: "linear-gradient(45deg, #bad1d5, white)",height:650}}>
             <CustomerNavbar/>
             <h4>My Bookings</h4>
             <div style={{paddingTop:"30px"}} >
@@ -244,9 +244,9 @@ const CustomerBookings = () => {
                         {val.seat_num==null && val.booking_history!='canceled' && <td><Link  to={{
                             pathname: "/customer/purchase-seats",
                             bookingid:val.id
-                            }}><button className="btn btn-primary" >Book Seat</button></Link></td>}
+                            }}><button className="book-seat-btn" >Book Seat</button></Link></td>}
                         {val.seat_num!=null && val.booking_history!='canceled' && <div>{val.seat_num}</div>}
-                        {val.booking_history=='booked' && <td><button onClick = {(e)=>cancelBooking(e,val.id)}className="btn btn-primary" >Cancel</button></td>}
+                        {val.booking_history=='booked' && <td><button onClick = {(e)=>cancelBooking(e,val.id)}className= "book-seat-btn" >Cancel</button></td>}
                         {val.booking_history=='canceled' && <div></div>}
                         
 

@@ -1,4 +1,5 @@
 import React from 'react'
+import '../CSS/PurchaseSeats.css';
 import CustomerNavbar from './CustomerNavbar'
 import {useState,useEffect} from "react";
 import 'bootstrap/dist/css/bootstrap.css'
@@ -109,16 +110,16 @@ const CustomerLanding = () => {
       
 
     return (
-        <div style={{backgroundColor:"lightblue",height:"1700px"}}>
+        <div style={{backgroundImage: "linear-gradient(110deg, #bad1d5, white)",height:"1700px"}}>
             <CustomerNavbar/>
-            <div style={{paddingTop:"20px",color:"blue"}}>
+            <div style={{paddingTop:"20px",color:"black"}}>
                 <h2>You are now free to move about the country...</h2>
             </div>
             <div className="container" >
             <div className="login-form">
                     <div className="search-main-div">
                         <div>
-                            <h4>
+                            <h4 class="search-flight-h">
                                 Search Flight
                             </h4>
                         </div>
@@ -162,7 +163,7 @@ const CustomerLanding = () => {
                                       />
                         </div>
                         <br></br>
-                        <button onClick={(e)=>searchFlight(e)} className="btn btn-primary">Search</button> 
+                        <button onClick={(e)=>searchFlight(e)} className="flight-search-btn">Search</button> 
                         </div>
                 </div>
 
