@@ -65,6 +65,7 @@ def booking(b_id):
                     if booking.seat in ['window', 'aisle', 'middle']:
                         booking.flight_oid.seats[booking.seat] += 1
 
+                booking.mileage_points_earned = 0
                 booking.save()
                 booking.flight_oid.save()
 

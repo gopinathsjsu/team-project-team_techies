@@ -219,6 +219,7 @@ const CustomerBookings = () => {
                         <th>Arrival Date</th>
                         <th>Departure Time</th>
                         <th>Arrival Time</th>
+                        <th>Reward Points Earned</th>
                         <th>Status</th>
                         <th>Seat</th>
                         <th>Action</th>
@@ -240,6 +241,7 @@ const CustomerBookings = () => {
                        
                         <td>{val.flight_oid.departure_time}</td>
                         <td>{val.flight_oid.arrival_time}</td>
+                        <td>{val.mileage_points_earned}</td>
                         <td>{val.booking_history}</td>
                         {val.seat_num==null && val.booking_history!='canceled' && <td><Link  to={{
                             pathname: "/customer/purchase-seats",
