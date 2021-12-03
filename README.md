@@ -1,5 +1,5 @@
 # Team Project - Team Techies
-team-project-team_techies created by GitHub Classroom
+
 
 Team Members: <br/>
 Abhishek Reddy - 015489240 <br/>
