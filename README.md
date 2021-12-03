@@ -18,7 +18,7 @@ React <br/>
 Tasks :<br/>
 Abhishek  - Frontend and Documentation <br/>
 Nidhi  - Backend and Database <br/>
-Sai  - AWS and Database <br/>
+Sai  - AWS<br/>
 Sameer - Frontend <br/>
 
 Project Journal <br/>
