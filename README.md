@@ -1,4 +1,4 @@
-# team-project-team_techies
+# Team Project - Team Techies
 team-project-team_techies created by GitHub Classroom
 
 Team Members: <br/>
