@@ -38,7 +38,7 @@ https://docs.google.com/spreadsheets/d/1qkVE57TqKiTPVYwF8EKbHxaOOvGZFEhWTGasEabl
 
 Project Journal <br/>
 The following documents contains required submissions: <br/>
-XP Values, Task Sheet, Burn down charts, Project board, Individual weekly Scrum Report, Architecture diagram, Class diagram, Installation commands (combined for backend and frontEnd, Database design, Backend Project Structure, Reward System Implementation Logic, UI Screens
+XP Values, Task Sheet, Burn down charts, Project board, Individual weekly Scrum Report, Architecture diagram, Class diagram, Installation commands (combined for backend and frontEnd, Database design, Backend Project Structure, Reward System Implementation Logic, UI Screens <br/>
 https://docs.google.com/document/d/1WVobC-ZDbBfdKoTGFrRaiXKKPq878J7gdtxhip-eTA8/edit <br/>
 
 
