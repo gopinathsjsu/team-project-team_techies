@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css'
 import '../App.css'
 
-import { Navbar,Nav,NavItem,Form,FormControl,Button,Modal} from 'react-bootstrap';
+import { Navbar,Nav} from 'react-bootstrap';
 import {useState } from "react";
 const Employee_Landing = () => {
 
